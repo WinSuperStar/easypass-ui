@@ -31,9 +31,15 @@ export class PresformComponent implements OnInit {
       language: 'zh',
       allowedPreviewTypes : [ 'image' ],
       allowedFileExtensions : ['jpg', 'png', 'gif'],
-      uploadUrl: '#'
+      uploadUrl: '/api/upload',
+      uploadAsync: false,
+      uploadExtraData: {
+        moduleName: 'customer'
+      }
     }).on('filebatchselected', function(event, files) {
-      // $scope.userPic = files;
+      $('#fileUpload').fileinput('upload');
+    }).on('fileuploaded', function(event, data, previewId, index) {
+      // ssss
     });
   }
   cancel() {

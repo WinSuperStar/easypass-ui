@@ -54,8 +54,8 @@ import {PermissionService} from "./shared/services/permission.service";
 import {CarService} from "./service/car.service";
 
 const routeConfig: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
+  {path: '', redirectTo: 'index', pathMatch: 'full'},
+  {path: 'index', component: LoginComponent},
   {
     path: 'home', component: HomeComponent, children: [{
       path: '',
@@ -127,7 +127,7 @@ const routeConfig: Routes = [
     FormsModule,
     HttpModule,
     HttpClientModule,
-    RouterModule.forRoot(routeConfig),
+    RouterModule.forRoot(routeConfig, {useHash: true}),
     ReactiveFormsModule,
     ReactiveFormsModule,
     FileUploaderModule

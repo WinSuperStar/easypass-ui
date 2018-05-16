@@ -31,10 +31,10 @@ export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad 
       return true;
     }
     this.loginService.redirectUrl = url;
-    let sessionId = 123456789;
+    //let sessionId = 123456789;
     let navigationExtras: NavigationExtras = {
-      queryParams: {'session_id': sessionId},
-      fragment: 'anchor'
+      //queryParams: {'session_id': sessionId},
+      //fragment: 'anchor'
     };
 
     this.router.navigate(['/login'], navigationExtras);
