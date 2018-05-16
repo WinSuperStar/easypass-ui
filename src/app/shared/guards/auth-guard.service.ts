@@ -37,7 +37,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad 
       //fragment: 'anchor'
     };
 
-    this.router.navigate(['/login'], navigationExtras);
+    this.router.navigate(['/index'], navigationExtras);
     return false;
   }
 }
