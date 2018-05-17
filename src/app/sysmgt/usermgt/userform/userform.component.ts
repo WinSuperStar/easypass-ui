@@ -57,7 +57,7 @@ export class UserformComponent implements OnInit {
               password: data.password,
               passwordConfirm: data.password
             },
-            position: data.rolename,
+            position: data.roleid,
             gender: data.gender,
             state: data.state
           })
@@ -122,7 +122,7 @@ export class UserformComponent implements OnInit {
         this.user.username = this.formModel.value['userName'];
         this.user.phone = this.formModel.value['phone'];
         this.user.password = this.formModel.controls['passwordInfo'].value['password'];
-        this.user.rolename = this.formModel.value['position'];
+        this.user.roleid = this.formModel.value['position'];
         this.user.gender = this.formModel.value['gender'];
         this.user.state = this.formModel.value['state'];
         console.log('更新用户：');

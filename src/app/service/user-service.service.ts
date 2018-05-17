@@ -29,7 +29,7 @@ export class UserServiceService {
       .set('username', user.username)
       .set('phone', user.phone)
       .set('password', user.password)
-      .set('rolename', user.rolename)
+      .set('roleid', user.roleid)
       .set('gender', user.gender)
       .set('state', user.state)
       .set('creator', user.creator)
@@ -51,7 +51,7 @@ export class UserServiceService {
       .set('username', user.username)
       .set('phone', user.phone)
       .set('password', user.password)
-      .set('rolename', user.rolename)
+      .set('rolename', user.roleid)
       .set('gender', user.gender)
       .set('state', user.state)
       .set('createdate', user.createdate)
@@ -96,7 +96,7 @@ export class User {
               public  add1: string,
               public  add2: string,
               public  add3: string,
-              public rolename: string) {
+              public roleid: string) {
 
   }
 }

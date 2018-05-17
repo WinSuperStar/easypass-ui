@@ -41,7 +41,7 @@
         <label class="col-sm-1 control-label">岗位</label>
         <div class="col-sm-2">
           <select class="form-control" formControlName="position" >
-            <option *ngFor="let role of roles | async; let i = index;" value={{role.rolename}}>{{role.rolename}}</option>
+            <option *ngFor="let role of roles | async; let i = index;" value={{role.roleid}}>{{role.rolename}}</option>
           </select>
         </div>
       </div>
