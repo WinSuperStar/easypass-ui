@@ -24,7 +24,8 @@ export class UserServiceService {
     );
   }
 
-  addUser(user:User): Observable<any>{
+  addUser(user: User): Observable<any> {
+    console.log('url：' + user.certpath);
     let params = new HttpParams()
       .set('username', user.username)
       .set('phone', user.phone)
@@ -33,29 +34,31 @@ export class UserServiceService {
       .set('gender', user.gender)
       .set('state', user.state)
       .set('creator', user.creator)
+      .set('certpath', user.certpath)
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
-    return this.httpClient.post('/api/addUser',params, {headers}).map(
+    return this.httpClient.post('/api/addUser', params, {headers}).map(
       res => {
         return res;
       },
       err => {
         return err;
       }
-    )
+    );
   }
 
   updateUser(user: User) {
     let params = new HttpParams()
-      .set('userid', user.userid+'')
+      .set('userid', user.userid + '')
       .set('username', user.username)
       .set('phone', user.phone)
       .set('password', user.password)
-      .set('rolename', user.roleid)
+      .set('roleid', user.roleid)
       .set('gender', user.gender)
       .set('state', user.state)
       .set('createdate', user.createdate)
       .set('creator', user.creator)
+      .set('certpath', user.certpath)
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
     return this.httpClient.put('/api/user',params, {headers}).map(
