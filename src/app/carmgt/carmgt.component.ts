@@ -67,7 +67,11 @@ export class CarmgtComponent implements OnInit {
     this.carset = this.carService.getSubBrand(p);
   }
 
-  edit(id:any){}
+  edit(id:any){
+    this.router.navigateByUrl('/home/carform/'+id);
+  }
 
-  createOrder(id:any){}
+  createOrder(id:any){
+    this.router.navigateByUrl('/home/orderform/'+id);
+  }
 }

@@ -65,7 +65,7 @@ export class CarformComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('/carmgt');
+    this.router.navigateByUrl('/home/carmgt');
   }
 
   save() {

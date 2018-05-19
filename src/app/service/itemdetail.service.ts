@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ItemdetailService {
@@ -8,11 +8,19 @@ export class ItemdetailService {
   constructor(private httpClient: HttpClient) {
   }
 
-  createItemdetail(vdrid:any, creator:any): Observable<any> {
+  createItemdetail(vdrid: any, vdrname: any, itemname: any, creator: any): Observable<any> {
     let params = new HttpParams()
       .set('vdrid', vdrid)
+      .set('vdrname', vdrname)
+      .set('itemname', itemname)
       .set('creator', creator);
-    return this.httpClient.post('/api/createItemdetail',params);
+    return this.httpClient.post('/api/createItemdetail', params);
+  }
+
+  saveItemdetail(itemdetail: any): Observable<any> {
+    let params = new HttpParams()
+      .set('itemdetail', itemdetail);
+    return this.httpClient.post('/api/saveItemdetail', params);
   }
 
   getItemdetail(papid: any): Observable<any> {
@@ -24,53 +32,59 @@ export class ItemdetailService {
 }
 
 export class Itemdetail {
-  constructor(
-    public  papid: number,
-    public  papMaterial: string,
-    public  carPresent: string,
-    public carPresentCost: number,
-    public  carPresentDesc: string,
-    public  oriIdType: string,
-    public  oriIdDesc: string,
-    public oriIdCost: number,
-    public  oriOtherCert: string,
-    public oriOtherCertCost: number,
-    public  oriOtherCertDesc: string,
-    public  oriPresent: string,
-    public oriPresentCost: number,
-    public  oriPresentDesc: string,
-    public  oriSampleVideoPath: string,
-    public  oriSampleImagePath: string,
-    public  oriSampleCertPath: string,
-    public  oriComments: string,
-    public oriCost: number,
-    public  oriLisenceType: string,
-    public  oriLisenceDesc: string,
-    public oriLisenceCost: number,
-    public  newIdType: string,
-    public  newIdDesc: string,
-    public newIdCost: number,
-    public  newOtherCert: string,
-    public newOtherCertCost: number,
-    public  newOtherCertDesc: string,
-    public  newPresent: string,
-    public newPresentCost: number,
-    public  newPresentDesc: string,
-    public  newSampleVideoPath: string,
-    public  newSampleImagePath: string,
-    public  newSampleCertPath: string,
-    public  newComments: string,
-    public newCost: number,
-    public  newLisenceType: string,
-    public  newLisenceDesc: string,
-    public newLisenceCost: number,
-    public  relatedVendorId: string,
-    public  createdate: string,
-    public  creator: string,
-    public  state: string,
-    public  add1: string,
-    public  add2: string,
-    public  add3: string
-  ) {
+  constructor(public  papid: number,
+              public matDengji: string,
+              public matXingshi: string,
+              public matJiaoqiang: string,
+              public matGouzhi: string,
+              public matFapiao: string,
+              public matQita: string,
+              public matQitaDesc: string,
+              public  carPresent: string,
+              public carPresentCost: number,
+              public  carPresentDesc: string,
+              public  oriIdType: string,
+              public  oriIdDesc: string,
+              public oriIdCost: number,
+              public  oriOtherCert: string,
+              public oriOtherCertCost: number,
+              public  oriOtherCertDesc: string,
+              public  oriPresent: string,
+              public oriPresentCost: number,
+              public  oriPresentDesc: string,
+              public  oriSampleVideoPath: string,
+              public  oriSampleImagePath: string,
+              public  oriSampleCertPath: string,
+              public  oriComments: string,
+              public oriCost: number,
+              public  oriLisenceType: string,
+              public  oriLisenceDesc: string,
+              public oriLisenceCost: number,
+              public  newIdType: string,
+              public  newIdDesc: string,
+              public newIdCost: number,
+              public  newOtherCert: string,
+              public newOtherCertCost: number,
+              public  newOtherCertDesc: string,
+              public  newPresent: string,
+              public newPresentCost: number,
+              public  newPresentDesc: string,
+              public  newSampleVideoPath: string,
+              public  newSampleImagePath: string,
+              public  newSampleCertPath: string,
+              public  newComments: string,
+              public newCost: number,
+              public  newLisenceType: string,
+              public  newLisenceDesc: string,
+              public newLisenceCost: number,
+              public  relatedVendorId: string,
+              public relatedVendorName: string,
+              public relatedItemName: string,
+              public  createdate: string,
+              public  creator: string,
+              public  state: string,
+              public  add1: string,
+              public  add2: string,
+              public  add3: string) {
   }
 }

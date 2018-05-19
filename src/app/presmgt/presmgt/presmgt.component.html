@@ -4,36 +4,39 @@
   </div>
   <!-- /.box-header -->
   <!-- form start -->
-  <form class="form-horizontal">
+  <form class="form-horizontal" [formGroup]="formGroup">
     <div class="box-body">
       <div class="form-group">
         <label class="col-sm-2 control-label">详细地址</label>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">省</div>
-          <select class="form-control">
-            <option value="上海">上海</option>
+          <select class="form-control" (change)="showCity($event)" formControlName="caraddr1">
+            <option disabled selected="selected">请选择省</option>
+            <option *ngFor="let pro of province | async; let i = index" value="{{pro.name}}">{{pro.name}}</option>
           </select>
         </div>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">市</div>
-          <select class="form-control">
-            <option value="上海">上海</option>
+          <select class="form-control" (change)="showArea($event)" formControlName="caraddr2">
+            <option disabled selected="selected">请选择市</option>
+            <option *ngFor="let c of city | async; let i = index" value="{{c.name}}">{{c.name}}</option>
           </select>
         </div>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">县</div>
-          <select class="form-control">
-            <option value="上海">上海</option>
+          <select class="form-control" formControlName="caraddr3">
+            <option disabled selected="selected">请选择区</option>
+            <option *ngFor="let a of area | async; let i = index" value="{{a.name}}">{{a.name}}</option>
           </select>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">牌照代码</label>
-        <div class="col-sm-1">
-          <input type="text" class="form-control" placeholder="浙">
+        <div class="col-sm-1" style="width:70px;">
+          <input type="text" class="form-control" formControlName="carplate1">
         </div>
-        <div class="col-sm-1">
-          <input type="text" class="form-control" placeholder="C">
+        <div class="col-sm-1" style="width:70px;">
+          <input type="text" class="form-control" formControlName="carplate2">
         </div>
       </div>
       <div class="form-group">
@@ -63,40 +66,18 @@
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">办证项目</label>
-        <div class="col-sm-2 formMulCheckBox">
-          <div>上牌</div>
-          <input type="checkbox">
-        </div>
-        <div class="col-sm-2 formMulCheckBox">
-          <div >违章</div>
-          <input type="checkbox">
-        </div>
-        <div class="col-sm-2 formMulCheckBox">
-          <div>抵押/解除抵押</div>
-          <input type="checkbox">
-        </div>
-        <div class="col-sm-2 formMulCheckBox">
-          <div>委托</div>
-          <input type="checkbox">
-        </div>
-        <div class="col-sm-2 formMulCheckBox">
-          <div>年检</div>
-          <input type="checkbox">
-        </div>
-        <div class="col-sm-2 formMulCheckBox">
-          <div>换补牌证</div>
-          <input type="checkbox">
-        </div>
-        <div class="col-sm-2 formMulCheckBox">
-          <div>其他</div>
-          <input type="checkbox">
+        <div *ngFor="let item of formGroup.get('itemlist').controls; let i=index">
+          <div class="col-sm-2 formMulCheckBox">
+            <div>{{itemlist[i].name}}</div>
+            <input type="checkbox" [formControl]="item" value="{{itemlist[i].state}}">
+          </div>
         </div>
       </div>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
       <button type="submit" class="btn btn-primary pull-left" (click)="create()">新建预录客户</button>&nbsp;&nbsp;
-      <button type="submit" class="btn btn-success pull-left" style="margin-left:5px;">查询</button>
+      <button type="submit" class="btn btn-success pull-left" style="margin-left:5px;" (click)="search(formGroup.value)">查询</button>
     </div>
     <!-- /.box-footer -->
   </form>
@@ -124,33 +105,22 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>1</td>
-        <td>湖南客户1</td>
-        <td>湖南省长沙市长沙县</td>
-        <td>湘D</td>
+      <tr  *ngFor="let p of presales | async; let i=index ">
+        <td>{{p.saleid}}</td>
+        <td>{{p.cusname}}</td>
+        <td>{{p.caraddr}}</td>
+        <td>{{p.carplate}}</td>
         <td>上牌，过户，年检</td>
-        <td>50000</td>
-        <td>何炅</td>
-        <td>杨磊</td>
+        <td>{{p.state}}</td>
+        <td>{{p.contact}}</td>
+        <td>{{p.creator}}</td>
         <td>
-          <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
-          <a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>删除</a>
+          <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)=edit(p.saleid)></span>编辑</a>
+          <a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" (click)=delete(p.saleid)></span>删除</a>
         </td>
       </tr>
       </tbody>
       <tfoot>
-      <tr>
-        <th>客户编号</th>
-        <th>客户名称</th>
-        <th>省市县</th>
-        <th>牌照代码</th>
-        <th>办证项目</th>
-        <th>销售费用</th>
-        <th>代办商联系人</th>
-        <th>创建人</th>
-        <th>操作</th>
-      </tr>
       </tfoot>
     </table>
   </div>

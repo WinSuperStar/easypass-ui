@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NavigationExtras, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginServiceService} from '../shared/services/login-service.service';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -41,16 +41,16 @@ export class LoginComponent implements OnInit {
             let roleid = res.roleid;
             let params = new HttpParams()
               .set('roleid', roleid);
-            this.httpClient.post('/api/permission',params,{ responseType: 'text' }).subscribe(
-              res=>{
-                console.log('获取权限：'+res);
-                localStorage.setItem('permission',res)
+            this.httpClient.post('/api/permission', params, {responseType: 'text'}).subscribe(
+              res => {
+                console.log('获取权限：' + res);
+                localStorage.setItem('permission', res);
               },
-              err=>{
-                console.log(err);
+              err => {
+                console.log(err.message);
                 return err;
               }
-            )
+            );
             let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : 'home';
             let navigationExtras: NavigationExtras = {
               queryParamsHandling: 'preserve',
@@ -58,13 +58,13 @@ export class LoginComponent implements OnInit {
             };
             this.router.navigate([redirect], navigationExtras);
           } else {
-            this.message = '用户名或者密码不正确'
+            this.message = '用户名或者密码不正确';
           }
         },
         err => {
-          console.log("Error");
+          console.log('Error');
         }
-      )
+      );
   }
 
   logout() {

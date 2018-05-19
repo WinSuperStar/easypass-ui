@@ -2,6 +2,7 @@
   <div class="box box-info">
     <div class="box-header with-border">
       <h3 class="box-title">办证要求以及费用</h3>
+      当前代办商：{{itemdetail.relatedVendorName}} -- {{itemdetail.relatedItemName}}
     </div>
     <!-- /.box-header -->
     <!-- form start -->
@@ -9,28 +10,28 @@
       <table style="width:100%;">
         <tr>车辆所需材料</tr>
         <tr>
-          <td>车辆登记证书<input type="checkbox" checked></td>
-          <td>行驶证<input type="checkbox" checked></td>
-          <td>交强险保单<input type="checkbox"></td>
-          <td>购置税本<input type="checkbox"></td>
-          <td colspan="2">新车发票<input type="checkbox"></td>
+          <td>车辆登记证书<input type="checkbox" checked formControlName="matDengji"></td>
+          <td>行驶证<input type="checkbox" checked formControlName="matXingshi"></td>
+          <td>交强险保单<input type="checkbox" formControlName="matJiaoqiang"></td>
+          <td>购置税本<input type="checkbox" formControlName="matGouzhi"></td>
+          <td colspan="2">新车发票<input type="checkbox" formControlName="matFapiao"></td>
         </tr>
         <tr>
-          <td colspan="3">其他<input type="checkbox">
+          <td colspan="3">其他<input type="checkbox" formControlName="matQita">
           <td>其他摘要说明</td>
-          <td colspan="2"><textarea></textarea></td>
+          <td colspan="2"><textarea formControlName="matQitaDesc"></textarea></td>
         </tr>
         <tr>
           <td>车辆是否需要到场</td>
           <td>是
-            <input type="radio" name="carPresence">
+            <input type="radio" name="carPresent" formControlName="carPresent">
             否
-            <input type="radio" name="carPresence">
+            <input type="radio" name="carPresent" formControlName="carPresent">
           </td>
           <td>金额</td>
-          <td><input></td>
+          <td><input formControlName="carPresentCost"></td>
           <td>摘要说明</td>
-          <td><textarea></textarea></td>
+          <td><textarea formControlName="carPresentDesc"></textarea></td>
         </tr>
         <tr>
         <tr>
@@ -39,30 +40,30 @@
         <tr>
           <td>身份证</td>
           <td>
-            原件<input type="radio" name="oriOwnerId">
-            复印件<input type="radio" name="oriOwnerId">
+            原件<input type="radio" name="oriIdType" formControlName="oriIdType">
+            复印件<input type="radio" name="oriIdType" formControlName="oriIdType">
           </td>
           <td>摘要说明</td>
-          <td><textarea></textarea></td>
+          <td><textarea formControlName="oriIdDesc"></textarea></td>
           <td>费用</td>
-          <td><input></td>
+          <td><input formControlName="oriIdCost"></td>
         </tr>
         <tr>
           <td>其他证件</td>
-          <td colspan="2"><input type="checkbox"></td>
+          <td colspan="2"><input type="checkbox" formControlName="oriOtherCert"></td>
           <td>金额</td>
-          <td colspan="2"><input type="number"></td>
+          <td colspan="2"><input type="number" formControlName="oriOtherCertCost"></td>
         </tr>
         <tr>
           <td>本人是否到场</td>
           <td>
-            是<input type="radio" name="oriOwnerPresence">
-            否<input type="radio" name="oriOwnerPresence">
+            是<input type="radio" name="oriPresent" formControlName="oriPresent">
+            否<input type="radio" name="oriPresent" formControlName="oriPresent">
           </td>
           <td>摘要说明</td>
-          <td><textarea></textarea></td>
+          <td><textarea formControlName="oriPresentDesc"></textarea></td>
           <td>金额</td>
-          <td><input type="number"></td>
+          <td><input type="number" formControlName="oriPresentCost"></td>
         </tr>
         <tr>
           <td>上传样板视频
@@ -83,39 +84,21 @@
           <td colspan="5">展示已上传公证书</td>
         </tr>
         <tr>
-          <td>摘要说明</td>
-          <td colspan="2"><textarea></textarea></td>
-          <td>金额</td>
-          <td colspan="2"><input type="number"></td>
-        </tr>
-        <tr>
-          <td>其他</td>
-          <td colspan="2"><input type="text"></td>
-          <td>金额</td>
-          <td colspan="2"><input type="number"></td>
-        </tr>
-        <tr>
           <td>原车主单位营业执照</td>
           <td>
-            原件<input type="radio" name="oriOwnerPresence">
-            复印件<input type="radio" name="oriOwnerPresence">
+            原件<input type="radio" name="oriLisenceType" formControlName="oriLisenceType">
+            复印件<input type="radio" name="oriLisenceType" formControlName="oriLisenceType">
           </td>
           <td>摘要说明</td>
-          <td><textarea></textarea></td>
+          <td><textarea formControlName="oriLisenceDesc"></textarea></td>
           <td>金额</td>
-          <td><input type="number"></td>
+          <td><input type="number" formControlName="oriLisenceCost"></td>
         </tr>
         <tr>
-          <td>其他证件</td>
-          <td colspan="2"><input type="text"></td>
+          <td>摘要说明</td>
+          <td colspan="2"><textarea formControlName="oriComments"></textarea></td>
           <td>金额</td>
-          <td colspan="2"><input type="number"></td>
-        </tr>
-        <tr>
-          <td>上传样板图片
-            <button type="button">上传</button>
-          </td>
-          <td colspan="5">展示已上传图片</td>
+          <td colspan="2"><input type="number" formControlName="oriCost"></td>
         </tr>
         <tr>
           新车主
@@ -123,30 +106,30 @@
         <tr>
           <td>身份证</td>
           <td>
-            原件<input type="radio" name="oriOwnerId">
-            复印件<input type="radio" name="oriOwnerId">
+            原件<input type="radio" name="newIdType" formControlName="newIdType">
+            复印件<input type="radio" name="newIdType" formControlName="newIdType">
           </td>
           <td>摘要说明</td>
-          <td><textarea></textarea></td>
+          <td><textarea formControlName="newIdDesc"></textarea></td>
           <td>费用</td>
-          <td><input></td>
+          <td><input formControlName="newIdCost"></td>
         </tr>
         <tr>
           <td>其他证件</td>
-          <td colspan="2"><input type="checkbox"></td>
+          <td colspan="2"><input type="checkbox" formControlName="newOtherCert"></td>
           <td>金额</td>
-          <td colspan="2"><input type="number"></td>
+          <td colspan="2"><input type="number" formControlName="newOtherCertCost"></td>
         </tr>
         <tr>
           <td>本人是否到场</td>
           <td>
-            是<input type="radio" name="oriOwnerPresence">
-            否<input type="radio" name="oriOwnerPresence">
+            是<input type="radio" name="newPresent" formControlName="newPresent">
+            否<input type="radio" name="newPresent" formControlName="newPresent">
           </td>
           <td>摘要说明</td>
-          <td><textarea></textarea></td>
+          <td><textarea formControlName="newPresentDesc"></textarea></td>
           <td>金额</td>
-          <td><input type="number"></td>
+          <td><input type="number" formControlName="newPresentCost"></td>
         </tr>
         <tr>
           <td>上传样板视频
@@ -167,39 +150,21 @@
           <td colspan="5">展示已上传公证书</td>
         </tr>
         <tr>
-          <td>摘要说明</td>
-          <td colspan="2"><textarea></textarea></td>
-          <td>金额</td>
-          <td colspan="2"><input type="number"></td>
-        </tr>
-        <tr>
-          <td>其他</td>
-          <td colspan="2"><input type="text"></td>
-          <td>金额</td>
-          <td colspan="2"><input type="number"></td>
-        </tr>
-        <tr>
-          <td>原车主单位营业执照</td>
+          <td>新车主单位营业执照</td>
           <td>
-            原件<input type="radio" name="oriOwnerPresence">
-            复印件<input type="radio" name="oriOwnerPresence">
+            原件<input type="radio" name="newLisenceType" formControlName="newLisenceType">
+            复印件<input type="radio" name="newLisenceType" formControlName="newLisenceType">
           </td>
           <td>摘要说明</td>
-          <td><textarea></textarea></td>
+          <td><textarea formControlName="newLisenceDesc"></textarea></td>
           <td>金额</td>
-          <td><input type="number"></td>
+          <td><input type="number" formControlName="newLisenceCost"></td>
         </tr>
         <tr>
-          <td>其他证件</td>
-          <td colspan="2"><input type="text"></td>
+          <td>摘要说明</td>
+          <td colspan="2"><textarea formControlName="newComments"></textarea></td>
           <td>金额</td>
-          <td colspan="2"><input type="number"></td>
-        </tr>
-        <tr>
-          <td>上传样板图片
-            <button type="button">上传</button>
-          </td>
-          <td colspan="5">展示已上传图片</td>
+          <td colspan="2"><input type="number" formControlName="newCost"></td>
         </tr>
       </table>
     </div>

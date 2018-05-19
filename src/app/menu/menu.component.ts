@@ -30,11 +30,18 @@ export class MenuComponent implements OnInit {
       }]),
       new Menu(2, '客户管理', [{id: 21, name: '客户管理', link: 'home/cusmgt'}, {id: 22, name: '代办商管理', link: 'home/vdrmgt'}]),
       new Menu(3, '销售限价管理', [{id: 31, name: '销售限价管理', link: 'home/presmgt'}]),
-      new Menu(4, '订单管理', [{id: 41, name: '办证车辆管理', link: 'home/carmgt'}, {id: 42, name: '订单管理', link: 'home/odrmgt'}]),
+      new Menu(4, '订单管理',
+        [{id: 41, name: '办证车辆管理', link: 'home/carmgt'},
+          {id: 42, name: '查询订单(待提交)', link: 'home/odrmgt'},
+          {id: 43, name: '查询订单(待办证)', link: 'home/odrmgt'},
+          {id: 44, name: '查询订单(办证中)', link: 'home/odrmgt'},
+          {id: 45, name: '查询订单(办证完成)', link: 'home/odrmgt'},
+          {id: 46, name: '查询订单(汇总)', link: 'home/odrmgt'}
+          ]),
     ];
-    if(!this.pService.checkPerm('1')){
-      this.menus.splice(0,1);
-    }
+    // if(!this.pService.checkPerm('1')){
+    //   this.menus.splice(0,1);
+    // }
 
 
   }

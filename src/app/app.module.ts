@@ -40,18 +40,19 @@ import {LoginServiceService} from './shared/services/login-service.service';
 import {MainComponent} from './main/main.component';
 import {FieldErrorDisplayComponent} from './shared/message/field-error-display/field-error-display.component';
 import {ValidationService} from './shared/services/validation.service';
-import {HttpClientModule} from "@angular/common/http";
-import {UserServiceService} from "./service/user-service.service";
-import {FileUploaderModule} from "ng4-file-upload";
-import {DateService} from "./shared/services/date.service";
-import {RoleService} from "./service/role.service";
-import {CustomerService} from "./service/customer.service";
-import {AddrSelectService} from "./shared/services/addr-select.service";
-import {VendorService} from "./service/vendor.service";
+import {HttpClientModule} from '@angular/common/http';
+import {UserServiceService} from './service/user-service.service';
+import {FileUploaderModule} from 'ng4-file-upload';
+import {DateService} from './shared/services/date.service';
+import {RoleService} from './service/role.service';
+import {CustomerService} from './service/customer.service';
+import {AddrSelectService} from './shared/services/addr-select.service';
+import {VendorService} from './service/vendor.service';
 import {ItemFormComponent} from './vdrmgt/item-form/item-form.component';
-import {ItemdetailService} from "./service/itemdetail.service";
-import {PermissionService} from "./shared/services/permission.service";
-import {CarService} from "./service/car.service";
+import {ItemdetailService} from './service/itemdetail.service';
+import {PermissionService} from './shared/services/permission.service';
+import {CarService} from './service/car.service';
+import {PresaleService} from './service/presale.service';
 
 const routeConfig: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -78,6 +79,8 @@ const routeConfig: Routes = [
         {path: 'carform/:id', component: CarformComponent},
         {path: 'odrmgt', component: OdrmgtComponent},
         {path: 'orderform/:id', component: OrderformComponent},
+        {path: 'presmgt', component: PresmgtComponent},
+        {path: 'presmgt/:id', component: PresformComponent},
         {path: 'itemform', component: ItemFormComponent},
         {path: 'itemform/:id', component: ItemFormComponent},],
     }], canActivate: [AuthGuardService]
@@ -146,7 +149,8 @@ const routeConfig: Routes = [
     VendorService,
     ItemdetailService,
     PermissionService,
-    CarService], // used to mention what service to provide in this module
+    CarService,
+    PresaleService], // used to mention what service to provide in this module
   bootstrap: [AppComponent] // main component
 })
 export class AppModule {
