@@ -6,3 +6,22 @@ td{
 table{
   width:100%;
 }
+label span{
+  color:red;
+  margin:4px;
+}
+
+.buttonEdit{
+  background-color: #218a2c;
+}
+
+table button{
+  float: left;
+  color: #fff;
+  background-color: #338a8a;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}

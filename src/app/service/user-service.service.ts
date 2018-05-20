@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class UserServiceService {
@@ -26,6 +26,7 @@ export class UserServiceService {
 
   addUser(user: User): Observable<any> {
     console.log('url：' + user.certpath);
+
     let params = new HttpParams()
       .set('username', user.username)
       .set('phone', user.phone)
@@ -37,6 +38,9 @@ export class UserServiceService {
       .set('certpath', user.certpath)
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
+      .set('creator', user.creator);
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/x-www-form-urlencoded');
     return this.httpClient.post('/api/addUser', params, {headers}).map(
       res => {
         return res;
@@ -59,28 +63,29 @@ export class UserServiceService {
       .set('createdate', user.createdate)
       .set('creator', user.creator)
       .set('certpath', user.certpath)
+      .set('creator', user.creator);
     let headers = new HttpHeaders()
-      .set('Content-Type', 'application/x-www-form-urlencoded')
-    return this.httpClient.put('/api/user',params, {headers}).map(
+      .set('Content-Type', 'application/x-www-form-urlencoded');
+    return this.httpClient.put('/api/user', params, {headers}).map(
       res => {
         return res;
       },
       err => {
         return err;
       }
-    )
+    );
   }
 
   getUser(userid: number): Observable<any> {
     // let params = new HttpParams().set('userid',userid+'');
-    return this.httpClient.get('/api/user/'+userid).map(
+    return this.httpClient.get('/api/user/' + userid).map(
       res => {
         return res;
       }
     );
   }
 
-  getAllUsers(): Observable<any>{
+  getAllUsers(): Observable<any> {
     return this.httpClient.get('/api/allUsers');
   }
 }

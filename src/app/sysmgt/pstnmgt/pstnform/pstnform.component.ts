@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Auth, Role, RoleService} from "../../../service/role.service";
-import {ValidationService} from "../../../shared/services/validation.service";
-import {Observable} from "rxjs/Observable";
+import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Auth, Role, RoleService} from '../../../service/role.service';
+import {ValidationService} from '../../../shared/services/validation.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-pstnform',
@@ -52,11 +52,11 @@ export class PstnformComponent implements OnInit {
       this.formGroup.get('authlist').valueChanges.subscribe(values => {
         let selects: string[] = [];
         values.forEach((selected: boolean, i: number) => {
-          selected === true && selects.push(this.current_auths[i].authid + '')
+          selected === true && selects.push(this.current_auths[i].authid + '');
         });
         this.selects = selects;
       });
-      if (this.roleid != 0) {
+      if (this.roleid !== 0) {
         this.roleService.getRole(this.roleid).subscribe(
           data => {
             this.role = data;
@@ -65,12 +65,12 @@ export class PstnformComponent implements OnInit {
             //   authlist: data.authlist
             // })
             this.formGroup.get('rolename').setValue(data.rolename);
-            this.selects = []
+            this.selects = [];
             data.authlist.split(',').map(num => {
               let formArray: FormArray;
               formArray = this.formGroup.get('authlist') as FormArray;
               // this.formGroup.get('authlist').at(num - 1).setValue(true);
-              formArray.at(num-1).setValue(true);
+              formArray.at(num - 1).setValue(true);
             });
           }
         );
@@ -102,7 +102,7 @@ export class PstnformComponent implements OnInit {
           null,
           null,
           null
-        )
+        );
         this.roleService.addRole(this.role).subscribe(
           res => {
             // 告诉岗位创建成功或者失败
@@ -110,10 +110,10 @@ export class PstnformComponent implements OnInit {
             this.router.navigateByUrl('/home/pstnmgt');
           },
           err => {
-            alert('创建失败: ' + err.message)
+            alert('创建失败: ' + err.message);
             this.role = null;
           }
-        )
+        );
       } else {
         this.role.rolename = this.formGroup.value['rolename'];
         this.role.authlist = this.selects.toString();
