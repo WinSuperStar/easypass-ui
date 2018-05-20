@@ -22,8 +22,8 @@
         <div class="box-body " style="padding:5px;">
           <label class="col-sm-2 control-label">岗位</label>
           <div class="col-sm-2">
-            <select class="form-control" formControlName="role">
-              <option *ngFor="let role of roles | async; let i = index;" value={{role.rolename}}>{{role.rolename}}</option>
+            <select class="form-control" formControlName="roleid">
+              <option *ngFor="let role of roles | async; let i = index;" value={{role.roleid}}>{{role.rolename}}</option>
             </select>
           </div>
           <label class="col-sm-2 control-label">状态</label>

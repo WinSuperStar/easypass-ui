@@ -12,7 +12,7 @@ export class UserServiceService {
     let params = new HttpParams()
       .set('username', form['username'])
       .set('phone', form['phone'])
-      .set('role', form['role'])
+      .set('roleid', form['roleid'])
       .set('state', form['state']);
     return this.httpClient.post('/api/users', params).map(
       res => {
@@ -39,8 +39,6 @@ export class UserServiceService {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .set('creator', user.creator);
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/x-www-form-urlencoded');
     return this.httpClient.post('/api/addUser', params, {headers}).map(
       res => {
         return res;

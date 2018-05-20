@@ -28,7 +28,7 @@ export class UsermgtComponent implements OnInit {
     this.formGroup = fb.group({
       username: [''],
       phone: [''],
-      role: [''],
+      roleid: [''],
       state: ['']
     });
   }

@@ -49,9 +49,6 @@ import {CustomerService} from './service/customer.service';
 import {AddrSelectService} from './shared/services/addr-select.service';
 import {VendorService} from './service/vendor.service';
 import {ItemFormComponent} from './vdrmgt/item-form/item-form.component';
-import {ItemdetailService} from "./service/itemdetail.service";
-import {PermissionService} from "./shared/services/permission.service";
-import {CarService} from "./service/car.service";
 import { TipComponent } from './tip/tip.component';
 import {AccessLogService} from './service/access-log.service';
 import { AccesslogmgtComponent } from './sysmgt/accesslogmgt/accesslogmgt.component';
@@ -132,7 +129,7 @@ const routeConfig: Routes = [
     MainComponent,
     FieldErrorDisplayComponent,
     ItemFormComponent,
-    TipComponent
+    TipComponent,
     AccesslogmgtComponent
   ],
   imports: [
@@ -160,7 +157,7 @@ const routeConfig: Routes = [
     ItemdetailService,
     PermissionService,
     CarService,
-    AccessLogService
+    AccessLogService,
     PresaleService], // used to mention what service to provide in this module
   bootstrap: [AppComponent] // main component
 })
