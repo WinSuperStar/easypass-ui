@@ -76,8 +76,7 @@ export class UserformComponent implements OnInit {
           const paths = this.user.certpath.split(',');
           paths.forEach(function(path, i) {
             console.log(path);
-            // const realDomainPath =  'D:/data/files' + path;
-            const realDomainPath = 'http://a.hiphotos.baidu.com/image/pic/item/10dfa9ec8a136327f216788d9d8fa0ec09fac791.jpg';
+            const realDomainPath = $.cookie('domain') + path;
             console.log(realDomainPath);
             initialPreview.push(realDomainPath);
             const showName = path.substring(path.lastIndexOf('/') + 1);
@@ -137,7 +136,7 @@ export class UserformComponent implements OnInit {
   }
   canEdit() {
     let roleid = JSON.parse(localStorage.getItem('currentUser'))['roleid'];
-    if(roleid!=18){
+    if(roleid!=18&&this.user != null){
        $("#userName").attr("readonly","readonly");
        $("#position").attr("disabled","disabled");
        $("#womanGender").attr("disabled","disabled");

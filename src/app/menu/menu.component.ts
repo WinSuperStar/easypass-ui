@@ -41,9 +41,9 @@ export class MenuComponent implements OnInit {
           {id: 47, name: '查询订单(汇总)', link: 'home/odrmgt'}
           ]),
     ];
-    if (!this.pService.checkPerm('1')){
+    /*if (!this.pService.checkPerm('1')){
       this.menus.splice(0,1);
-    }
+    }*/
   }
 
   // target to hold menu information and enable the active-highlight function
