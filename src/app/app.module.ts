@@ -52,6 +52,8 @@ import {ItemFormComponent} from './vdrmgt/item-form/item-form.component';
 import {ItemdetailService} from "./service/itemdetail.service";
 import {PermissionService} from "./shared/services/permission.service";
 import {CarService} from "./service/car.service";
+import {AccessLogService} from './service/access-log.service';
+import { AccesslogmgtComponent } from './sysmgt/accesslogmgt/accesslogmgt.component';
 
 const routeConfig: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -62,6 +64,7 @@ const routeConfig: Routes = [
       canActivateChild: [AuthGuardService],
       children: [
         {path: 'usermgt', component: UsermgtComponent},
+        {path: 'accessLogmgt', component: AccesslogmgtComponent},
         {path: 'userform', component: UserformComponent},
         {path: 'userform/:id', component: UserformComponent},
         {path: 'pstnmgt', component: PstnmgtComponent},
@@ -120,7 +123,8 @@ const routeConfig: Routes = [
     LoginComponent,
     MainComponent,
     FieldErrorDisplayComponent,
-    ItemFormComponent
+    ItemFormComponent,
+    AccesslogmgtComponent
   ],
   imports: [
     BrowserModule,
@@ -146,7 +150,8 @@ const routeConfig: Routes = [
     VendorService,
     ItemdetailService,
     PermissionService,
-    CarService], // used to mention what service to provide in this module
+    CarService,
+    AccessLogService], // used to mention what service to provide in this module
   bootstrap: [AppComponent] // main component
 })
 export class AppModule {
