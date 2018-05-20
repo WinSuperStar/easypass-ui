@@ -52,6 +52,7 @@ import {ItemFormComponent} from './vdrmgt/item-form/item-form.component';
 import {ItemdetailService} from "./service/itemdetail.service";
 import {PermissionService} from "./shared/services/permission.service";
 import {CarService} from "./service/car.service";
+import { TipComponent } from './tip/tip.component';
 import {AccessLogService} from './service/access-log.service';
 import { AccesslogmgtComponent } from './sysmgt/accesslogmgt/accesslogmgt.component';
 import {ItemdetailService} from './service/itemdetail.service';
@@ -67,6 +68,7 @@ const routeConfig: Routes = [
       path: '',
       canActivateChild: [AuthGuardService],
       children: [
+        {path: 'tip', component: TipComponent},
         {path: 'usermgt', component: UsermgtComponent},
         {path: 'accessLogmgt', component: AccesslogmgtComponent},
         {path: 'userform', component: UserformComponent},
@@ -130,6 +132,7 @@ const routeConfig: Routes = [
     MainComponent,
     FieldErrorDisplayComponent,
     ItemFormComponent,
+    TipComponent
     AccesslogmgtComponent
   ],
   imports: [

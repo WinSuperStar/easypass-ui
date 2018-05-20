@@ -37,6 +37,7 @@ export class UserformComponent implements OnInit {
 
   }
 
+
   ngOnInit() {
 
     this.roles = this.roleService.getRoles();
@@ -92,9 +93,7 @@ export class UserformComponent implements OnInit {
     } else {
       this.initFileUpload(initialPreview , initialPreviewConfig);
     }
-
-
-
+    this.canEdit();
   }
 
   initFileUpload(initialPreview, initialPreviewConfig) {
@@ -136,6 +135,17 @@ export class UserformComponent implements OnInit {
 
     });
   }
+  canEdit() {
+    let roleid = JSON.parse(localStorage.getItem('currentUser'))['roleid'];
+    if(roleid!=18){
+       $("#userName").attr("readonly","readonly");
+       $("#position").attr("disabled","disabled");
+       $("#womanGender").attr("disabled","disabled");
+       $("#activeState").attr("disabled","disabled");
+    }
+
+  }
+
 
 
 

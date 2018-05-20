@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
               }
             );
             let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : 'home';
+            alert(redirect);
             let navigationExtras: NavigationExtras = {
               queryParamsHandling: 'preserve',
               preserveFragment: true

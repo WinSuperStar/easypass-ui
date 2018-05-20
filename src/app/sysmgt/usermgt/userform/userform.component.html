@@ -9,7 +9,7 @@
       <div class="form-group" style="padding:5px;">
         <label class="col-sm-1 control-label">用户名<span>*</span></label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" formControlName="userName">
+          <input type="text" id="userName" class="form-control" formControlName="userName">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formModel, 'userName')"
             errorMsg="*只能输入中文"></app-field-error-display>
@@ -49,19 +49,19 @@
         <label class="col-sm-1 control-label">性别</label>
         <div class="col-sm-2" style="padding-top: 5px;">
           <label>
-            男<input type="radio" name="gender" value="男" formControlName="gender">
+            男<input type="radio" name="gender" value="男" formControlName="gender"  id="manGender">
           </label>
           <label>
-            女<input type="radio" name="gender" value="女" formControlName="gender">
+            女<input type="radio" name="gender" value="女" formControlName="gender"  id="womanGender">
           </label>
         </div>
         <label class="col-sm-1 control-label">状态</label>
         <div class="col-sm-2" style="padding-top: 5px;">
           <label>
-            激活<input type="radio" name="state" value='激活' formControlName="state">
+            激活<input type="radio" name="state" value='激活' formControlName="state"    id="activeState"/>
           </label>
           <label>
-            失效<input type="radio" name="state" value='失效' formControlName="state">
+            失效<input type="radio" name="state" value='失效' formControlName="state"    id="failState"/>
           </label>
         </div>
       </div>
