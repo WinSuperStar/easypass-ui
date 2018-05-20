@@ -30,7 +30,7 @@ export class UsermgtComponent implements OnInit {
       phone: [''],
       role: [''],
       state: ['']
-    })
+    });
   }
 
   ngOnInit() {
