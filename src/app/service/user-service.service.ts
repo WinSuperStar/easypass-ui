@@ -12,7 +12,7 @@ export class UserServiceService {
     let params = new HttpParams()
       .set('username', form['username'])
       .set('phone', form['phone'])
-      .set('role', form['role'])
+      .set('roleid', form['roleid'])
       .set('state', form['state']);
     return this.httpClient.post('/api/users', params).map(
       res => {
@@ -25,6 +25,8 @@ export class UserServiceService {
   }
 
   addUser(user: User): Observable<any> {
+    console.log('url：' + user.certpath);
+
     let params = new HttpParams()
       .set('username', user.username)
       .set('phone', user.phone)
@@ -32,9 +34,11 @@ export class UserServiceService {
       .set('roleid', user.roleid)
       .set('gender', user.gender)
       .set('state', user.state)
-      .set('creator', user.creator);
+      .set('creator', user.creator)
+      .set('certpath', user.certpath)
     let headers = new HttpHeaders()
-      .set('Content-Type', 'application/x-www-form-urlencoded');
+      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .set('creator', user.creator);
     return this.httpClient.post('/api/addUser', params, {headers}).map(
       res => {
         return res;
@@ -51,10 +55,12 @@ export class UserServiceService {
       .set('username', user.username)
       .set('phone', user.phone)
       .set('password', user.password)
-      .set('rolename', user.roleid)
+      .set('roleid', user.roleid)
       .set('gender', user.gender)
       .set('state', user.state)
       .set('createdate', user.createdate)
+      .set('creator', user.creator)
+      .set('certpath', user.certpath)
       .set('creator', user.creator);
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');

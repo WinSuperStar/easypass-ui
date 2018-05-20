@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(post)
       .subscribe(
         res => {
+          console.log('登陆结果：' + res);
           if (res != null) {
             let roleid = res.roleid;
             let params = new HttpParams()
@@ -45,18 +46,19 @@ export class LoginComponent implements OnInit {
               res => {
                 console.log('获取权限：' + res);
                 localStorage.setItem('permission', res);
+                let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : 'home';
+                let navigationExtras: NavigationExtras = {
+                  queryParamsHandling: 'preserve',
+                  preserveFragment: true
+                };
+                this.router.navigate([redirect], navigationExtras);
               },
               err => {
                 console.log(err.message);
                 return err;
               }
             );
-            let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : 'home';
-            let navigationExtras: NavigationExtras = {
-              queryParamsHandling: 'preserve',
-              preserveFragment: true
-            };
-            this.router.navigate([redirect], navigationExtras);
+
           } else {
             this.message = '用户名或者密码不正确';
           }

@@ -85,6 +85,15 @@ export class RoleService {
     );
   }
 
+  delRole(roleid: number): Observable<any> {
+    // let params = new HttpParams().set('userid',userid+'');
+    return this.httpClient.get('/api/delRole/' + roleid).map(
+      res => {
+        return res;
+      }
+    );
+  }
+
 }
 
 export class Role {

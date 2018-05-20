@@ -1,0 +1,41 @@
+<div class="box box-info">
+  <div class="box-header with-border">
+    <h3 class="box-title">访问日志查询</h3>
+  </div>
+</div>
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">查询结果</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <table id="accessLogmgtTable" class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>编号</th>
+        <th>操作人</th>
+        <th>操作时间</th>
+        <th>请求方式</th>
+        <th>访问路径</th>
+        <th>访问IP</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let accessLog of accessLogs | async; let i = index;">
+        <td>{{accessLog.id}}</td>
+        <td>{{accessLog.username}}</td>
+        <td>{{accessLog.operatorTime}}</td>
+        <td>{{accessLog.method}}</td>
+        <td>{{accessLog.url}}</td>
+        <td>{{accessLog.ip}}</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      </tfoot>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+
+
