@@ -2,7 +2,7 @@
   <div class="box box-info">
     <div class="box-header with-border">
       <h3 class="box-title">办证要求以及费用</h3>
-      当前代办商：{{itemdetail.relatedVendorName}} -- {{itemdetail.relatedItemName}}
+      当前位置：{{itemdetail.relatedBillName}} -- {{itemdetail.relatedItemName}}
     </div>
     <!-- /.box-header -->
     <!-- form start -->
@@ -10,8 +10,8 @@
       <table style="width:100%;">
         <tr>车辆所需材料</tr>
         <tr>
-          <td>车辆登记证书<input type="checkbox" checked formControlName="matDengji"></td>
-          <td>行驶证<input type="checkbox" checked formControlName="matXingshi"></td>
+          <td>车辆登记证书<input type="checkbox" formControlName="matDengji"></td>
+          <td>行驶证<input type="checkbox" formControlName="matXingshi"></td>
           <td>交强险保单<input type="checkbox" formControlName="matJiaoqiang"></td>
           <td>购置税本<input type="checkbox" formControlName="matGouzhi"></td>
           <td colspan="2">新车发票<input type="checkbox" formControlName="matFapiao"></td>
@@ -23,10 +23,13 @@
         </tr>
         <tr>
           <td>车辆是否需要到场</td>
-          <td>是
-            <input type="radio" name="carPresent" formControlName="carPresent">
-            否
-            <input type="radio" name="carPresent" formControlName="carPresent">
+          <td>
+            <label>
+              是<input type="radio" name="carPresent" value="是" formControlName="carPresent">
+            </label>
+            <label>
+              否<input type="radio" name="carPresent" value="否" formControlName="carPresent">
+            </label>
           </td>
           <td>金额</td>
           <td><input formControlName="carPresentCost"></td>
@@ -40,8 +43,8 @@
         <tr>
           <td>身份证</td>
           <td>
-            原件<input type="radio" name="oriIdType" formControlName="oriIdType">
-            复印件<input type="radio" name="oriIdType" formControlName="oriIdType">
+            原件<input type="radio" name="oriIdType"  value="原件" formControlName="oriIdType">
+            复印件<input type="radio" name="oriIdType" value="复印件" formControlName="oriIdType">
           </td>
           <td>摘要说明</td>
           <td><textarea formControlName="oriIdDesc"></textarea></td>
@@ -57,8 +60,8 @@
         <tr>
           <td>本人是否到场</td>
           <td>
-            是<input type="radio" name="oriPresent" formControlName="oriPresent">
-            否<input type="radio" name="oriPresent" formControlName="oriPresent">
+            是<input type="radio" name="oriPresent" value="是" formControlName="oriPresent">
+            否<input type="radio" name="oriPresent" value="否" formControlName="oriPresent">
           </td>
           <td>摘要说明</td>
           <td><textarea formControlName="oriPresentDesc"></textarea></td>
@@ -86,8 +89,8 @@
         <tr>
           <td>原车主单位营业执照</td>
           <td>
-            原件<input type="radio" name="oriLisenceType" formControlName="oriLisenceType">
-            复印件<input type="radio" name="oriLisenceType" formControlName="oriLisenceType">
+            原件<input type="radio" name="oriLisenceType" value="原件" formControlName="oriLisenceType">
+            复印件<input type="radio" name="oriLisenceType" value="复印件" formControlName="oriLisenceType">
           </td>
           <td>摘要说明</td>
           <td><textarea formControlName="oriLisenceDesc"></textarea></td>
@@ -106,8 +109,8 @@
         <tr>
           <td>身份证</td>
           <td>
-            原件<input type="radio" name="newIdType" formControlName="newIdType">
-            复印件<input type="radio" name="newIdType" formControlName="newIdType">
+            原件<input type="radio" name="newIdType" value="原件" formControlName="newIdType">
+            复印件<input type="radio" name="newIdType" value="复印件" formControlName="newIdType">
           </td>
           <td>摘要说明</td>
           <td><textarea formControlName="newIdDesc"></textarea></td>
@@ -123,8 +126,8 @@
         <tr>
           <td>本人是否到场</td>
           <td>
-            是<input type="radio" name="newPresent" formControlName="newPresent">
-            否<input type="radio" name="newPresent" formControlName="newPresent">
+            是<input type="radio" name="newPresent" value="是"  formControlName="newPresent">
+            否<input type="radio" name="newPresent" value="否" formControlName="newPresent">
           </td>
           <td>摘要说明</td>
           <td><textarea formControlName="newPresentDesc"></textarea></td>
@@ -152,8 +155,8 @@
         <tr>
           <td>新车主单位营业执照</td>
           <td>
-            原件<input type="radio" name="newLisenceType" formControlName="newLisenceType">
-            复印件<input type="radio" name="newLisenceType" formControlName="newLisenceType">
+            原件<input type="radio" name="newLisenceType" value="原件" formControlName="newLisenceType">
+            复印件<input type="radio" name="newLisenceType" value="复印件" formControlName="newLisenceType">
           </td>
           <td>摘要说明</td>
           <td><textarea formControlName="newLisenceDesc"></textarea></td>

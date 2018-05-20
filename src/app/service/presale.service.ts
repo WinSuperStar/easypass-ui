@@ -94,6 +94,7 @@ export class Presale {
               public  itemWeizhang: string,
               public itemWeizhangTax: number,
               public itemWeizhangCost: number,
+              public itemWeizhangCost2: number,
               public itemWeizhangCompletedate: string,
               public  itemWeizhangDesc: string,
               public  itemWeizhangReqId: number,

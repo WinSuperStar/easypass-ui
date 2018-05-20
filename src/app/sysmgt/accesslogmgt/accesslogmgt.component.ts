@@ -8,6 +8,8 @@ import {AccessLog, AccessLogService} from '../../service/access-log.service';
 
 declare var $: any;
 let myTable;
+
+
 @Component({
   selector: 'app-accesslogmgt',
   templateUrl: './accesslogmgt.component.html',
@@ -19,10 +21,11 @@ export class AccesslogmgtComponent implements OnInit {
   public accessLogs: Observable<Page<AccessLog>>;
 
   constructor(private router: Router,
-              public date: DateService,
+              public dateServie: DateService,
               private accessLogService: AccessLogService) { }
 
   ngOnInit() {
+    const date = this.dateServie;
     // this.search('1', '10') ;
     myTable = $('#accessLogmgtTable').DataTable( {
       'processing': true,
@@ -59,7 +62,11 @@ export class AccesslogmgtComponent implements OnInit {
       'columns': [
         { 'data': 'id' },
         { 'data': 'username' },
-        { 'data': 'operatorTime' },
+        { 'data': 'operatorTime' ,
+           'render': function ( data, type, row ) {
+             data = date.dateFmt(data);
+             return data;
+          }},
         { 'data': 'method' },
         { 'data': 'url' },
         { 'data': 'ip' }
