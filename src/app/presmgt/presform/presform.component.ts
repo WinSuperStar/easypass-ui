@@ -8,6 +8,7 @@ import {AddrSelectService, Area, City, Province} from '../../shared/services/add
 import {Presale, PresaleService} from '../../service/presale.service';
 import {ItemdetailService} from '../../service/itemdetail.service';
 import {ValidationService} from '../../shared/services/validation.service';
+import {DateService} from '../../shared/services/date.service';
 
 declare var $: any;
 
@@ -35,7 +36,8 @@ export class PresformComponent implements OnInit {
               private addrService: AddrSelectService,
               public validation: ValidationService,
               private presaleService: PresaleService,
-              private idService: ItemdetailService,) {
+              private idService: ItemdetailService,
+              private dateService: DateService) {
   }
 
   ngOnInit() {
@@ -78,6 +80,7 @@ export class PresformComponent implements OnInit {
       itemShangpaiReqId: [''],
       itemWeizhangTax: [''],
       itemWeizhangCost: [''],
+      itemWeizhangCost2: [''],
       itemWeizhangCompletedate: [''],
       itemWeizhangDesc: [''],
       itemWeizhangReqId: [''],
@@ -113,6 +116,8 @@ export class PresformComponent implements OnInit {
     this.presaleService.getPresale(id).subscribe(
       res => {
         this.presale = res;
+        this.showCity(res.caraddr.split(' ')[0]);
+        this.showArea(res.caraddr.split(' ')[1]);
         this.formGroup.reset({
           cusname: res.cusname,
           cusmode: res.cusmode,
@@ -127,21 +132,22 @@ export class PresformComponent implements OnInit {
           checkboxTidang: res.itemTidang,
           itemTidangTax: res.itemTidangTax,
           itemTidangCost: res.itemTidangCost,
-          itemTidangCompletedate: res.itemTidangCompletedate,
+          itemTidangCompletedate: this.dateService.dateFmt(res.itemTidangCompletedate),
           itemTidangDesc: res.itemTidangDesc,
           checkboxGuohu: res.itemGuohu,
           itemGuohuTax: res.itemGuohuTax,
           itemGuohuCost: res.itemGuohuCost,
-          itemGuohuCompletedate: res.itemGuohuCompletedate,
+          itemGuohuCompletedate: this.dateService.dateFmt(res.itemGuohuCompletedate),
           itemGuohuDesc: res.itemGuohuDesc,
           checkboxShangpai: res.itemShangpai,
           itemShangpaiTax: res.itemShangpaiTax,
           itemShangpaiCost: res.itemShangpaiCost,
-          itemShangpaiCompletedate: res.itemShangpaiCompletedate,
+          itemShangpaiCompletedate: this.dateService.dateFmt(res.itemShangpaiCompletedate),
           itemShangpaiDesc: res.itemShangpaiDesc,
           checkboxWeizhang: res.itemWeizhang,
           itemWeizhangTax: res.itemWeizhangTax,
           itemWeizhangCost: res.itemWeizhangCost,
+          itemWeizhangCost2: res.itemWeizhangCost2,
           itemWeizhangCompletedate: res.itemWeizhangCompletedate,
           itemWeizhangDesc: res.itemWeizhangDesc,
           checkboxDiya: res.itemDiya,
@@ -233,12 +239,15 @@ export class PresformComponent implements OnInit {
     this.formGroup.get('checkboxWeizhang').valueChanges.subscribe(value => {
       if (value) {
         this.formGroup.get('itemWeizhangCost').setValidators([Validators.required]);
+        this.formGroup.get('itemWeizhangCost2').setValidators([Validators.required]);
         this.formGroup.get('itemWeizhangCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemWeizhangCost').setValidators(null);
+        this.formGroup.get('itemWeizhangCost2').setValidators(null);
         this.formGroup.get('itemWeizhangCompletedate').setValidators([Validators.required]);
       }
       this.formGroup.get('itemWeizhangCost').updateValueAndValidity();
+      this.formGroup.get('itemWeizhangCost2').updateValueAndValidity();
       this.formGroup.get('itemWeizhangCompletedate').updateValueAndValidity();
     });
     // Dynamiclly load validation for Diya
@@ -350,6 +359,7 @@ export class PresformComponent implements OnInit {
       this.presale.itemWeizhang = this.formGroup.get('checkboxWeizhang').value;
       this.presale.itemWeizhangTax = this.formGroup.get('itemWeizhangTax').value;
       this.presale.itemWeizhangCost = this.formGroup.get('itemWeizhangCost').value;
+      this.presale.itemWeizhangCost2 = this.formGroup.get('itemWeizhangCost2').value;
       this.presale.itemWeizhangCompletedate = this.formGroup.get('itemWeizhangCompletedate').value;
       this.presale.itemWeizhangDesc = this.formGroup.get('itemWeizhangDesc').value;
       // this.presale.itemWeizhangReqId = this.formGroup.get('').value;
@@ -407,7 +417,13 @@ export class PresformComponent implements OnInit {
   }
 
   showCity(item) {
-    let p = item.target.value;
+    console.log(typeof item);
+    let p:string;
+    if(typeof item == 'string' ){
+      p = item
+    }else{
+      p = item.target.value;
+    }
     this.addrService.getProCode(p).subscribe(
       res => {
         this.formGroup.get('carplate1').setValue(res);
@@ -419,7 +435,12 @@ export class PresformComponent implements OnInit {
   }
 
   showArea(item) {
-    let c = item.target.value;
+    let c:string;
+    if(typeof item == 'string' ){
+      c = item
+    }else{
+      c = item.target.value;
+    }
     this.addrService.getShotCode(c).subscribe(
       res => {
         if (res == '' || res == null) {
@@ -439,7 +460,7 @@ export class PresformComponent implements OnInit {
     switch (name) {
       case 'tidang':
         if (this.presale.itemTidangReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemTidangReqId = res;
@@ -462,7 +483,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'guohu':
         if (this.presale.itemGuohuReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemGuohuReqId = res;
@@ -485,7 +506,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'shangpai':
         if (this.presale.itemShangpaiReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemShangpaiReqId = res;
@@ -508,7 +529,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'weizhang':
         if (this.presale.itemWeizhangReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemWeizhangReqId = res;
@@ -531,7 +552,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'diya':
         if (this.presale.itemDiyaReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemDiyaReqId = res;
@@ -554,7 +575,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'jiechudiya':
         if (this.presale.itemJiechudiyaReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemJiechudiyaReqId = res;
@@ -577,7 +598,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'weituo':
         if (this.presale.itemWeituoReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemWeituoReqId = res;
@@ -600,7 +621,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'nianjian':
         if (this.presale.itemNianjianReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemNianjianReqId = res;
@@ -623,7 +644,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'buhuan':
         if (this.presale.itemBuhuanReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemBuhuanReqId = res;
@@ -646,7 +667,7 @@ export class PresformComponent implements OnInit {
         break;
       case 'qita':
         if (this.presale.itemQitaReqId == null) {
-          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.presale.saleid, this.presale.cusname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'presale')
             .subscribe(
               res => {
                 this.presale.itemQitaReqId = res;

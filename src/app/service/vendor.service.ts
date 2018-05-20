@@ -43,6 +43,7 @@ export class VendorService {
       .set('state', form['state'])
       .set('itemlist', this.transfer(form['itemlist']));
     // .set('form', str);
+    console.log(params);
     return this.httpClient.post('/api/getVdrs', params);
   }
 
@@ -94,6 +95,7 @@ export class Vendor {
               public  itemWeizhang: string,
               public itemWeizhangTax: number,
               public itemWeizhangCost: number,
+              public itemWeizhangCost2: number,
               public itemWeizhangCompletedate: string,
               public  itemWeizhangDesc: string,
               public  itemWeizhangReqId: number,

@@ -130,21 +130,27 @@
           <td>
             <div class="form-group">
               <label class="col-sm-2 control-label">提档交易税</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemTidangTax">
               </div>
               <label class="col-sm-2 control-label">提档金额</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemTidangCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemTidangCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemTidangCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemTidangCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemTidangDesc"></textarea>
               </div>
             </div>
@@ -166,21 +172,27 @@
           <td>
             <div class="form-group">
               <label class="col-sm-2 control-label">过户交易税</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemGuohuTax">
               </div>
               <label class="col-sm-2 control-label">过户金额</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemGuohuCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemGuohuCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemGuohuCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemGuohuCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemGuohuDesc"></textarea>
               </div>
             </div>
@@ -201,22 +213,24 @@
           <td></td>
           <td>
             <div class="form-group">
-              <label class="col-sm-2 control-label">上牌交易税</label>
-              <div class="col-sm-3">
-                <input type="text" class="form-control" formControlName="itemShangpaiTax">
-              </div>
               <label class="col-sm-2 control-label">上牌金额</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemShangpaiCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemShangpaiCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemShangpaiCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemShangpaiCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemShangpaiDesc"></textarea>
               </div>
             </div>
@@ -237,22 +251,31 @@
           <td></td>
           <td>
             <div class="form-group">
-              <label class="col-sm-2 control-label">违章交易税</label>
-              <div class="col-sm-3">
-                <input type="text" class="form-control" formControlName="itemWeizhangTax">
-              </div>
-              <label class="col-sm-2 control-label">违章金额</label>
-              <div class="col-sm-3">
+              <label class="col-sm-2 control-label">违章RMB/条</label>
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemWeizhangCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemWeizhangCost')"
+                  errorMsg="*必填项"></app-field-error-display>
+              </div>
+              <label class="col-sm-2 control-label">扣分RMB/分</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" formControlName="itemWeizhangCost2">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemWeizhangCost2')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemWeizhangCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemWeizhangCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemWeizhangDesc"></textarea>
               </div>
             </div>
@@ -274,17 +297,23 @@
           <td>
             <div class="form-group">
               <label class="col-sm-2 control-label">抵押金额</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemDiyaCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemDiyaCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemDiyaCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemDiyaCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemDiyaDesc"></textarea>
               </div>
             </div>
@@ -293,10 +322,11 @@
         <!--解除抵押 -->
         <tr>
           <td>
-            解除抵押<input type="checkbox" formControlName="checkboxDiya">
+            解除抵押<input type="checkbox" formControlName="checkboxJiechudiya">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxJiechudiya').value" (click)="itemdetail($event)" name="jiechudiya">
+            <button [hidden]="!formGroup.get('checkboxJiechudiya').value" (click)="itemdetail($event)"
+                    name="jiechudiya">
               {{vdr.itemJiechudiyaReqId==null?'创建办证要求':'编辑办证要求'}}
             </button>
           </td>
@@ -306,17 +336,23 @@
           <td>
             <div class="form-group">
               <label class="col-sm-2 control-label">解除抵押金额</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemJiechudiyaCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemJiechudiyaCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemJiechudiyaCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemJiechudiyaCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemJiechudiyaDesc"></textarea>
               </div>
             </div>
@@ -325,7 +361,7 @@
         <!--委托-->
         <tr>
           <td>
-            委托<input type="checkbox" formControlName="checkboxWeituo">
+            年检委托<input type="checkbox" formControlName="checkboxWeituo">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxWeituo').value" (click)="itemdetail($event)" name="weituo">
@@ -337,18 +373,24 @@
           <td></td>
           <td>
             <div class="form-group">
-              <label class="col-sm-2 control-label">委托金额</label>
-              <div class="col-sm-3">
+              <label class="col-sm-2 control-label">年检委托金额</label>
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemWeituoCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemWeituoCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemWeituoCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemWeituoCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemWeituoDesc"></textarea>
               </div>
             </div>
@@ -370,21 +412,27 @@
           <td>
             <div class="form-group">
               <label class="col-sm-2 control-label">年检交易税</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemNianjianTax">
               </div>
               <label class="col-sm-2 control-label">年检金额</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemNianjianCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemNianjianCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemNianjianCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemNianjianCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemNianjianDesc"></textarea>
               </div>
             </div>
@@ -406,17 +454,23 @@
           <td>
             <div class="form-group">
               <label class="col-sm-2 control-label">换补牌证金额</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemBuhuanCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemBuhuanCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemBuhuanCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemBuhuanCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemBuhuanDesc"></textarea>
               </div>
             </div>
@@ -438,17 +492,23 @@
           <td>
             <div class="form-group">
               <label class="col-sm-2 control-label">其他金额</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemQitaCost">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemQitaCost')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemQitaCompletedate">
+                <app-field-error-display
+                  [displayError]="validation.isFiledValid(formGroup, 'itemQitaCompletedate')"
+                  errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">摘要说明</label>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <textarea class="form-control" formControlName="itemQitaDesc"></textarea>
               </div>
             </div>
