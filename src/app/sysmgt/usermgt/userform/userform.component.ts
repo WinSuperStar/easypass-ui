@@ -137,7 +137,7 @@ export class UserformComponent implements OnInit {
   }
   canEdit() {
     let roleid = JSON.parse(localStorage.getItem('currentUser'))['roleid'];
-    if(roleid!=18){
+    if(roleid!=18&&this.user != null){
        $("#userName").attr("readonly","readonly");
        $("#position").attr("disabled","disabled");
        $("#womanGender").attr("disabled","disabled");
