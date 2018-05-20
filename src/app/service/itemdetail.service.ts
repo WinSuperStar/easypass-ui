@@ -8,12 +8,13 @@ export class ItemdetailService {
   constructor(private httpClient: HttpClient) {
   }
 
-  createItemdetail(vdrid: any, vdrname: any, itemname: any, creator: any): Observable<any> {
+  createItemdetail(billid: any, billname: any, itemname: any, creator: any, billtype:any): Observable<any> {
     let params = new HttpParams()
-      .set('vdrid', vdrid)
-      .set('vdrname', vdrname)
+      .set('billid', billid)
+      .set('billname', billname)
       .set('itemname', itemname)
-      .set('creator', creator);
+      .set('creator', creator)
+      .set('billtype', billtype);
     return this.httpClient.post('/api/createItemdetail', params);
   }
 
@@ -77,8 +78,9 @@ export class Itemdetail {
               public  newLisenceType: string,
               public  newLisenceDesc: string,
               public newLisenceCost: number,
-              public  relatedVendorId: string,
-              public relatedVendorName: string,
+              public  relatedBillId: number,
+              public relatedBillName: string,
+              public relatedBillType: string,
               public relatedItemName: string,
               public  createdate: string,
               public  creator: string,

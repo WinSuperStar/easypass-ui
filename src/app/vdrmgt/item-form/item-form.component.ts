@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Itemdetail, ItemdetailService} from '../../service/itemdetail.service';
 import {Observable} from 'rxjs/Observable';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -18,7 +18,8 @@ export class ItemFormComponent implements OnInit {
   constructor(private routeInfo: ActivatedRoute,
               private idService: ItemdetailService,
               private fb: FormBuilder,
-              public validation: ValidationService) {
+              public validation: ValidationService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -64,50 +65,48 @@ export class ItemFormComponent implements OnInit {
     this.idService.getItemdetail(id).subscribe(
       res => {
         this.itemdetail = res;
+        this.formGroup.reset({
+          matDengji: this.itemdetail.matDengji,
+          matXingshi: this.itemdetail.matXingshi,
+          matJiaoqiang: this.itemdetail.matJiaoqiang,
+          matGouzhi: this.itemdetail.matGouzhi,
+          matFapiao: this.itemdetail.matFapiao,
+          matQita: this.itemdetail.matQita,
+          matQitaDesc: this.itemdetail.matQitaDesc,
+          carPresent: this.itemdetail.carPresent,
+          carPresentCost: this.itemdetail.carPresentCost,
+          carPresentDesc: this.itemdetail.carPresentDesc,
+          oriIdType: this.itemdetail.oriIdType,
+          oriIdDesc: this.itemdetail.oriIdDesc,
+          oriIdCost: this.itemdetail.oriIdCost,
+          oriOtherCert: this.itemdetail.oriOtherCert,
+          oriOtherCertCost: this.itemdetail.oriOtherCertCost,
+          oriPresent: this.itemdetail.oriPresent,
+          oriPresentDesc: this.itemdetail.oriPresentDesc,
+          oriPresentCost: this.itemdetail.oriPresentCost,
+          oriLisenceType: this.itemdetail.oriLisenceType,
+          oriLisenceDesc: this.itemdetail.oriLisenceDesc,
+          oriLisenceCost: this.itemdetail.oriLisenceCost,
+          oriComments: this.itemdetail.oriComments,
+          oriCost: this.itemdetail.oriCost,
+          newIdType: this.itemdetail.newIdType,
+          newIdDesc: this.itemdetail.newIdDesc,
+          newIdCost: this.itemdetail.newIdCost,
+          newOtherCert: this.itemdetail.newOtherCert,
+          newOtherCertCost: this.itemdetail.newOtherCertCost,
+          newPresent: this.itemdetail.newPresent,
+          newPresentDesc: this.itemdetail.newPresentDesc,
+          newPresentCost: this.itemdetail.newPresentCost,
+          newLisenceType: this.itemdetail.newLisenceType,
+          newLisenceDesc: this.itemdetail.newLisenceDesc,
+          newLisenceCost: this.itemdetail.newLisenceCost,
+          newComments: this.itemdetail.newComments,
+          newCost: this.itemdetail.newCost
+        });
       },
       err => {
         return err;
       });
-    if (this.itemdetail !== null) {
-      this.formGroup.reset({
-        matDengji: this.itemdetail.matDengji,
-        matXingshi: this.itemdetail.matXingshi,
-        matJiaoqiang: this.itemdetail.matJiaoqiang,
-        matGouzhi: this.itemdetail.matGouzhi,
-        matFapiao: this.itemdetail.matFapiao,
-        matQita: this.itemdetail.matQita,
-        matQitaDesc: this.itemdetail.matQitaDesc,
-        carPresent: this.itemdetail.carPresent,
-        carPresentCost: this.itemdetail.carPresentCost,
-        carPresentDesc: this.itemdetail.carPresentDesc,
-        oriIdType: this.itemdetail.oriIdType,
-        oriIdDesc: this.itemdetail.oriIdDesc,
-        oriIdCost: this.itemdetail.oriIdCost,
-        oriOtherCert: this.itemdetail.oriOtherCert,
-        oriOtherCertCost: this.itemdetail.oriOtherCertCost,
-        oriPresent: this.itemdetail.oriPresent,
-        oriPresentDesc: this.itemdetail.oriPresentDesc,
-        oriPresentCost: this.itemdetail.oriPresentCost,
-        oriLisenceType: this.itemdetail.oriLisenceType,
-        oriLisenceDesc: this.itemdetail.oriLisenceDesc,
-        oriLisenceCost: this.itemdetail.oriLisenceCost,
-        oriComments: this.itemdetail.oriComments,
-        oriCost: this.itemdetail.oriCost,
-        newIdType: this.itemdetail.newIdType,
-        newIdDesc: this.itemdetail.newIdDesc,
-        newIdCost: this.itemdetail.newIdCost,
-        newOtherCert: this.itemdetail.newOtherCert,
-        newOtherCertCost: this.itemdetail.newOtherCertCost,
-        newPresent: this.itemdetail.newPresent,
-        newPresentDesc: this.itemdetail.newPresentDesc,
-        newPresentCost: this.itemdetail.newPresentCost,
-        newLisenceType: this.itemdetail.newLisenceType,
-        newLisenceDesc: this.itemdetail.newLisenceDesc,
-        newLisenceCost: this.itemdetail.newLisenceCost,
-        newComments: this.itemdetail.newComments,
-        newCost: this.itemdetail.newCost
-      });
-    }
 
   }
 
@@ -153,6 +152,7 @@ export class ItemFormComponent implements OnInit {
       this.idService.saveItemdetail(JSON.stringify(this.itemdetail)).subscribe(
         res => {
           alert('成功保存项目需求！');
+          this.returnPre();
         },
         err => {
           alert('错误：' + err.message);
@@ -160,6 +160,22 @@ export class ItemFormComponent implements OnInit {
       );
     } else {
       this.validation.validateAllFormFields(this.formGroup);
+    }
+  }
+
+  cancel(){
+    if(confirm('确定要返回？')) {
+      this.returnPre();
+    }
+  }
+
+  returnPre(){
+    let path = this.itemdetail.relatedBillType;
+    let id = this.itemdetail.relatedBillId;
+    if (path === 'presale') {
+      this.router.navigateByUrl('/home/presmgt/' + id);
+    } else {
+      this.router.navigateByUrl('/home/vdrmgt/' + id);
     }
   }
 }

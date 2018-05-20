@@ -67,6 +67,7 @@ export class VdrFormComponent implements OnInit {
       itemShangpaiReqId: [''],
       itemWeizhangTax: [''],
       itemWeizhangCost: [''],
+      itemWeizhangCost2: [''],
       itemWeizhangCompletedate: [''],
       itemWeizhangDesc: [''],
       itemWeizhangReqId: [''],
@@ -103,6 +104,8 @@ export class VdrFormComponent implements OnInit {
     this.vendorService.getVdr(id).subscribe(
       res => {
         this.vdr = res;
+        this.showCity(res.vdraddr.split(' ')[0]);
+        this.showArea(res.vdraddr.split(' ')[1]);
         this.formGroup.reset({
           vdrname: res.vdrname,
           vdraddrdetail: res.vdraddrdetail,
@@ -130,6 +133,7 @@ export class VdrFormComponent implements OnInit {
           checkboxWeizhang: res.itemWeizhang,
           itemWeizhangTax: res.itemWeizhangTax,
           itemWeizhangCost: res.itemWeizhangCost,
+          itemWeizhangCost2: res.itemWeizhangCost2,
           itemWeizhangCompletedate: res.itemWeizhangCompletedate,
           itemWeizhangDesc: res.itemWeizhangDesc,
           checkboxDiya: res.itemDiya,
@@ -165,6 +169,129 @@ export class VdrFormComponent implements OnInit {
     );
     // this.vdr = new Vdr(1, '车王', 13390988765, '上海浦东门店', [{id: 1, name: '办证', desc: '办理牌照证件', price: 9000}]);
     this.province = this.addrService.getPros();
+    // Dynamiclly load validation for Tidang
+    this.formGroup.get('checkboxTidang').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemTidangCost').setValidators([Validators.required]);
+        this.formGroup.get('itemTidangCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemTidangCost').setValidators(null);
+        this.formGroup.get('itemTidangCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemTidangCost').updateValueAndValidity();
+      this.formGroup.get('itemTidangCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Guohu
+    this.formGroup.get('checkboxGuohu').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemGuohuCost').setValidators([Validators.required]);
+        this.formGroup.get('itemGuohuCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemGuohuCost').setValidators(null);
+        this.formGroup.get('itemGuohuCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemGuohuCost').updateValueAndValidity();
+      this.formGroup.get('itemGuohuCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Shangpai
+    this.formGroup.get('checkboxShangpai').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemShangpaiCost').setValidators([Validators.required]);
+        this.formGroup.get('itemShangpaiCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemShangpaiCost').setValidators(null);
+        this.formGroup.get('itemShangpaiCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemShangpaiCost').updateValueAndValidity();
+      this.formGroup.get('itemShangpaiCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Weizhang
+    this.formGroup.get('checkboxWeizhang').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemWeizhangCost').setValidators([Validators.required]);
+        this.formGroup.get('itemWeizhangCost2').setValidators([Validators.required]);
+        this.formGroup.get('itemWeizhangCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemWeizhangCost').setValidators(null);
+        this.formGroup.get('itemWeizhangCost2').setValidators(null);
+        this.formGroup.get('itemWeizhangCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemWeizhangCost').updateValueAndValidity();
+      this.formGroup.get('itemWeizhangCost2').updateValueAndValidity();
+      this.formGroup.get('itemWeizhangCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Diya
+    this.formGroup.get('checkboxDiya').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemDiyaCost').setValidators([Validators.required]);
+        this.formGroup.get('itemDiyaCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemDiyaCost').setValidators(null);
+        this.formGroup.get('itemDiyaCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemDiyaCost').updateValueAndValidity();
+      this.formGroup.get('itemDiyaCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Jiechudiya
+    this.formGroup.get('checkboxJiechudiya').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemJiechudiyaCost').setValidators([Validators.required]);
+        this.formGroup.get('itemJiechudiyaCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemJiechudiyaCost').setValidators(null);
+        this.formGroup.get('itemJiechudiyaCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemJiechudiyaCost').updateValueAndValidity();
+      this.formGroup.get('itemJiechudiyaCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Weituo
+    this.formGroup.get('checkboxWeituo').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemWeituoCost').setValidators([Validators.required]);
+        this.formGroup.get('itemWeituoCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemWeituoCost').setValidators(null);
+        this.formGroup.get('itemWeituoCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemWeituoCost').updateValueAndValidity();
+      this.formGroup.get('itemWeituoCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Nianjian
+    this.formGroup.get('checkboxNianjian').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemNianjianCost').setValidators([Validators.required]);
+        this.formGroup.get('itemNianjianCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemNianjianCost').setValidators(null);
+        this.formGroup.get('itemNianjianCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemNianjianCost').updateValueAndValidity();
+      this.formGroup.get('itemNianjianCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Buhuan
+    this.formGroup.get('checkboxBuhuan').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemBuhuanCost').setValidators([Validators.required]);
+        this.formGroup.get('itemBuhuanCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemBuhuanCost').setValidators(null);
+        this.formGroup.get('itemBuhuanCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemBuhuanCost').updateValueAndValidity();
+      this.formGroup.get('itemBuhuanCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Qita
+    this.formGroup.get('checkboxQita').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemQitaCost').setValidators([Validators.required]);
+        this.formGroup.get('itemQitaCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemQitaCost').setValidators(null);
+        this.formGroup.get('itemQitaCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemQitaCost').updateValueAndValidity();
+      this.formGroup.get('itemQitaCompletedate').updateValueAndValidity();
+    });
   }
 
   cancel() {
@@ -203,6 +330,7 @@ export class VdrFormComponent implements OnInit {
       this.vdr.itemWeizhang = this.formGroup.get('checkboxWeizhang').value;
       this.vdr.itemWeizhangTax = this.formGroup.get('itemWeizhangTax').value;
       this.vdr.itemWeizhangCost = this.formGroup.get('itemWeizhangCost').value;
+      this.vdr.itemWeizhangCost2 = this.formGroup.get('itemWeizhangCost2').value;
       this.vdr.itemWeizhangCompletedate = this.formGroup.get('itemWeizhangCompletedate').value;
       this.vdr.itemWeizhangDesc = this.formGroup.get('itemWeizhangDesc').value;
       // this.vdr.itemWeizhangReqId = this.formGroup.get('').value;
@@ -278,7 +406,12 @@ export class VdrFormComponent implements OnInit {
   }
 
   showCity(item) {
-    let p = item.target.value;
+    let p:string;
+    if(typeof item == 'string' ){
+      p = item
+    }else{
+      p = item.target.value;
+    }
     this.addrService.getProCode(p).subscribe(
       res => {
         this.formGroup.get('vdrplate1').setValue(res);
@@ -290,7 +423,12 @@ export class VdrFormComponent implements OnInit {
   }
 
   showArea(item) {
-    let c = item.target.value;
+    let c:string;
+    if(typeof item == 'string' ){
+      c = item
+    }else{
+      c = item.target.value;
+    }
     this.addrService.getShotCode(c).subscribe(
       res => {
         if (res == '' || res == null) {
@@ -317,7 +455,7 @@ export class VdrFormComponent implements OnInit {
     switch (name) {
       case 'tidang':
         if (this.vdr.itemTidangReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemTidangReqId = res;
@@ -340,7 +478,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'guohu':
         if (this.vdr.itemGuohuReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemGuohuReqId = res;
@@ -363,7 +501,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'shangpai':
         if (this.vdr.itemShangpaiReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemShangpaiReqId = res;
@@ -386,7 +524,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'weizhang':
         if (this.vdr.itemWeizhangReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemWeizhangReqId = res;
@@ -409,7 +547,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'diya':
         if (this.vdr.itemDiyaReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemDiyaReqId = res;
@@ -432,7 +570,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'jiechudiya':
         if (this.vdr.itemJiechudiyaReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemJiechudiyaReqId = res;
@@ -455,7 +593,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'weituo':
         if (this.vdr.itemWeituoReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemWeituoReqId = res;
@@ -478,7 +616,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'nianjian':
         if (this.vdr.itemNianjianReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemNianjianReqId = res;
@@ -501,7 +639,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'buhuan':
         if (this.vdr.itemBuhuanReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemBuhuanReqId = res;
@@ -524,7 +662,7 @@ export class VdrFormComponent implements OnInit {
         break;
       case 'qita':
         if (this.vdr.itemQitaReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'], 'vendor')
             .subscribe(
               res => {
                 this.vdr.itemQitaReqId = res;

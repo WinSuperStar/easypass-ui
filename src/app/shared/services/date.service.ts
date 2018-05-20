@@ -6,8 +6,12 @@ export class DateService {
   constructor() { }
 
   dateFmt(val:any) {
-    var crtTime = new Date(val);
-    return this.dateFtt("yyyy-MM-dd hh:mm:ss",crtTime);
+    if(val == '' || val == null){
+      return '';
+    }else {
+      var crtTime = new Date(val);
+      return this.dateFtt("yyyy-MM-dd hh:mm:ss", crtTime);
+    }
   }
 
   dateFtt(fmt,date)
