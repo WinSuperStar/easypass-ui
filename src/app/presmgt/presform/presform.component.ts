@@ -25,7 +25,7 @@ export class PresformComponent implements OnInit {
   public area: Observable<Area[]>;
   public province: Observable<Province[]>;
 
-  private formGroup: FormGroup;
+  public formGroup: FormGroup;
 
   constructor(private router: Router,
               private routeInfo: ActivatedRoute,
@@ -116,6 +116,9 @@ export class PresformComponent implements OnInit {
         this.formGroup.reset({
           cusname: res.cusname,
           cusmode: res.cusmode,
+          caraddr1: res.caraddr.split(' ')[0],
+          caraddr2: res.caraddr.split(' ')[1],
+          caraddr3: res.caraddr.split(' ')[2],
           carplate1: res.carplate.split(' ')[0],
           carplate2: res.carplate.split(' ')[1],
           contact: res.contact,
@@ -188,7 +191,127 @@ export class PresformComponent implements OnInit {
     }).on('filebatchselected', function (event, files) {
       $('#fileUpload').fileinput('upload');
     }).on('fileuploaded', function (event, data, previewId, index) {
-      // ssss
+    });
+
+    // Dynamiclly load validation for Tidang
+    this.formGroup.get('checkboxTidang').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemTidangCost').setValidators([Validators.required]);
+        this.formGroup.get('itemTidangCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemTidangCost').setValidators(null);
+        this.formGroup.get('itemTidangCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemTidangCost').updateValueAndValidity();
+      this.formGroup.get('itemTidangCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Guohu
+    this.formGroup.get('checkboxGuohu').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemGuohuCost').setValidators([Validators.required]);
+        this.formGroup.get('itemGuohuCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemGuohuCost').setValidators(null);
+        this.formGroup.get('itemGuohuCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemGuohuCost').updateValueAndValidity();
+      this.formGroup.get('itemGuohuCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Shangpai
+    this.formGroup.get('checkboxShangpai').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemShangpaiCost').setValidators([Validators.required]);
+        this.formGroup.get('itemShangpaiCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemShangpaiCost').setValidators(null);
+        this.formGroup.get('itemShangpaiCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemShangpaiCost').updateValueAndValidity();
+      this.formGroup.get('itemShangpaiCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Weizhang
+    this.formGroup.get('checkboxWeizhang').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemWeizhangCost').setValidators([Validators.required]);
+        this.formGroup.get('itemWeizhangCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemWeizhangCost').setValidators(null);
+        this.formGroup.get('itemWeizhangCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemWeizhangCost').updateValueAndValidity();
+      this.formGroup.get('itemWeizhangCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Diya
+    this.formGroup.get('checkboxDiya').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemDiyaCost').setValidators([Validators.required]);
+        this.formGroup.get('itemDiyaCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemDiyaCost').setValidators(null);
+        this.formGroup.get('itemDiyaCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemDiyaCost').updateValueAndValidity();
+      this.formGroup.get('itemDiyaCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Jiechudiya
+    this.formGroup.get('checkboxJiechudiya').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemJiechudiyaCost').setValidators([Validators.required]);
+        this.formGroup.get('itemJiechudiyaCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemJiechudiyaCost').setValidators(null);
+        this.formGroup.get('itemJiechudiyaCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemJiechudiyaCost').updateValueAndValidity();
+      this.formGroup.get('itemJiechudiyaCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Weituo
+    this.formGroup.get('checkboxWeituo').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemWeituoCost').setValidators([Validators.required]);
+        this.formGroup.get('itemWeituoCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemWeituoCost').setValidators(null);
+        this.formGroup.get('itemWeituoCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemWeituoCost').updateValueAndValidity();
+      this.formGroup.get('itemWeituoCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Nianjian
+    this.formGroup.get('checkboxNianjian').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemNianjianCost').setValidators([Validators.required]);
+        this.formGroup.get('itemNianjianCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemNianjianCost').setValidators(null);
+        this.formGroup.get('itemNianjianCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemNianjianCost').updateValueAndValidity();
+      this.formGroup.get('itemNianjianCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Buhuan
+    this.formGroup.get('checkboxBuhuan').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemBuhuanCost').setValidators([Validators.required]);
+        this.formGroup.get('itemBuhuanCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemBuhuanCost').setValidators(null);
+        this.formGroup.get('itemBuhuanCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemBuhuanCost').updateValueAndValidity();
+      this.formGroup.get('itemBuhuanCompletedate').updateValueAndValidity();
+    });
+    // Dynamiclly load validation for Qita
+    this.formGroup.get('checkboxQita').valueChanges.subscribe(value => {
+      if (value) {
+        this.formGroup.get('itemQitaCost').setValidators([Validators.required]);
+        this.formGroup.get('itemQitaCompletedate').setValidators([Validators.required]);
+      } else {
+        this.formGroup.get('itemQitaCost').setValidators(null);
+        this.formGroup.get('itemQitaCompletedate').setValidators([Validators.required]);
+      }
+      this.formGroup.get('itemQitaCost').updateValueAndValidity();
+      this.formGroup.get('itemQitaCompletedate').updateValueAndValidity();
     });
   }
 
@@ -197,13 +320,10 @@ export class PresformComponent implements OnInit {
   }
 
   save() {
-    console.log(this.presale);
-    console.log(this.formGroup.valid);
-    console.log(this.formGroup.value);
-    // this.router.navigateByUrl('/home/presalemgt');
     if (this.formGroup.valid) {
       // this.presale.presaleid= this.formGroup.get('').value;
       this.presale.cusname = this.formGroup.get('cusname').value;
+      this.presale.cusmode = this.formGroup.get('cusmode').value;
       this.presale.caraddr = this.formGroup.get('caraddr1').value + ' ' + this.formGroup.get('caraddr2').value + ' ' + this.formGroup.get('caraddr3').value;
       this.presale.carplate = this.formGroup.get('carplate1').value + ' ' + this.formGroup.get('carplate2').value;
       this.presale.contact = this.formGroup.get('contact').value;
