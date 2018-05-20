@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {AddrSelectService, Area, City, Province} from "../../shared/services/addr-select.service";
-import {Observable} from "rxjs/Observable";
-import {Vendor, VendorService} from "../../service/vendor.service";
-import {ItemdetailService} from "../../service/itemdetail.service";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AddrSelectService, Area, City, Province} from '../../shared/services/addr-select.service';
+import {Observable} from 'rxjs/Observable';
+import {Vendor, VendorService} from '../../service/vendor.service';
+import {ItemdetailService} from '../../service/itemdetail.service';
+import {ValidationService} from '../../shared/services/validation.service';
 
 @Component({
   selector: 'app-vdr-form',
@@ -17,89 +18,149 @@ export class VdrFormComponent implements OnInit {
   public city: Observable<City[]>;
   public area: Observable<Area[]>;
   public province: Observable<Province[]>;
-  // public platecode: string = '';
-  // private checkboxShangpai:any;
 
-  public formGroup: FormGroup = this.fb.group({
-    vdrname: [''],
-    vdraddr1: [''],
-    vdraddr2: [''],
-    vdraddr3: [''],
-    vdraddrdetail: [''],
-    vdrplate1: [''],
-    vdrplate2: [''],
-    checkboxShangpai: [''],
-    checkboxWeizhang: [''],
-    checkboxDiya: [''],
-    checkboxJiechudiya: [''],
-    checkboxWeituo: [''],
-    checkboxNianjian: [''],
-    checkboxBuhuan: [''],
-    checkboxQita: [''],
-    checkboxTidang: [''],
-    checkboxGuohu: [''],
-    itemTidangTax: [''],
-    itemTidangCost: [''],
-    itemTidangCompletedate: [''],
-    itemTidangDesc: [''],
-    itemTidangReqId: [''],
-    itemGuohuTax: [''],
-    itemGuohuCost: [''],
-    itemGuohuCompletedate: [''],
-    itemGuohuDesc: [''],
-    itemGuohuReqId: [''],
-    itemShangpaiTax: [''],
-    itemShangpaiCost: [''],
-    itemShangpaiCompletedate: [''],
-    itemShangpaiDesc: [''],
-    itemShangpaiReqId: [''],
-    itemWeizhangTax: [''],
-    itemWeizhangCost: [''],
-    itemWeizhangCompletedate: [''],
-    itemWeizhangDesc: [''],
-    itemWeizhangReqId: [''],
-    itemDiyaCost: [''],
-    itemDiyaCompletedate: [''],
-    itemDiyaDesc: [''],
-    itemDiyaReqId: [''],
-    itemJiechudiyaCost: [''],
-    itemJiechudiyaCompletedate: [''],
-    itemJiechudiyaDesc: [''],
-    itemJiechudiyaReqId: [''],
-    itemWeituoTax: [''],
-    itemWeituoCost: [''],
-    itemWeituoCompletedate: [''],
-    itemWeituoDesc: [''],
-    itemWeituoReqId: [''],
-    itemNianjianTax: [''],
-    itemNianjianCost: [''],
-    itemNianjianCompletedate: [''],
-    itemNianjianDesc: [''],
-    itemNianjianReqId: [''],
-    itemBuhuanTax: [''],
-    itemBuhuanCost: [''],
-    itemBuhuanCompletedate: [''],
-    itemBuhuanDesc: [''],
-    itemBuhuanReqId: [''],
-    itemQitaCost: [''],
-    itemQitaCompletedate: [''],
-    itemQitaDesc: [''],
-    contacts: this.fb.array([this.createContact()])
-  });
+  public formGroup: FormGroup;
 
   constructor(private routeInfo: ActivatedRoute,
               private vendorService: VendorService,
               private router: Router,
               private addrService: AddrSelectService,
-              private idService: ItemdetailService) {
+              private idService: ItemdetailService,
+              public validation: ValidationService) {
   }
 
   ngOnInit() {
     // this.vdr = new Vendor();
     let id = this.routeInfo.snapshot.params['id'];
+    this.formGroup = this.fb.group({
+      vdrname: ['', Validators.required],
+      vdraddr1: ['', Validators.required],
+      vdraddr2: ['', Validators.required],
+      vdraddr3: ['', Validators.required],
+      vdraddrdetail: ['', Validators.required],
+      vdrplate1: ['', Validators.required],
+      vdrplate2: ['', Validators.required],
+      checkboxShangpai: [''],
+      checkboxWeizhang: [''],
+      checkboxDiya: [''],
+      checkboxJiechudiya: [''],
+      checkboxWeituo: [''],
+      checkboxNianjian: [''],
+      checkboxBuhuan: [''],
+      checkboxQita: [''],
+      checkboxTidang: [''],
+      checkboxGuohu: [''],
+      itemTidangTax: [''],
+      itemTidangCost: [''],
+      itemTidangCompletedate: [''],
+      itemTidangDesc: [''],
+      itemTidangReqId: [''],
+      itemGuohuTax: [''],
+      itemGuohuCost: [''],
+      itemGuohuCompletedate: [''],
+      itemGuohuDesc: [''],
+      itemGuohuReqId: [''],
+      itemShangpaiTax: [''],
+      itemShangpaiCost: [''],
+      itemShangpaiCompletedate: [''],
+      itemShangpaiDesc: [''],
+      itemShangpaiReqId: [''],
+      itemWeizhangTax: [''],
+      itemWeizhangCost: [''],
+      itemWeizhangCompletedate: [''],
+      itemWeizhangDesc: [''],
+      itemWeizhangReqId: [''],
+      itemDiyaCost: [''],
+      itemDiyaCompletedate: [''],
+      itemDiyaDesc: [''],
+      itemDiyaReqId: [''],
+      itemJiechudiyaCost: [''],
+      itemJiechudiyaCompletedate: [''],
+      itemJiechudiyaDesc: [''],
+      itemJiechudiyaReqId: [''],
+      itemWeituoTax: [''],
+      itemWeituoCost: [''],
+      itemWeituoCompletedate: [''],
+      itemWeituoDesc: [''],
+      itemWeituoReqId: [''],
+      itemNianjianTax: [''],
+      itemNianjianCost: [''],
+      itemNianjianCompletedate: [''],
+      itemNianjianDesc: [''],
+      itemNianjianReqId: [''],
+      itemBuhuanTax: [''],
+      itemBuhuanCost: [''],
+      itemBuhuanCompletedate: [''],
+      itemBuhuanDesc: [''],
+      itemBuhuanReqId: [''],
+      itemQitaCost: [''],
+      itemQitaCompletedate: [''],
+      itemQitaDesc: [''],
+      // contacts: this.fb.array([this.createContact()])
+      contact: ['', Validators.required],
+      contactphone: ['', Validators.required]
+    });
     this.vendorService.getVdr(id).subscribe(
       res => {
         this.vdr = res;
+        this.formGroup.reset({
+          vdrname: res.vdrname,
+          vdraddrdetail: res.vdraddrdetail,
+          vdrplate1: res.vdrplate.split(' ')[0],
+          vdrplate2: res.vdrplate.split(' ')[1],
+          contact: res.contact,
+          contactphone: res.contactphone,
+          commitdate: res.commitdate,
+          state: res.state,
+          checkboxTidang: res.itemTidang,
+          itemTidangTax: res.itemTidangTax,
+          itemTidangCost: res.itemTidangCost,
+          itemTidangCompletedate: res.itemTidangCompletedate,
+          itemTidangDesc: res.itemTidangDesc,
+          checkboxGuohu: res.itemGuohu,
+          itemGuohuTax: res.itemGuohuTax,
+          itemGuohuCost: res.itemGuohuCost,
+          itemGuohuCompletedate: res.itemGuohuCompletedate,
+          itemGuohuDesc: res.itemGuohuDesc,
+          checkboxShangpai: res.itemShangpai,
+          itemShangpaiTax: res.itemShangpaiTax,
+          itemShangpaiCost: res.itemShangpaiCost,
+          itemShangpaiCompletedate: res.itemShangpaiCompletedate,
+          itemShangpaiDesc: res.itemShangpaiDesc,
+          checkboxWeizhang: res.itemWeizhang,
+          itemWeizhangTax: res.itemWeizhangTax,
+          itemWeizhangCost: res.itemWeizhangCost,
+          itemWeizhangCompletedate: res.itemWeizhangCompletedate,
+          itemWeizhangDesc: res.itemWeizhangDesc,
+          checkboxDiya: res.itemDiya,
+          itemDiyaCost: res.itemDiyaCost,
+          itemDiyaCompletedate: res.itemDiyaCompletedate,
+          itemDiyaDesc: res.itemDiyaDesc,
+          checkboxJiechudiya: res.itemJiechudiya,
+          itemJiechudiyaCost: res.itemJiechudiyaCost,
+          itemJiechudiyaCompletedate: res.itemJiechudiyaCompletedate,
+          itemJiechudiyaDesc: res.itemJiechudiyaDesc,
+          checkboxWeituo: res.itemWeituo,
+          itemWeituoTax: res.itemWeituoTax,
+          itemWeituoCost: res.itemWeituoCost,
+          itemWeituoCompletedate: res.itemWeituoCompletedate,
+          itemWeituoDesc: res.itemWeituoDesc,
+          checkboxNianjian: res.itemNianjian,
+          itemNianjianTax: res.itemNianjianTax,
+          itemNianjianCost: res.itemNianjianCost,
+          itemNianjianCompletedate: res.itemNianjianCompletedate,
+          itemNianjianDesc: res.itemNianjianDesc,
+          checkboxBuhuan: res.itemBuhuan,
+          itemBuhuanTax: res.itemBuhuanTax,
+          itemBuhuanCost: res.itemBuhuanCost,
+          itemBuhuanCompletedate: res.itemBuhuanCompletedate,
+          itemBuhuanDesc: res.itemBuhuanDesc,
+          checkboxQita: res.itemQita,
+          itemQitaCost: res.itemQitaCost,
+          itemQitaCompletedate: res.itemQitaCompletedate,
+          itemQitaDesc: res.itemQitaDesc
+        })
+        ;
       }
     );
     // this.vdr = new Vdr(1, '车王', 13390988765, '上海浦东门店', [{id: 1, name: '办证', desc: '办理牌照证件', price: 9000}]);
@@ -117,9 +178,9 @@ export class VdrFormComponent implements OnInit {
       this.vdr.vdrname = this.formGroup.get('vdrname').value;
       this.vdr.vdraddr = this.formGroup.get('vdraddr1').value + ' ' + this.formGroup.get('vdraddr2').value + ' ' + this.formGroup.get('vdraddr3').value;
       this.vdr.vdraddrdetail = this.formGroup.get('vdraddrdetail').value;
-      this.vdr.vdrplate = this.formGroup.get('vdrplate1').value + this.formGroup.get('vdrplate2');
-      // this.vdr.contact = this.formGroup.get('contact').value;
-      // this.vdr.contactphone = this.formGroup.get('contactphone').value;
+      this.vdr.vdrplate = this.formGroup.get('vdrplate1').value + ' ' + this.formGroup.get('vdrplate2').value;
+      this.vdr.contact = this.formGroup.get('contact').value;
+      this.vdr.contactphone = this.formGroup.get('contactphone').value;
       // this.vdr.contacts = '';
       this.vdr.itemTidang = this.formGroup.get('checkboxTidang').value;
       this.vdr.itemTidangTax = this.formGroup.get('itemTidangTax').value;
@@ -194,6 +255,7 @@ export class VdrFormComponent implements OnInit {
       );
     } else {
       // 触发所有校验
+      this.validation.validateAllFormFields(this.formGroup);
     }
   }
 
@@ -217,7 +279,6 @@ export class VdrFormComponent implements OnInit {
 
   showCity(item) {
     let p = item.target.value;
-    console.log(p);
     this.addrService.getProCode(p).subscribe(
       res => {
         this.formGroup.get('vdrplate1').setValue(res);
@@ -256,10 +317,18 @@ export class VdrFormComponent implements OnInit {
     switch (name) {
       case 'tidang':
         if (this.vdr.itemTidangReqId == null) {
-          this.idService.createItemdetail(this.vdr.vdrid, JSON.parse(localStorage.getItem('currentUser'))['username'])
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
             .subscribe(
               res => {
                 this.vdr.itemTidangReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
               },
               err => {
                 return err;
@@ -269,8 +338,212 @@ export class VdrFormComponent implements OnInit {
           this.router.navigateByUrl('/home/itemform/' + this.vdr.itemTidangReqId);
         }
         break;
-      case '':
-        //
+      case 'guohu':
+        if (this.vdr.itemGuohuReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemGuohuReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemGuohuReqId);
+        }
+        break;
+      case 'shangpai':
+        if (this.vdr.itemShangpaiReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemShangpaiReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemShangpaiReqId);
+        }
+        break;
+      case 'weizhang':
+        if (this.vdr.itemWeizhangReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemWeizhangReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemWeizhangReqId);
+        }
+        break;
+      case 'diya':
+        if (this.vdr.itemDiyaReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemDiyaReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemDiyaReqId);
+        }
+        break;
+      case 'jiechudiya':
+        if (this.vdr.itemJiechudiyaReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemJiechudiyaReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemJiechudiyaReqId);
+        }
+        break;
+      case 'weituo':
+        if (this.vdr.itemWeituoReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemWeituoReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemWeituoReqId);
+        }
+        break;
+      case 'nianjian':
+        if (this.vdr.itemNianjianReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemNianjianReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemNianjianReqId);
+        }
+        break;
+      case 'buhuan':
+        if (this.vdr.itemBuhuanReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemBuhuanReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemBuhuanReqId);
+        }
+        break;
+      case 'qita':
+        if (this.vdr.itemQitaReqId == null) {
+          this.idService.createItemdetail(this.vdr.vdrid, this.vdr.vdrname, name, JSON.parse(localStorage.getItem('currentUser'))['username'])
+            .subscribe(
+              res => {
+                this.vdr.itemQitaReqId = res;
+                this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
+                  res => {
+                    alert('为当前项目创建办证要求' );
+                  },
+                  err => {
+                    alert('错误：' + err.message);
+                  }
+                );
+              },
+              err => {
+                return err;
+              }
+            );
+        } else {
+          this.router.navigateByUrl('/home/itemform/' + this.vdr.itemQitaReqId);
+        }
         break;
       default:
       //
@@ -283,5 +556,5 @@ export class VdrFormComponent implements OnInit {
 export class Contact {
   constructor(public name: string,
               public phone: number) {
-  };
+  }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 export class LoginServiceService {
   // private url: string = 'http://locaolhost:4200/';
   redirectUrl: string;
+
   constructor(public httpClient: HttpClient) {
   }
 
@@ -24,8 +25,8 @@ export class LoginServiceService {
     return this.httpClient.post('/api/login', params)
       .map(
         res => {
-          if(res != null){
-            localStorage.setItem('currentUser',JSON.stringify(res));
+          if (res != null) {
+            localStorage.setItem('currentUser', JSON.stringify(res));
           }
           return res;
         },

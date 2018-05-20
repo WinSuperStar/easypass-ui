@@ -40,23 +40,29 @@ import {LoginServiceService} from './shared/services/login-service.service';
 import {MainComponent} from './main/main.component';
 import {FieldErrorDisplayComponent} from './shared/message/field-error-display/field-error-display.component';
 import {ValidationService} from './shared/services/validation.service';
-import {HttpClientModule} from "@angular/common/http";
-import {UserServiceService} from "./service/user-service.service";
-import {FileUploaderModule} from "ng4-file-upload";
-import {DateService} from "./shared/services/date.service";
-import {RoleService} from "./service/role.service";
-import {CustomerService} from "./service/customer.service";
-import {AddrSelectService} from "./shared/services/addr-select.service";
-import {VendorService} from "./service/vendor.service";
+import {HttpClientModule} from '@angular/common/http';
+import {UserServiceService} from './service/user-service.service';
+import {FileUploaderModule} from 'ng4-file-upload';
+import {DateService} from './shared/services/date.service';
+import {RoleService} from './service/role.service';
+import {CustomerService} from './service/customer.service';
+import {AddrSelectService} from './shared/services/addr-select.service';
+import {VendorService} from './service/vendor.service';
 import {ItemFormComponent} from './vdrmgt/item-form/item-form.component';
 import {ItemdetailService} from "./service/itemdetail.service";
 import {PermissionService} from "./shared/services/permission.service";
 import {CarService} from "./service/car.service";
 import { TipComponent } from './tip/tip.component';
+import {AccessLogService} from './service/access-log.service';
+import { AccesslogmgtComponent } from './sysmgt/accesslogmgt/accesslogmgt.component';
+import {ItemdetailService} from './service/itemdetail.service';
+import {PermissionService} from './shared/services/permission.service';
+import {CarService} from './service/car.service';
+import {PresaleService} from './service/presale.service';
 
 const routeConfig: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
+  {path: '', redirectTo: 'index', pathMatch: 'full'},
+  {path: 'index', component: LoginComponent},
   {
     path: 'home', component: HomeComponent, children: [{
       path: '',
@@ -64,6 +70,7 @@ const routeConfig: Routes = [
       children: [
         {path: 'tip', component: TipComponent},
         {path: 'usermgt', component: UsermgtComponent},
+        {path: 'accessLogmgt', component: AccesslogmgtComponent},
         {path: 'userform', component: UserformComponent},
         {path: 'userform/:id', component: UserformComponent},
         {path: 'pstnmgt', component: PstnmgtComponent},
@@ -80,6 +87,8 @@ const routeConfig: Routes = [
         {path: 'carform/:id', component: CarformComponent},
         {path: 'odrmgt', component: OdrmgtComponent},
         {path: 'orderform/:id', component: OrderformComponent},
+        {path: 'presmgt', component: PresmgtComponent},
+        {path: 'presmgt/:id', component: PresformComponent},
         {path: 'itemform', component: ItemFormComponent},
         {path: 'itemform/:id', component: ItemFormComponent},],
     }], canActivate: [AuthGuardService]
@@ -124,13 +133,14 @@ const routeConfig: Routes = [
     FieldErrorDisplayComponent,
     ItemFormComponent,
     TipComponent
+    AccesslogmgtComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     HttpClientModule,
-    RouterModule.forRoot(routeConfig),
+    RouterModule.forRoot(routeConfig, {useHash: true}),
     ReactiveFormsModule,
     ReactiveFormsModule,
     FileUploaderModule
@@ -149,7 +159,9 @@ const routeConfig: Routes = [
     VendorService,
     ItemdetailService,
     PermissionService,
-    CarService], // used to mention what service to provide in this module
+    CarService,
+    AccessLogService
+    PresaleService], // used to mention what service to provide in this module
   bootstrap: [AppComponent] // main component
 })
 export class AppModule {

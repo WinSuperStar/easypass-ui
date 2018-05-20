@@ -93,9 +93,9 @@
         <td>{{car.creator}}</td>
         <td>{{dService.dateFmt(car.createdate)}}</td>
         <td>
-          <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="edit(car.carid)"></span>编辑</a>
+          <button class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="edit(car.carid)"></span>编辑</button>
           <!--<a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>删除</a>-->
-          <a class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus" (click)="createOrder(car.carid)"></span>创建订单</a>
+          <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus" (click)="createOrder(car.carid)"></span>创建订单</button>
         </td>
       </tr>
       </tbody>

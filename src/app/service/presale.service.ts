@@ -3,47 +3,43 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
-export class VendorService {
+export class PresaleService {
 
   constructor(private httpClient: HttpClient) {
   }
 
-  createVdr(creator: any): Observable<any> {
+  createPresale(creator: any): Observable<any> {
     let params = new HttpParams()
       .set('creator', creator);
-    return this.httpClient.post('/api/createVdr', params);
+    return this.httpClient.post('/api/createPresale', params);
   }
 
-  getAllVdrs(): Observable<any>{
-    return this.httpClient.get('/api/getAllVdrs');
-  }
-
-  saveVdr(vendor: any): Observable<any> {
+  savePresale(presale: any): Observable<any> {
     let params = new HttpParams()
-      .set('vendor', vendor);
-    return this.httpClient.post('/api/saveVdr', params);
+      .set('presale', presale);
+    return this.httpClient.post('/api/savePresale', params);
   }
 
-  getVdr(vdrid: any): Observable<any> {
+  getPresale(saleid: any): Observable<any> {
     let params = new HttpParams()
-      .set('vdrid', vdrid);
-    return this.httpClient.post('/api/getVdr', params);
+      .set('saleid', saleid);
+    return this.httpClient.post('/api/getPresale', params);
   }
 
-  getVdrs(form: any): Observable<any> {
+  getPresales(form: any): Observable<any> {
     let params = new HttpParams()
-      .set('vdraddr1', form['vdraddr1'])
-      .set('vdraddr2', form['vdraddr2'])
-      .set('vdraddr3', form['vdraddr3'])
-      .set('vdrplate1', form['vdrplate1'])
-      .set('vdrplate2', form['vdrplate2'])
+      .set('caraddr1', form['vdraddr1'])
+      .set('caraddr2', form['vdraddr2'])
+      .set('caraddr3', form['vdraddr3'])
+      .set('carplate1', form['vdrplate1'])
+      .set('carplate2', form['vdrplate2'])
       .set('contact', form['contact'])
       .set('contactphone', form['contactphone'])
       .set('firstdate', form['firstdate'])
       .set('state', form['state'])
       .set('itemlist', this.transfer(form['itemlist']));
     // .set('form', str);
-    return this.httpClient.post('/api/getVdrs', params);
+    return this.httpClient.post('/api/getPresales', params);
   }
 
   transfer(a: any) {
@@ -59,9 +55,13 @@ export class VendorService {
   }
 }
 
-export class Vendor {
+export class Presale {
 
-  constructor(public  vdrid: number,
+  constructor(public  saleid: number,
+              public caraddr:string,
+              public carplate:string,
+              public cusname:string,
+              public cusmode:string,
               public  vdrname: string,
               public  vdraddr: string,
               public  vdraddrdetail: string,

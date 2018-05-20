@@ -10,6 +10,11 @@ label span{
   color:red;
   margin:4px;
 }
+
+.buttonEdit{
+  background-color: #218a2c;
+}
+
 table button{
   float: left;
   color: #fff;

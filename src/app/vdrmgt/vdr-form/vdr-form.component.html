@@ -10,20 +10,29 @@
         <label class="col-sm-2 control-label">代办商名称<span>*</span></label>
         <div class="col-sm-2">
           <input type="text" class="form-control" placeholder="名称" formControlName="vdrname">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'vdrname')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
-        <label class="col-sm-2 control-label">代办商地址<span>*</span></label>
-        <div class="col-sm-3">
-          <input type="number" class="form-control" placeholder="地址" formControlName="vdraddrdetail">
+        <label class="col-sm-1 control-label">代办商地址<span>*</span></label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" placeholder="地址" formControlName="vdraddrdetail">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'vdraddrdetail')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">详细地址<span>*</span></label>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">省</div>
-          <select class="form-control" (change)="showCity($event)" formcontrolname="vdraddr1">
+          <select class="form-control" (change)="showCity($event)" formControlName="vdraddr1">
             <option disabled selected="selected">请选择省</option>
             <option *ngFor="let pro of province | async; let i = index" value="{{pro.name}}">{{pro.name}}</option>
           </select>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'vdraddr1')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">市</div>
@@ -31,6 +40,9 @@
             <option disabled selected="selected">请选择市</option>
             <option *ngFor="let c of city | async; let i = index" value="{{c.name}}">{{c.name}}</option>
           </select>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'vdraddr2')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">县</div>
@@ -38,6 +50,9 @@
             <option disabled selected="selected">请选择区</option>
             <option *ngFor="let a of area | async; let i = index" value="{{a.name}}">{{a.name}}</option>
           </select>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'vdraddr3')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
       </div>
       <div class="form-group">
@@ -47,27 +62,46 @@
         </div>
         <div class="col-sm-1" style="width:70px;">
           <input type="text" class="form-control" formControlName="vdrplate2">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'vdrplate2')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">联系人<span><i class="fa fa-fw fa-plus-square-o" (click)="addContact()"></i></span></label>
-
-        <div class="col-sm-8" formArrayName="contacts">
-          <div *ngFor="let e of formGroup.get('contacts').controls;let i = index;">
-            <div class="form-group" [formGroupName]="i">
-              <label class="col-sm-2 control-label">联系人</label>
-              <div class="col-sm-3">
-                <input class="form-control" formControlName="contact">
-              </div>
-              <label class="col-sm-3 control-label">联系人电话</label>
-              <div class="col-sm-3">
-                <input class="form-control" formControlName="contactphone">
-              </div>
-              <span><i class="fa fa-fw  fa-minus-square-o" (click)="removeContact(i)"></i></span>
-            </div>
-          </div>
+        <label class="col-sm-2 control-label">联系人(主)<span>*</span></label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="contact">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'contact')"
+            errorMsg="*必填项"></app-field-error-display>
+        </div>
+        <label class="col-sm-1 control-label">联系人电话(主)<span>*</span></label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="contactphone">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'contactphone')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
       </div>
+      <!-- 误删 待用 -->
+      <!--<div class="form-group">-->
+        <!--<label class="col-sm-2 control-label">联系人<span><i class="fa fa-fw fa-plus-square-o" (click)="addContact()"></i></span></label>-->
+        <!--<div class="col-sm-8" formArrayName="contacts">-->
+          <!--<div *ngFor="let e of formGroup.get('contacts').controls;let i = index;">-->
+            <!--<div class="form-group" [formGroupName]="i">-->
+              <!--<label class="col-sm-2 control-label">联系人</label>-->
+              <!--<div class="col-sm-3">-->
+                <!--<input class="form-control" formControlName="contact">-->
+              <!--</div>-->
+              <!--<label class="col-sm-3 control-label">联系人电话</label>-->
+              <!--<div class="col-sm-3">-->
+                <!--<input class="form-control" formControlName="contactphone">-->
+              <!--</div>-->
+              <!--<span><i class="fa fa-fw  fa-minus-square-o" (click)="removeContact(i)"></i></span>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
     <!-- /.box-body -->
     <!-- /.box-footer -->
@@ -87,7 +121,7 @@
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxTidang').value" (click)="itemdetail($event)" name="tidang">
-              {{vdr.itemTidangReqId==null?'创建办证要求':'编辑办证要求' | async}}
+              {{vdr.itemTidangReqId==null?'创建办证要求':'编辑办证要求'}}
             </button>
           </td>
         </tr>
@@ -122,7 +156,9 @@
             过户<input type="checkbox" formControlName="checkboxGuohu">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxGuohu').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxGuohu').value" (click)="itemdetail($event)" name="guohu">
+              {{vdr.itemGuohuReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxGuohu').value">
@@ -156,7 +192,9 @@
             上牌<input type="checkbox" formControlName="checkboxShangpai" name="cbShangpai">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxShangpai').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxShangpai').value" (click)="itemdetail($event)" name="shangpai">
+              {{vdr.itemShangpaiReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxShangpai').value">
@@ -190,7 +228,9 @@
             违章<input type="checkbox" formControlName="checkboxWeizhang">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxWeizhang').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxWeizhang').value" (click)="itemdetail($event)" name="weizhang">
+              {{vdr.itemWeizhangReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxWeizhang').value">
@@ -224,7 +264,9 @@
             抵押<input type="checkbox" formControlName="checkboxDiya">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxDiya').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxDiya').value" (click)="itemdetail($event)" name="diya">
+              {{vdr.itemDiyaReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxDiya').value">
@@ -254,7 +296,9 @@
             解除抵押<input type="checkbox" formControlName="checkboxDiya">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxJiechudiya').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxJiechudiya').value" (click)="itemdetail($event)" name="jiechudiya">
+              {{vdr.itemJiechudiyaReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxJiechudiya').value">
@@ -284,7 +328,9 @@
             委托<input type="checkbox" formControlName="checkboxWeituo">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxWeituo').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxWeituo').value" (click)="itemdetail($event)" name="weituo">
+              {{vdr.itemWeituoReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxWeituo').value">
@@ -314,7 +360,9 @@
             年检<input type="checkbox" formControlName="checkboxNianjian">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxNianjian').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxNianjian').value" (click)="itemdetail($event)" name="nianjian">
+              {{vdr.itemNianjianReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxNianjian').value">
@@ -348,7 +396,9 @@
             换补牌证<input type="checkbox" formControlName="checkboxBuhuan">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxBuhuan').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxBuhuan').value" (click)="itemdetail($event)" name="buhuan">
+              {{vdr.itemBuhuanReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxBuhuan').value">
@@ -378,7 +428,9 @@
             其他<input type="checkbox" formControlName="checkboxQita">
           </td>
           <td>
-            <button [hidden]="!formGroup.get('checkboxQita').value">办证要求</button>
+            <button [hidden]="!formGroup.get('checkboxQita').value" (click)="itemdetail($event)" name="qita">
+              {{vdr.itemQitaReqId==null?'创建办证要求':'编辑办证要求'}}
+            </button>
           </td>
         </tr>
         <tr [hidden]="!formGroup.get('checkboxQita').value">

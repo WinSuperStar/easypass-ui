@@ -30,8 +30,8 @@ export class CarService {
       .set('carnum', form.value['carnum'])
       .set('carbrand', form.value['carbrand'])
       .set('carset', form.value['carset'])
-      .set('firstdate1', str==''?'':str.split(',')[0])
-      .set('firstdate2', str==''?'':str.split(',')[1])
+      .set('firstdate1', str==null?'':str.split(',')[0])
+      .set('firstdate2', str==null?'':str.split(',')[1])
       .set('creator', form.value['creator']);
     return this.httpClient.post('/api/cars', params);
   }

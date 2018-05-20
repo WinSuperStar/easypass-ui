@@ -40,8 +40,8 @@
       <div class="form-group" style="padding:5px;">
         <label class="col-sm-1 control-label">岗位</label>
         <div class="col-sm-2">
-          <select class="form-control" formControlName="position"   id="position">
-            <option *ngFor="let role of roles | async; let i = index;" value={{role.rolename}}>{{role.rolename}}</option>
+          <select class="form-control" formControlName="position" >
+            <option *ngFor="let role of roles | async; let i = index;" value={{role.roleid}}>{{role.rolename}}</option>
           </select>
         </div>
       </div>
@@ -67,9 +67,11 @@
       </div>
       <div class="form-group">
         <label class="col-sm-1 control-label">上传证件照</label>
-        <div class="col-sm-2">
-          <input type="file" id="exampleInputFile">
-          <p class="help-block">照片相关要求</p>
+        <div class="col-sm-7">
+          <input type="hidden" id="certpath" name="certpath"  formControlName="certpath" >
+          <div class="file-loading">
+            <input id="userCertUpload" name="files" type="file" multiple >
+          </div>
         </div>
       </div>
     </div>

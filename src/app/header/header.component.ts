@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
   logout(){
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('/index');
     localStorage.removeItem('currentUser');
     // bootpopup.alert('hello!');
   }
