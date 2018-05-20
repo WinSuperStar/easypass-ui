@@ -43,7 +43,9 @@ export class VendorService {
       .set('state', form['state'])
       .set('itemlist', this.transfer(form['itemlist']));
     // .set('form', str);
-    console.log(params);
+    // console.log(form['itemlist'][0]);
+    // console.log(form['itemlist'][0]===false);
+    console.log('search params are: '+params);
     return this.httpClient.post('/api/getVdrs', params);
   }
 
@@ -51,9 +53,9 @@ export class VendorService {
     let str = '';
     for (let i = 0; i < a.length; i++) {
       if (i < a.length - 1) {
-        str = str + a[i] + ',';
+        str = str + (a[i]===false?'false':a[i]) + ',';
       } else {
-        str = str + a[i];
+        str = str + (a[i]===false?'false':a[i]);
       }
     }
     return str;

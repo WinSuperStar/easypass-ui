@@ -42,23 +42,23 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">客户模式</label>
         <div class="col-sm-2">
-          <select class="form-control">
-            <option>全部</option>
+          <select class="form-control" formControlName="cusmode">
+            <option selected="selected">全部</option>
             <option>个人</option>
             <option>公司</option>
           </select>
         </div>
         <label class="col-sm-2 control-label">客户名称</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" formControlName="cusname">
         </div>
         <!--<span><i class="fa fa-fw fa-plus-square-o" (click)="addContact()"></i></span>-->
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">销售费用</label>
         <div class="col-sm-2">
-          <select class="form-control">
-            <option>全部</option>
+          <select class="form-control" formControlName="state">
+            <option selected="selected">全部</option>
             <option>未录入</option>
             <option>已录入</option>
           </select>
@@ -110,7 +110,7 @@
         <td>{{p.cusname}}</td>
         <td>{{p.caraddr}}</td>
         <td>{{p.carplate}}</td>
-        <td>上牌，过户，年检</td>
+        <td>{{showItemDetail(p)}}</td>
         <td>{{p.state}}</td>
         <td>{{p.contact}}</td>
         <td>{{p.creator}}</td>

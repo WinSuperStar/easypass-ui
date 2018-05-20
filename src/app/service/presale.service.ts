@@ -28,14 +28,13 @@ export class PresaleService {
 
   getPresales(form: any): Observable<any> {
     let params = new HttpParams()
-      .set('caraddr1', form['vdraddr1'])
-      .set('caraddr2', form['vdraddr2'])
-      .set('caraddr3', form['vdraddr3'])
-      .set('carplate1', form['vdrplate1'])
-      .set('carplate2', form['vdrplate2'])
-      .set('contact', form['contact'])
-      .set('contactphone', form['contactphone'])
-      .set('firstdate', form['firstdate'])
+      .set('caraddr1', form['caraddr1'])
+      .set('caraddr2', form['caraddr2'])
+      .set('caraddr3', form['caraddr3'])
+      .set('carplate1', form['carplate1'])
+      .set('carplate2', form['carplate2'])
+      .set('cusmode',form['cusmode'])
+      .set('cusname', form['cusname'])
       .set('state', form['state'])
       .set('itemlist', this.transfer(form['itemlist']));
     // .set('form', str);
@@ -46,9 +45,9 @@ export class PresaleService {
     let str = '';
     for (let i = 0; i < a.length; i++) {
       if (i < a.length - 1) {
-        str = str + a[i] + ',';
+        str = str + (a[i]===false?'false':a[i]) + ',';
       } else {
-        str = str + a[i];
+        str = str + (a[i]===false?'false':a[i]);
       }
     }
     return str;

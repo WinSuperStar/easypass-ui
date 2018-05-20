@@ -37,6 +37,7 @@ export class CusformComponent implements OnInit {
       contactPhone: ['', [Validators.required, mobileValidator], mobileUniqueValidator],
       cusmode: ['', Validators.required],
       province: [''],
+      state: ['',Validators.required],
       city: [''],
       area: ['']
     });
@@ -45,6 +46,8 @@ export class CusformComponent implements OnInit {
         data => {
           this.cus = data;
           let u = this.cus.address.split(' ');
+          this.showCity(u[0]);
+          this.showArea(u[1]);
           this.formGroup.reset({
             cusname: data.cusname,
             cusmode: data.cusmode,
@@ -52,7 +55,8 @@ export class CusformComponent implements OnInit {
             contactPhone: data.contactPhone,
             province: u[0],
             city: u[1],
-            area: u[2]
+            area: u[2],
+            state:data.state
           })
         }
       );
@@ -79,7 +83,7 @@ export class CusformComponent implements OnInit {
           this.formGroup.value['contactPhone'],
           this.formGroup.value['cusmode'],
           this.formGroup.value['province'] + ' ' + this.formGroup.value['city'] + ' ' + this.formGroup.value['area'],
-          '正常',
+          this.formGroup.value['state'],
           null,
           JSON.parse(localStorage.getItem('currentUser'))['username'],
           null,
@@ -93,7 +97,12 @@ export class CusformComponent implements OnInit {
             this.router.navigateByUrl('/home/cusmgt');
           },
           err => {
-            alert('创建失败: ' + err.message)
+            console.log(err);
+            if(err.message.indexOf('contact_phone_UNIQUE')){
+              alert('创建失败，手机号码已存在');
+            } else {
+              alert('创建失败: ' + err.message)
+            }
             this.cus = null;
           }
         )
@@ -122,7 +131,12 @@ export class CusformComponent implements OnInit {
   }
 
   showCity(item) {
-    let p = item.target.value;
+    let p:string;
+    if(typeof item == 'string' ){
+      p = item
+    }else{
+      p = item.target.value;
+    }
     console.log(p);
     this.addrService.getProCode(p).subscribe(
       res => {
@@ -135,7 +149,12 @@ export class CusformComponent implements OnInit {
   }
 
   showArea(item) {
-    let c = item.target.value;
+    let c:string;
+    if(typeof item == 'string' ){
+      c = item
+    }else{
+      c = item.target.value;
+    }
     this.addrService.getShotCode(c).subscribe(
       res => {
         if (res == '' || res == null) {

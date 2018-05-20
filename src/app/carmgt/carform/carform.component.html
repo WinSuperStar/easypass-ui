@@ -1,6 +1,6 @@
 <div class="box box-info">
   <div class="box-header with-border">
-    <h3 class="box-title">新增车辆信息</h3>
+    <h3 class="box-title">车辆信息</h3>
   </div>
   <!-- /.box-header -->
   <!-- form start -->
@@ -12,7 +12,7 @@
           <input type="text" class="form-control" formControlName="carnum">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'carnum')"
-            errorMsg="*格式不正确"></app-field-error-display>
+            errorMsg="*至少17位，字母大写"></app-field-error-display>
         </div>
       </div>
       <div class="form-group">
@@ -58,7 +58,7 @@
     <!-- /.box-body -->
     <div class="box-footer">
       <button type="button" class="btn btn-primary pull-left" (click)="cancel()">取消</button>&nbsp;&nbsp;
-      <button type="submit" class="btn btn-success pull-left" style="margin-left:5px;" (click)="save()">新建</button>
+      <button type="submit" class="btn btn-success pull-left" style="margin-left:5px;" (click)="save()">保存</button>
     </div>
     <!-- /.box-footer -->
   </form>

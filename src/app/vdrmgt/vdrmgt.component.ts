@@ -129,4 +129,45 @@ export class VdrmgtComponent implements OnInit {
     // console.log(form['itemlist']);
     this.vendors = this.vendorService.getVdrs(form);
   }
+
+  showItemDetail(v: Vendor){
+    let list:string = '';
+    if(v.itemTidang == 'true'){
+      list = '提档'+',';
+    }else if (v.itemGuohu == 'true'){
+      list = list + '过户' +',';
+    }else if (v.itemShangpai == 'true'){
+      list = list + '上牌' +',';
+    }else if (v.itemWeizhang == 'true'){
+      list = list + '违章' +',';
+    }else if (v.itemDiya == 'true'){
+      list = list + '抵押' +',';
+    }else if (v.itemJiechudiya == 'true'){
+      list = list + '解除抵押' +',';
+    }else if (v.itemWeituo == 'true'){
+      list = list + '委托' +',';
+    }else if (v.itemNianjian == 'true'){
+      list = list + '年检' +',';
+    }else if (v.itemBuhuan == 'true'){
+      list = list + '换补牌证' +',';
+    }else if (v.itemQita == 'true'){
+      list = list + '其他';
+    }
+    return list;
+  }
+
+  edit(id:any){
+    this.router.navigateByUrl('/home/vdrmgt/'+id);
+  }
+
+  submit(id:any){
+    //提交
+  }
+
+  view(id:any){
+    this.router.navigateByUrl('/home/vdrmgt/'+id);
+  }
+  delete(id:any){
+    //删除
+  }
 }

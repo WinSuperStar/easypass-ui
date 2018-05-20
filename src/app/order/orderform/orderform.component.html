@@ -1,4 +1,4 @@
-<form class="form-horizontal" [formGroup]="formModel">
+<form class="form-horizontal" [formGroup]="formGroup">
   <div class="box box-info">
     <div class="box-header with-border">
       <h3 class="box-title">订单基本信息</h3>
@@ -9,7 +9,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">车架号</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" disabled value="1234567891011">
+          <input type="text" class="form-control" value="1234567891011">
         </div>
         <label class="col-sm-2 control-label">初次登记日期</label>
         <div class="col-sm-2">
@@ -20,15 +20,11 @@
         <label class="col-sm-2 control-label">车辆详情</label>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">品牌</div>
-          <input class="form-control" disabled value="福特">
+          <input class="form-control" disabled>
         </div>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">车系</div>
-          <input class="form-control" disabled value="福克斯">
-        </div>
-        <div class="col-sm-3" style="display:table;">
-          <div class="input-group-addon">车型</div>
-          <input class="form-control" disabled value="2018运动2.0T">
+          <input class="form-control" disabled>
         </div>
       </div>
       <div class="form-group">

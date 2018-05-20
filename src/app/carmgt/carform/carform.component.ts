@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {Car, CarService} from "../../service/car.service";
 import {carnumValidator, mobileValidator} from "../../shared/validators/Validators";
 import {ValidationService} from "../../shared/services/validation.service";
+import {DateService} from '../../shared/services/date.service';
 
 declare var $: any;
 
@@ -24,7 +25,8 @@ export class CarformComponent implements OnInit {
   constructor(private router: Router,
               private carService: CarService,
               public validation: ValidationService,
-              private routeInfo: ActivatedRoute) {
+              private routeInfo: ActivatedRoute,
+              private dateService: DateService) {
   }
 
   ngOnInit() {
@@ -49,16 +51,19 @@ export class CarformComponent implements OnInit {
       this.carService.getCar(this.carid).subscribe(
         data => {
           this.car = data;
+          console.log(data);
+          this.showSet(data.carbrand);
           this.set = this.carService.getSubBrand(data.carbrand);
           this.formGroup.reset({
             carnum: data.carnum,
             carbrand: data.carbrand,
             carset: data.carset,
-            firstdate: data.firstdate
+            firstdate: this.dateService.dateFmt(data.firstdate)
           })
         },
         err => {
           console.log(err);
+          return err;
         }
       );
     }
@@ -127,8 +132,12 @@ export class CarformComponent implements OnInit {
   }
 
   showSet(item: any) {
-    let p = item.target.value;
-    console.log(p);
+    let p:string;
+    if(typeof item == 'string' ){
+      p = item
+    }else{
+      p = item.target.value;
+    }
     this.set = this.carService.getSubBrand(p);
   }
 }

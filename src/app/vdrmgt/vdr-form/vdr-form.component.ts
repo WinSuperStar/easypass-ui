@@ -104,11 +104,15 @@ export class VdrFormComponent implements OnInit {
     this.vendorService.getVdr(id).subscribe(
       res => {
         this.vdr = res;
+        this.province = this.addrService.getPros();
         this.showCity(res.vdraddr.split(' ')[0]);
         this.showArea(res.vdraddr.split(' ')[1]);
         this.formGroup.reset({
           vdrname: res.vdrname,
           vdraddrdetail: res.vdraddrdetail,
+          vdraddr1:res.vdraddr.split(' ')[0],
+          vdraddr2:res.vdraddr.split(' ')[1],
+          vdraddr3:res.vdraddr.split(' ')[2],
           vdrplate1: res.vdrplate.split(' ')[0],
           vdrplate2: res.vdrplate.split(' ')[1],
           contact: res.contact,
@@ -295,7 +299,9 @@ export class VdrFormComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('/home/vdrmgt');
+    if(confirm('确定要返回？')) {
+      this.router.navigateByUrl('/home/vdrmgt');
+    }
   }
 
   save() {

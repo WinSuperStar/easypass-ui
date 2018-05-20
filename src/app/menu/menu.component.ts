@@ -33,11 +33,12 @@ export class MenuComponent implements OnInit {
       new Menu(3, '销售限价管理', [{id: 31, name: '销售限价管理', link: 'home/presmgt'}]),
       new Menu(4, '订单管理',
         [{id: 41, name: '办证车辆管理', link: 'home/carmgt'},
-          {id: 42, name: '查询订单(待提交)', link: 'home/odrmgt'},
-          {id: 43, name: '查询订单(待办证)', link: 'home/odrmgt'},
-          {id: 44, name: '查询订单(办证中)', link: 'home/odrmgt'},
-          {id: 45, name: '查询订单(办证完成)', link: 'home/odrmgt'},
-          {id: 46, name: '查询订单(汇总)', link: 'home/odrmgt'}
+          {id: 42, name: '创建订单', link: 'home/orderform/0'},
+          {id: 43, name: '查询订单(待提交)', link: 'home/odrmgt'},
+          {id: 44, name: '查询订单(待办证)', link: 'home/odrmgt'},
+          {id: 45, name: '查询订单(办证中)', link: 'home/odrmgt'},
+          {id: 46, name: '查询订单(办证完成)', link: 'home/odrmgt'},
+          {id: 47, name: '查询订单(汇总)', link: 'home/odrmgt'}
           ]),
     ];
     if (!this.pService.checkPerm('1')){

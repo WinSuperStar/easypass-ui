@@ -116,6 +116,7 @@ export class PresformComponent implements OnInit {
     this.presaleService.getPresale(id).subscribe(
       res => {
         this.presale = res;
+        // this.province = this.addrService.getPros();
         this.showCity(res.caraddr.split(' ')[0]);
         this.showArea(res.caraddr.split(' ')[1]);
         this.formGroup.reset({
@@ -184,6 +185,62 @@ export class PresformComponent implements OnInit {
       }
     );
     this.province = this.addrService.getPros();
+    // 选择完代办商后，带入代办商信息
+    this.formGroup.get('contact').valueChanges.subscribe(
+      res => {
+        // let v: Vendor;
+        // for (let i = 0; i < this.vendors.length ;i++){
+        //   if (this.vendors[i].contact == this.formGroup.get('contact').value){
+        //     v = this.vendors[i];
+        //     break;
+        //   }
+        // }
+        this.vendorService.getVdr(this.formGroup.get('contact').value).subscribe(res=>{
+          this.presale.contact = res.vdrname;
+          this.formGroup.reset({
+            checkboxTidang: res.itemTidang,
+            itemTidangTax: res.itemTidangTax,
+            itemTidangCost: res.itemTidangCost,
+            itemTidangDesc: res.itemTidangDesc,
+            checkboxGuohu: res.itemGuohu,
+            itemGuohuTax: res.itemGuohuTax,
+            itemGuohuCost: res.itemGuohuCost,
+            itemGuohuDesc: res.itemGuohuDesc,
+            checkboxShangpai: res.itemShangpai,
+            itemShangpaiTax: res.itemShangpaiTax,
+            itemShangpaiCost: res.itemShangpaiCost,
+            itemShangpaiDesc: res.itemShangpaiDesc,
+            checkboxWeizhang: res.itemWeizhang,
+            itemWeizhangTax: res.itemWeizhangTax,
+            itemWeizhangCost: res.itemWeizhangCost,
+            itemWeizhangCost2: res.itemWeizhangCost2,
+            itemWeizhangDesc: res.itemWeizhangDesc,
+            checkboxDiya: res.itemDiya,
+            itemDiyaCost: res.itemDiyaCost,
+            itemDiyaDesc: res.itemDiyaDesc,
+            checkboxJiechudiya: res.itemJiechudiya,
+            itemJiechudiyaCost: res.itemJiechudiyaCost,
+            itemJiechudiyaDesc: res.itemJiechudiyaDesc,
+            checkboxWeituo: res.itemWeituo,
+            itemWeituoTax: res.itemWeituoTax,
+            itemWeituoCost: res.itemWeituoCost,
+            itemWeituoDesc: res.itemWeituoDesc,
+            checkboxNianjian: res.itemNianjian,
+            itemNianjianTax: res.itemNianjianTax,
+            itemNianjianCost: res.itemNianjianCost,
+            itemNianjianDesc: res.itemNianjianDesc,
+            checkboxBuhuan: res.itemBuhuan,
+            itemBuhuanTax: res.itemBuhuanTax,
+            itemBuhuanCost: res.itemBuhuanCost,
+            itemBuhuanDesc: res.itemBuhuanDesc,
+            checkboxQita: res.itemQita,
+            itemQitaCost: res.itemQitaCost,
+            itemQitaDesc: res.itemQitaDesc
+          });
+        });
+
+      });
+
     $('#fileUpload').fileinput({
       theme: 'fa',
       language: 'zh',
@@ -325,7 +382,9 @@ export class PresformComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('/presmgt');
+    if (confirm('确定要返回？')) {
+      this.router.navigateByUrl('/home/presmgt');
+    }
   }
 
   save() {
@@ -335,7 +394,7 @@ export class PresformComponent implements OnInit {
       this.presale.cusmode = this.formGroup.get('cusmode').value;
       this.presale.caraddr = this.formGroup.get('caraddr1').value + ' ' + this.formGroup.get('caraddr2').value + ' ' + this.formGroup.get('caraddr3').value;
       this.presale.carplate = this.formGroup.get('carplate1').value + ' ' + this.formGroup.get('carplate2').value;
-      this.presale.contact = this.formGroup.get('contact').value;
+      // this.presale.contact = this.formGroup.get('contact').value;
       this.presale.contactphone = this.formGroup.get('contactphone').value;
       // this.presale.contacts = '';
       this.presale.itemTidang = this.formGroup.get('checkboxTidang').value;
@@ -418,10 +477,10 @@ export class PresformComponent implements OnInit {
 
   showCity(item) {
     console.log(typeof item);
-    let p:string;
-    if(typeof item == 'string' ){
-      p = item
-    }else{
+    let p: string;
+    if (typeof item == 'string') {
+      p = item;
+    } else {
       p = item.target.value;
     }
     this.addrService.getProCode(p).subscribe(
@@ -435,10 +494,10 @@ export class PresformComponent implements OnInit {
   }
 
   showArea(item) {
-    let c:string;
-    if(typeof item == 'string' ){
-      c = item
-    }else{
+    let c: string;
+    if (typeof item == 'string') {
+      c = item;
+    } else {
       c = item.target.value;
     }
     this.addrService.getShotCode(c).subscribe(

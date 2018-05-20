@@ -143,26 +143,22 @@
         <td>{{v.vdraddr}}</td>
         <td>{{v.vdrplate}}</td>
         <td>{{v.vdrname}}</td>
-        <td>上牌，过户，年检</td>
-        <td>
-          <p>联系人1</p>
-          <p>联系人2</p>
+        <td>{{showItemDetail(v)}}</td>
+        <td>{{v.contact}}
         </td>
-        <td>
-          <p>联系电话1</p>
-          <p>联系电话2</p>
+        <td>{{v.contactphone}}
         </td>
-        <td>2018-01-01</td>
-        <td>提交</td>
-        <td>杨磊</td>
+        <td>{{v.createdate}}</td>
+        <td>{{v.state}}</td>
+        <td>{{v.creator}}</td>
         <td>
           <p>
-            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span>提交</a>
-            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span>查看</a>
+            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="submit(v.vdrid)"></span>提交</a>
+            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="view(v.vdrid)"></span>查看</a>
           </p>
           <p>
-            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
-            <a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>删除</a>
+            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="edit(v.vdrid)"></span>编辑</a>
+            <a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" (click)="delete(v.vdrid)"></span>删除</a>
           </p>
         </td>
       </tr>
