@@ -38,12 +38,11 @@ export class LoginComponent implements OnInit {
       .subscribe(
         res => {
           if (res != null) {
-            let rolename = res.rolename;
+            let roleid = res.roleid;
             let params = new HttpParams()
-              .set('rolename', rolename);
+              .set('roleid', roleid);
             this.httpClient.post('/api/permission',params,{ responseType: 'text' }).subscribe(
               res=>{
-                console.log('获取权限：'+res);
                 localStorage.setItem('permission',res)
               },
               err=>{
@@ -51,7 +50,9 @@ export class LoginComponent implements OnInit {
                 return err;
               }
             )
+
             let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : 'home';
+            alert(redirect);
             let navigationExtras: NavigationExtras = {
               queryParamsHandling: 'preserve',
               preserveFragment: true

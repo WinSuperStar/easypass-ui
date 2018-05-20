@@ -11,6 +11,8 @@ import {Role, RoleService} from "../../../service/role.service";
 import {Observable} from "rxjs/Observable";
 declare var bootbox:any;
 
+declare var $: any;
+
 @Component({
   selector: 'app-userform',
   templateUrl: './userform.component.html',
@@ -32,6 +34,7 @@ export class UserformComponent implements OnInit {
 
   }
 
+
   ngOnInit() {
     this.roles = this.roleService.getRoles();
     this.userid = this.routeInfo.snapshot.params['id'];
@@ -44,7 +47,8 @@ export class UserformComponent implements OnInit {
       }, {validator: passwordValidator}),
       position: ['', Validators.required],
       gender: ['女'],
-      state: ['失效']
+      state: ['失效'],
+      myVar: [ 'true' ]
     });
     if (this.userid != 0) {
       this.userService.getUser(this.userid).subscribe(
@@ -67,8 +71,18 @@ export class UserformComponent implements OnInit {
         }
       );
     }
+    this.canEdit();
   }
+  canEdit() {
+    let roleid = JSON.parse(localStorage.getItem('currentUser'))['roleid'];
+    if(roleid!=18){
+       $("#userName").attr("readonly","readonly");
+       $("#position").attr("disabled","disabled");
+       $("#womanGender").attr("disabled","disabled");
+       $("#activeState").attr("disabled","disabled");
+    }
 
+  }
   cancel() {
     let c = confirm('确定要返回？');
     if(c == true) {

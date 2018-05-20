@@ -122,7 +122,7 @@ export class PstnformComponent implements OnInit {
         console.log(this.role);
         this.roleService.updateRole(this.role).subscribe(
           res => {
-            alert('用户更新成功： ' + this.role.rolename);
+            alert('岗位更新成功： ' + this.role.rolename);
             this.router.navigateByUrl('/home/pstnmgt');
           },
           err => {

@@ -19,6 +19,7 @@ export class PermissionService {
         }
       }
     }
+    console.log("权限如下："+flag);
     return flag;
   }
 
