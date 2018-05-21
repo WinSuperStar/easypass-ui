@@ -26,7 +26,6 @@ export class AccesslogmgtComponent implements OnInit {
 
   ngOnInit() {
     const date = this.dateServie;
-    // this.search('1', '10') ;
     myTable = $('#accessLogmgtTable').DataTable( {
       'processing': true,
       'serverSide': true,
