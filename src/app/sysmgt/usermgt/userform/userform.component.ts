@@ -83,21 +83,21 @@ export class UserformComponent implements OnInit {
             console.log(showName);
             initialPreviewConfig.push({caption: '证件照', downloadUrl: realDomainPath ,  key: i });
           })
-          this.initFileUpload( initialPreview , initialPreviewConfig );
+          this.initFileUpload('certpath', initialPreview , initialPreviewConfig );
         },
         err => {
           console.log(err);
         }
       );
     } else {
-      this.initFileUpload(initialPreview , initialPreviewConfig);
+      this.initFileUpload('certpath', initialPreview , initialPreviewConfig);
     }
     this.canEdit();
   }
 
-  initFileUpload(initialPreview, initialPreviewConfig) {
+  initFileUpload(id, initialPreview, initialPreviewConfig) {
     const _formModel = this.formModel;
-    $('#userCertUpload').fileinput({
+    const fileInput = $('#' + id + 'Upload').fileinput({
       theme: 'fa',
       language: 'zh',
       allowedPreviewTypes : [ 'image' ],
@@ -112,23 +112,17 @@ export class UserformComponent implements OnInit {
         moduleName: 'user'
       }
     }).on('filebatchselected', function(event, files) {
-      $('#userCertUpload').fileinput('upload');
+      fileInput.fileinput('upload');
     }).on('filebatchuploadsuccess', function(event, data, previewId, index) {
       console.log(data.response);
       this.result = data.response;
       if (this.result.code == 0) {
-        const relativeStorePath =  $('#certpath').val() ;
+        const relativeStorePath =  $('#' + id ).val() ;
         console.log(relativeStorePath);
         if (relativeStorePath != '' ) {
-
           _formModel.get('certpath').setValue(relativeStorePath + ',' + this.result.data.relativeStorePath);
-          // $('#certpath').val(relativeStorePath + ',' + this.result.data.relativeStorePath);
-          // user.certpath = relativeStorePath + ',' + this.result.data.relativeStorePath ;
         } else {
-          // $('#certpath').val(this.result.data.relativeStorePath);
           _formModel.get('certpath').setValue(this.result.data.relativeStorePath);
-          // user.certpath = this.result.data.relativeStorePath;
-
         }
       }
 

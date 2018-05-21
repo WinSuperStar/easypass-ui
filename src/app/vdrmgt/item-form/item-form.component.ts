@@ -5,6 +5,9 @@ import {Observable} from 'rxjs/Observable';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ValidationService} from '../../shared/services/validation.service';
 
+
+declare var $: any;
+
 @Component({
   selector: 'app-item-form',
   templateUrl: './item-form.component.html',
@@ -23,6 +26,8 @@ export class ItemFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    const initialPreview = new Array();
+    const initialPreviewConfig  = new Array();
     let id = this.routeInfo.snapshot.params['id'];
     this.formGroup = this.fb.group({
       matDengji: [''],
@@ -60,7 +65,13 @@ export class ItemFormComponent implements OnInit {
       newLisenceDesc: [''],
       newLisenceCost: [''],
       newComments: [''],
-      newCost: ['']
+      newCost: [''],
+      oriSampleVideoPath: [''],
+      oriSampleImagePath: [''],
+      oriSampleCertPath: [''],
+      newSampleVideoPath: [''],
+      newSampleImagePath: [''],
+      newSampleCertPath: ['']
     });
     this.idService.getItemdetail(id).subscribe(
       res => {
@@ -101,14 +112,98 @@ export class ItemFormComponent implements OnInit {
           newLisenceDesc: this.itemdetail.newLisenceDesc,
           newLisenceCost: this.itemdetail.newLisenceCost,
           newComments: this.itemdetail.newComments,
-          newCost: this.itemdetail.newCost
+          newCost: this.itemdetail.newCost,
+          oriSampleVideoPath: this.itemdetail.oriSampleVideoPath,
+          oriSampleImagePath: this.itemdetail.oriSampleImagePath,
+          oriSampleCertPath: this.itemdetail.oriSampleCertPath,
+          newSampleVideoPath: this.itemdetail.newSampleVideoPath,
+          newSampleImagePath: this.itemdetail.newSampleImagePath,
+          newSampleCertPath: this.itemdetail.newSampleCertPath
         });
+        let paths = this.itemdetail.oriSampleVideoPath.split(',');
+        paths.forEach(function(path, i) {
+          console.log(path);
+          const realDomainPath = $.cookie('domain') + path;
+          console.log(realDomainPath);
+          initialPreview.push(realDomainPath);
+          const showName = path.substring(path.lastIndexOf('/') + 1);
+          console.log(showName);
+          initialPreviewConfig.push({caption: '样板视频', downloadUrl: realDomainPath ,  key: i });
+        });
+        this.initVideoFileUpload('oriSampleVideoPath', initialPreview, initialPreviewConfig);
+
+        paths = this.itemdetail.oriSampleImagePath.split(',');
+        paths.forEach(function(path, i) {
+          console.log(path);
+          const realDomainPath = $.cookie('domain') + path;
+          console.log(realDomainPath);
+          initialPreview.push(realDomainPath);
+          const showName = path.substring(path.lastIndexOf('/') + 1);
+          console.log(showName);
+          initialPreviewConfig.push({caption: '样板图片', downloadUrl: realDomainPath ,  key: i });
+        });
+        this.initImageFileUpload('oriSampleImagePath', initialPreview, initialPreviewConfig);
+
+        paths = this.itemdetail.oriSampleCertPath.split(',');
+        paths.forEach(function(path, i) {
+          console.log(path);
+          const realDomainPath = $.cookie('domain') + path;
+          console.log(realDomainPath);
+          initialPreview.push(realDomainPath);
+          const showName = path.substring(path.lastIndexOf('/') + 1);
+          console.log(showName);
+          initialPreviewConfig.push({caption: '样板公证书', downloadUrl: realDomainPath ,  key: i });
+        });
+        this.initImageFileUpload('oriSampleCertPath', initialPreview, initialPreviewConfig);
+
+        paths = this.itemdetail.newSampleVideoPath.split(',');
+        paths.forEach(function(path, i) {
+          console.log(path);
+          const realDomainPath = $.cookie('domain') + path;
+          console.log(realDomainPath);
+          initialPreview.push(realDomainPath);
+          const showName = path.substring(path.lastIndexOf('/') + 1);
+          console.log(showName);
+          initialPreviewConfig.push({caption: '样板视频', downloadUrl: realDomainPath ,  key: i });
+        });
+        this.initVideoFileUpload('newSampleVideoPath', initialPreview, initialPreviewConfig);
+
+        paths = this.itemdetail.newSampleImagePath.split(',');
+        paths.forEach(function(path, i) {
+          console.log(path);
+          const realDomainPath = $.cookie('domain') + path;
+          console.log(realDomainPath);
+          initialPreview.push(realDomainPath);
+          const showName = path.substring(path.lastIndexOf('/') + 1);
+          console.log(showName);
+          initialPreviewConfig.push({caption: '样板图片', downloadUrl: realDomainPath ,  key: i });
+        });
+        this.initImageFileUpload('newSampleImagePath', initialPreview, initialPreviewConfig);
+
+        paths = this.itemdetail.newSampleCertPath.split(',');
+        paths.forEach(function(path, i) {
+          console.log(path);
+          const realDomainPath = $.cookie('domain') + path;
+          console.log(realDomainPath);
+          initialPreview.push(realDomainPath);
+          const showName = path.substring(path.lastIndexOf('/') + 1);
+          console.log(showName);
+          initialPreviewConfig.push({caption: '样板公证书', downloadUrl: realDomainPath ,  key: i });
+        });
+        this.initImageFileUpload('newSampleCertPath', initialPreview, initialPreviewConfig);
       },
       err => {
         return err;
       });
-
+      this.initVideoFileUpload('oriSampleVideoPath', initialPreview, initialPreviewConfig);
+      this.initImageFileUpload('oriSampleImagePath', initialPreview, initialPreviewConfig);
+      this.initImageFileUpload('oriSampleCertPath', initialPreview, initialPreviewConfig);
+      this.initVideoFileUpload('newSampleVideoPath', initialPreview, initialPreviewConfig);
+      this.initImageFileUpload('newSampleImagePath', initialPreview, initialPreviewConfig);
+      this.initImageFileUpload('newSampleCertPath', initialPreview, initialPreviewConfig);
   }
+
+
 
   save() {
     if (this.formGroup.valid) {
@@ -148,6 +243,12 @@ export class ItemFormComponent implements OnInit {
       this.itemdetail.newLisenceCost = this.formGroup.get('newLisenceCost').value;
       this.itemdetail.newComments = this.formGroup.get('newComments').value;
       this.itemdetail.newCost = this.formGroup.get('newCost').value;
+      this.itemdetail.oriSampleVideoPath = this.formGroup.get('oriSampleVideoPath').value;
+      this.itemdetail.oriSampleImagePath = this.formGroup.get('oriSampleVideoPath').value;
+      this.itemdetail.oriSampleCertPath = this.formGroup.get('oriSampleVideoPath').value;
+      this.itemdetail.newSampleVideoPath = this.formGroup.get('oriSampleVideoPath').value;
+      this.itemdetail.newSampleImagePath = this.formGroup.get('oriSampleVideoPath').value;
+      this.itemdetail.newSampleCertPath = this.formGroup.get('oriSampleVideoPath').value;
       console.log(this.itemdetail);
       this.idService.saveItemdetail(JSON.stringify(this.itemdetail)).subscribe(
         res => {
@@ -178,4 +279,70 @@ export class ItemFormComponent implements OnInit {
       this.router.navigateByUrl('/home/vdrmgt/' + id);
     }
   }
+
+  initVideoFileUpload(id , initialPreview, initialPreviewConfig) {
+    const _formModel = this.formGroup;
+    const fileUpload = $('#' + id + 'Upload').fileinput({
+      theme: 'fa',
+      language: 'zh',
+      allowedPreviewTypes : [ 'video' ],
+      allowedFileExtensions : ['mp4', 'avi', 'mov', 'wmv', 'asf', 'navi', '3gp', 'mkv', 'f4v', 'rmvb', 'webm'],
+      uploadUrl: '/api/upload',
+      uploadAsync: false,
+      initialPreviewAsData: true,
+      initialPreviewFileType: 'image',
+      initialPreview: initialPreview ,
+      initialPreviewConfig: initialPreviewConfig ,
+      uploadExtraData: {
+        moduleName: 'user'
+      }
+    }).on('filebatchselected', function(event, files) {
+      fileUpload.fileinput('upload');
+    }).on('filebatchuploadsuccess', function(event, data, previewId, index) {
+      console.log(data.response);
+      this.result = data.response;
+      if (this.result.code == 0) {
+        const relativeStorePath =  $('#' + id).val() ;
+        console.log(relativeStorePath);
+        if (relativeStorePath != '' ) {
+          _formModel.get(id).setValue(relativeStorePath + ',' + this.result.data.relativeStorePath);
+        } else {
+          _formModel.get(id).setValue(this.result.data.relativeStorePath);
+        }
+      }
+    });
+  }
+  initImageFileUpload(id , initialPreview, initialPreviewConfig) {
+    const _formModel = this.formGroup;
+    const fileUpload = $('#' + id + 'Upload').fileinput({
+      theme: 'fa',
+      language: 'zh',
+      allowedPreviewTypes : [ 'image' ],
+      allowedFileExtensions : ['jpg', 'png', 'gif'],
+      uploadUrl: '/api/upload',
+      uploadAsync: false,
+      initialPreviewAsData: true,
+      initialPreviewFileType: 'image',
+      initialPreview: initialPreview ,
+      initialPreviewConfig: initialPreviewConfig ,
+      uploadExtraData: {
+        moduleName: 'user'
+      }
+    }).on('filebatchselected', function(event, files) {
+      fileUpload.fileinput('upload');
+    }).on('filebatchuploadsuccess', function(event, data, previewId, index) {
+      console.log(data.response);
+      this.result = data.response;
+      if (this.result.code == 0) {
+        const relativeStorePath =  $('#' + id).val() ;
+        console.log(relativeStorePath);
+        if (relativeStorePath != '' ) {
+          _formModel.get(id).setValue(relativeStorePath + ',' + this.result.data.relativeStorePath);
+        } else {
+          _formModel.get(id).setValue(this.result.data.relativeStorePath);
+        }
+      }
+    });
+  }
+
 }

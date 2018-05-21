@@ -69,22 +69,40 @@
           <td><input type="number" formControlName="oriPresentCost"></td>
         </tr>
         <tr>
-          <td>上传样板视频
-            <button type="button">上传</button>
+          <td>上传样板视频 </td>
+          <td colspan="5">
+            <div class="col-sm-7">
+              <input type="hidden" id="oriSampleVideoPath" name="oriSampleVideoPath"  formControlName="oriSampleVideoPath" >
+              <div class="file-loading">
+                <input id="oriSampleVideoPathUpload" name="files" type="file" multiple >
+              </div>
+            </div>
           </td>
-          <td colspan="5">展示已上传视频</td>
         </tr>
         <tr>
           <td>上传样板图片
-            <button type="button">上传</button>
           </td>
-          <td colspan="5">展示已上传图片</td>
+          <td colspan="5">
+            <div class="col-sm-7">
+              <input type="hidden" id="oriSampleImagePath" name="oriSampleImagePath"  formControlName="oriSampleImagePath" >
+              <div class="file-loading">
+                <input id="oriSampleImagePathUpload" name="files" type="file" multiple >
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>上传样板公证书
             <button type="button">上传</button>
           </td>
-          <td colspan="5">展示已上传公证书</td>
+          <td colspan="5">
+            <div class="col-sm-7">
+              <input type="hidden" id="oriSampleCertPath" name="oriSampleCertPath"  formControlName="oriSampleCertPath" >
+              <div class="file-loading">
+                <input id="oriSampleCertPathUpload" name="files" type="file" multiple >
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>原车主单位营业执照</td>
@@ -136,21 +154,39 @@
         </tr>
         <tr>
           <td>上传样板视频
-            <button type="button">上传</button>
           </td>
-          <td colspan="5">展示已上传视频</td>
+          <td colspan="5">
+            <div class="col-sm-7">
+              <input type="hidden" id="newSampleVideoPath" name="newSampleVideoPath"  formControlName="newSampleVideoPath" >
+              <div class="file-loading">
+                <input id="newSampleVideoPathUpload" name="files" type="file" multiple >
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>上传样板图片
-            <button type="button">上传</button>
           </td>
-          <td colspan="5">展示已上传图片</td>
+          <td colspan="5">
+            <div class="col-sm-7">
+              <input type="hidden" id="newSampleImagePath" name="newSampleImagePath"  formControlName="newSampleImagePath" >
+              <div class="file-loading">
+                <input id="newSampleImagePathUpload" name="files" type="file" multiple >
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>上传样板公证书
-            <button type="button">上传</button>
           </td>
-          <td colspan="5">展示已上传公证书</td>
+          <td colspan="5">
+            <div class="col-sm-7">
+              <input type="hidden" id="newSampleCertPath" name="newSampleCertPath"  formControlName="newSampleCertPath" >
+              <div class="file-loading">
+                <input id="newSampleCertPathUpload" name="files" type="file" multiple >
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td>新车主单位营业执照</td>
