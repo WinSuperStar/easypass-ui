@@ -56,7 +56,7 @@ export class PstnformComponent implements OnInit {
         });
         this.selects = selects;
       });
-      if (this.roleid !== 0) {
+      if (this.roleid != 0) {
         this.roleService.getRole(this.roleid).subscribe(
           data => {
             this.role = data;

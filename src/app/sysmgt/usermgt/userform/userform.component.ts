@@ -76,7 +76,7 @@ export class UserformComponent implements OnInit {
           const paths = this.user.certpath.split(',');
           paths.forEach(function(path, i) {
             console.log(path);
-            const realDomainPath = $.cookie('domain') + path;
+            const realDomainPath = path;
             console.log(realDomainPath);
             initialPreview.push(realDomainPath);
             const showName = path.substring(path.lastIndexOf('/') + 1);
@@ -173,7 +173,7 @@ export class UserformComponent implements OnInit {
           '',
           '',
           this.formModel.value['position'],
-          '',
+          ''
         );
         console.log('新建用户：');
         console.log(this.user);

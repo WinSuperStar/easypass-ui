@@ -25,20 +25,18 @@ export class PstnmgtComponent implements OnInit {
     this.router.navigateByUrl('/home/pstnform/0');
   }
 
-  edit(role: Role){
-    this.router.navigateByUrl('/home/pstnform/'+role.roleid);
+  edit(role: Role) {
+    this.router.navigateByUrl('/home/pstnform/' + role.roleid);
   }
 
-  delete(role: Role){
+  delete(role: Role) {
 
     this.roleService.delRole(role.roleid).subscribe(
       res => {
-        //alert('岗位删除成功! ');
         this.roles = this.roleService.getRoles();
         this.router.navigateByUrl('/home/pstnmgt');
       },
       err => {
-        //alert('岗位删除失败!' );
         this.roles = this.roleService.getRoles();
         this.router.navigateByUrl('/home/pstnmgt');
       }

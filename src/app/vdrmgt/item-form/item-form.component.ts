@@ -123,7 +123,7 @@ export class ItemFormComponent implements OnInit {
         let paths = this.itemdetail.oriSampleVideoPath.split(',');
         paths.forEach(function(path, i) {
           console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
+          const realDomainPath =  path;
           console.log(realDomainPath);
           initialPreview.push(realDomainPath);
           const showName = path.substring(path.lastIndexOf('/') + 1);
@@ -135,7 +135,7 @@ export class ItemFormComponent implements OnInit {
         paths = this.itemdetail.oriSampleImagePath.split(',');
         paths.forEach(function(path, i) {
           console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
+          const realDomainPath =  path;
           console.log(realDomainPath);
           initialPreview.push(realDomainPath);
           const showName = path.substring(path.lastIndexOf('/') + 1);
@@ -147,7 +147,7 @@ export class ItemFormComponent implements OnInit {
         paths = this.itemdetail.oriSampleCertPath.split(',');
         paths.forEach(function(path, i) {
           console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
+          const realDomainPath =  path;
           console.log(realDomainPath);
           initialPreview.push(realDomainPath);
           const showName = path.substring(path.lastIndexOf('/') + 1);
@@ -159,7 +159,7 @@ export class ItemFormComponent implements OnInit {
         paths = this.itemdetail.newSampleVideoPath.split(',');
         paths.forEach(function(path, i) {
           console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
+          const realDomainPath =  path;
           console.log(realDomainPath);
           initialPreview.push(realDomainPath);
           const showName = path.substring(path.lastIndexOf('/') + 1);
@@ -171,7 +171,7 @@ export class ItemFormComponent implements OnInit {
         paths = this.itemdetail.newSampleImagePath.split(',');
         paths.forEach(function(path, i) {
           console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
+          const realDomainPath =  path;
           console.log(realDomainPath);
           initialPreview.push(realDomainPath);
           const showName = path.substring(path.lastIndexOf('/') + 1);
@@ -183,7 +183,7 @@ export class ItemFormComponent implements OnInit {
         paths = this.itemdetail.newSampleCertPath.split(',');
         paths.forEach(function(path, i) {
           console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
+          const realDomainPath =  path;
           console.log(realDomainPath);
           initialPreview.push(realDomainPath);
           const showName = path.substring(path.lastIndexOf('/') + 1);
