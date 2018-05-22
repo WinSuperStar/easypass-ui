@@ -49,13 +49,13 @@ export class AccesslogmgtComponent implements OnInit {
             $.extend( d, searchParams );
           }
         },
-        'dataType' : 'json',
-        'dataFilter': function (json) {
-          console.log(json)
-          json = JSON.parse(json);
-          console.log(json);
-          return JSON.stringify(json);
-        }
+        'dataType' : 'json'
+        // 'dataFilter': function (json) {
+        //   console.log(json)
+        //   json = JSON.parse(json);
+        //   console.log(json);
+        //   return JSON.stringify(json);
+        // }
       },
       'searching' : false,
       'columns': [
