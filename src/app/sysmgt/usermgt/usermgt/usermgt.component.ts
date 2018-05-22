@@ -71,8 +71,8 @@ export class UsermgtComponent implements OnInit {
     this.users = this.userService.getUsers(value);
   }
 
-  edit(user:User){
+  edit(user: User) {
     console.log(user.userid);
-    this.router.navigateByUrl('/home/userform/'+user.userid);
+    this.router.navigateByUrl('/home/userform/' + user.userid);
   }
 }

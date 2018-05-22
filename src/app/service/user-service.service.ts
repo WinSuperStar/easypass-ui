@@ -102,7 +102,8 @@ export class User {
               public  add1: string,
               public  add2: string,
               public  add3: string,
-              public roleid: string) {
+              public  roleid: string,
+              public  rolename: string  ) {
 
   }
 }
