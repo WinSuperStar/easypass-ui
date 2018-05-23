@@ -73,16 +73,18 @@ export class UserformComponent implements OnInit {
             state: data.state,
             certpath: data.certpath
           });
-          const paths = this.user.certpath.split(',');
-          paths.forEach(function(path, i) {
-            console.log(path);
-            const realDomainPath = path;
-            console.log(realDomainPath);
-            initialPreview.push(realDomainPath);
-            const showName = path.substring(path.lastIndexOf('/') + 1);
-            console.log(showName);
-            initialPreviewConfig.push({caption: '证件照', downloadUrl: realDomainPath ,  key: i });
-          })
+          if ( this.user.certpath != null ) {
+            const paths = this.user.certpath.split(',');
+            paths.forEach(function(path, i) {
+              console.log(path);
+              const realDomainPath = path;
+              console.log(realDomainPath);
+              initialPreview.push(realDomainPath);
+              const showName = path.substring(path.lastIndexOf('/') + 1);
+              console.log(showName);
+              initialPreviewConfig.push({caption: '证件照', downloadUrl: realDomainPath ,  key: i });
+            });
+          }
           this.initFileUpload('certpath', initialPreview , initialPreviewConfig );
         },
         err => {
