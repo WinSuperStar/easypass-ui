@@ -120,76 +120,90 @@ export class ItemFormComponent implements OnInit {
           newSampleImagePath: this.itemdetail.newSampleImagePath,
           newSampleCertPath: this.itemdetail.newSampleCertPath
         });
-        let paths = this.itemdetail.oriSampleVideoPath.split(',');
-        paths.forEach(function(path, i) {
-          console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
-          console.log(realDomainPath);
-          initialPreview.push(realDomainPath);
-          const showName = path.substring(path.lastIndexOf('/') + 1);
-          console.log(showName);
-          initialPreviewConfig.push({caption: '样板视频', downloadUrl: realDomainPath ,  key: i });
-        });
+        let paths ;
+        if (this.itemdetail.oriSampleVideoPath != null) {
+          paths = this.itemdetail.oriSampleVideoPath.split(',');
+          paths.forEach(function(path, i) {
+            console.log(path);
+            const realDomainPath =  path;
+            console.log(realDomainPath);
+            initialPreview.push(realDomainPath);
+            const showName = path.substring(path.lastIndexOf('/') + 1);
+            console.log(showName);
+            initialPreviewConfig.push({caption: '样板视频', downloadUrl: realDomainPath ,  key: i });
+          });
+        }
         this.initVideoFileUpload('oriSampleVideoPath', initialPreview, initialPreviewConfig);
 
-        paths = this.itemdetail.oriSampleImagePath.split(',');
-        paths.forEach(function(path, i) {
-          console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
-          console.log(realDomainPath);
-          initialPreview.push(realDomainPath);
-          const showName = path.substring(path.lastIndexOf('/') + 1);
-          console.log(showName);
-          initialPreviewConfig.push({caption: '样板图片', downloadUrl: realDomainPath ,  key: i });
-        });
+
+        if ( this.itemdetail.oriSampleImagePath !=null ) {
+          paths = this.itemdetail.oriSampleImagePath.split(',');
+          paths.forEach(function(path, i) {
+            console.log(path);
+            const realDomainPath =  path;
+            console.log(realDomainPath);
+            initialPreview.push(realDomainPath);
+            const showName = path.substring(path.lastIndexOf('/') + 1);
+            console.log(showName);
+            initialPreviewConfig.push({caption: '样板图片', downloadUrl: realDomainPath ,  key: i });
+          });
+        }
         this.initImageFileUpload('oriSampleImagePath', initialPreview, initialPreviewConfig);
 
-        paths = this.itemdetail.oriSampleCertPath.split(',');
-        paths.forEach(function(path, i) {
-          console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
-          console.log(realDomainPath);
-          initialPreview.push(realDomainPath);
-          const showName = path.substring(path.lastIndexOf('/') + 1);
-          console.log(showName);
-          initialPreviewConfig.push({caption: '样板公证书', downloadUrl: realDomainPath ,  key: i });
-        });
+        if ( this.itemdetail.oriSampleCertPath != null) {
+          paths = this.itemdetail.oriSampleCertPath.split(',');
+          paths.forEach(function(path, i) {
+            console.log(path);
+            const realDomainPath =  path;
+            console.log(realDomainPath);
+            initialPreview.push(realDomainPath);
+            const showName = path.substring(path.lastIndexOf('/') + 1);
+            console.log(showName);
+            initialPreviewConfig.push({caption: '样板公证书', downloadUrl: realDomainPath ,  key: i });
+          });
+        }
         this.initImageFileUpload('oriSampleCertPath', initialPreview, initialPreviewConfig);
 
-        paths = this.itemdetail.newSampleVideoPath.split(',');
-        paths.forEach(function(path, i) {
-          console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
-          console.log(realDomainPath);
-          initialPreview.push(realDomainPath);
-          const showName = path.substring(path.lastIndexOf('/') + 1);
-          console.log(showName);
-          initialPreviewConfig.push({caption: '样板视频', downloadUrl: realDomainPath ,  key: i });
-        });
+        if ( this.itemdetail.newSampleVideoPath != null) {
+          paths = this.itemdetail.newSampleVideoPath.split(',');
+          paths.forEach(function(path, i) {
+            console.log(path);
+            const realDomainPath =  path;
+            console.log(realDomainPath);
+            initialPreview.push(realDomainPath);
+            const showName = path.substring(path.lastIndexOf('/') + 1);
+            console.log(showName);
+            initialPreviewConfig.push({caption: '样板视频', downloadUrl: realDomainPath ,  key: i });
+          });
+        }
         this.initVideoFileUpload('newSampleVideoPath', initialPreview, initialPreviewConfig);
 
-        paths = this.itemdetail.newSampleImagePath.split(',');
-        paths.forEach(function(path, i) {
-          console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
-          console.log(realDomainPath);
-          initialPreview.push(realDomainPath);
-          const showName = path.substring(path.lastIndexOf('/') + 1);
-          console.log(showName);
-          initialPreviewConfig.push({caption: '样板图片', downloadUrl: realDomainPath ,  key: i });
-        });
+        if ( this.itemdetail.newSampleImagePath != null ) {
+          paths = this.itemdetail.newSampleImagePath.split(',');
+          paths.forEach(function(path, i) {
+            console.log(path);
+            const realDomainPath =  path;
+            console.log(realDomainPath);
+            initialPreview.push(realDomainPath);
+            const showName = path.substring(path.lastIndexOf('/') + 1);
+            console.log(showName);
+            initialPreviewConfig.push({caption: '样板图片', downloadUrl: realDomainPath ,  key: i });
+          });
+        }
         this.initImageFileUpload('newSampleImagePath', initialPreview, initialPreviewConfig);
 
-        paths = this.itemdetail.newSampleCertPath.split(',');
-        paths.forEach(function(path, i) {
-          console.log(path);
-          const realDomainPath = $.cookie('domain') + path;
-          console.log(realDomainPath);
-          initialPreview.push(realDomainPath);
-          const showName = path.substring(path.lastIndexOf('/') + 1);
-          console.log(showName);
-          initialPreviewConfig.push({caption: '样板公证书', downloadUrl: realDomainPath ,  key: i });
-        });
+        if ( this.itemdetail.newSampleCertPath != null  ){
+          paths = this.itemdetail.newSampleCertPath.split(',');
+          paths.forEach(function(path, i) {
+            console.log(path);
+            const realDomainPath =  path;
+            console.log(realDomainPath);
+            initialPreview.push(realDomainPath);
+            const showName = path.substring(path.lastIndexOf('/') + 1);
+            console.log(showName);
+            initialPreviewConfig.push({caption: '样板公证书', downloadUrl: realDomainPath ,  key: i });
+          });
+        }
         this.initImageFileUpload('newSampleCertPath', initialPreview, initialPreviewConfig);
       },
       err => {

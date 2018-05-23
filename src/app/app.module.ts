@@ -56,6 +56,7 @@ import {ItemdetailService} from './service/itemdetail.service';
 import {PermissionService} from './shared/services/permission.service';
 import {CarService} from './service/car.service';
 import {PresaleService} from './service/presale.service';
+import {httpInterceptorProviders} from './http-interceptors/index';
 
 const routeConfig: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -143,6 +144,7 @@ const routeConfig: Routes = [
     FileUploaderModule
   ],
   providers: [
+    httpInterceptorProviders,
     LoggerService,
     SystemService,
     AuthGuardService,

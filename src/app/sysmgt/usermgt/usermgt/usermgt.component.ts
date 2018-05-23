@@ -121,7 +121,7 @@ export class UsermgtComponent implements OnInit {
       ],
       'info': true,
       'autoWidth': false,
-      'oLanguage': { //国际化配置
+      'oLanguage': {
         'sProcessing': '正在获取数据，请稍后...',
         'sLengthMenu': '显示 _MENU_ 条',
         'sZeroRecords': '没有您要搜索的内容',
@@ -150,8 +150,8 @@ export class UsermgtComponent implements OnInit {
     this.users = this.userService.getUsers(value);
   }
 
-  edit(user:User){
+  edit(user: User) {
     console.log(user.userid);
-    this.router.navigateByUrl('/home/userform/'+user.userid);
+    this.router.navigateByUrl('/home/userform/' + user.userid);
   }
 }

@@ -73,16 +73,18 @@ export class UserformComponent implements OnInit {
             state: data.state,
             certpath: data.certpath
           });
-          const paths = this.user.certpath.split(',');
-          paths.forEach(function(path, i) {
-            console.log(path);
-            const realDomainPath = $.cookie('domain') + path;
-            console.log(realDomainPath);
-            initialPreview.push(realDomainPath);
-            const showName = path.substring(path.lastIndexOf('/') + 1);
-            console.log(showName);
-            initialPreviewConfig.push({caption: '证件照', downloadUrl: realDomainPath ,  key: i });
-          })
+          if ( this.user.certpath != null ) {
+            const paths = this.user.certpath.split(',');
+            paths.forEach(function(path, i) {
+              console.log(path);
+              const realDomainPath = path;
+              console.log(realDomainPath);
+              initialPreview.push(realDomainPath);
+              const showName = path.substring(path.lastIndexOf('/') + 1);
+              console.log(showName);
+              initialPreviewConfig.push({caption: '证件照', downloadUrl: realDomainPath ,  key: i });
+            });
+          }
           this.initFileUpload('certpath', initialPreview , initialPreviewConfig );
         },
         err => {
@@ -173,6 +175,7 @@ export class UserformComponent implements OnInit {
           '',
           '',
           this.formModel.value['position'],
+          ''
         );
         console.log('新建用户：');
         console.log(this.user);
