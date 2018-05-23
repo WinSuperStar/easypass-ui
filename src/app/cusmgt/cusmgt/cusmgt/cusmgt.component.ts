@@ -84,7 +84,7 @@ export class CusmgtComponent implements OnInit {
       "columnDefs": [
         {
           "render": function ( data, type, row ) {
-            return ' <a class="btn btn-warning btn-xs" (click)="edit(cus)"><span class="glyphicon glyphicon-pencil"></span>编辑</a>';
+            return ' <a class="btn btn-warning btn-xs" (click)="edit('+row+')"><span class="glyphicon glyphicon-pencil"></span>编辑</a>';
           },
           "targets": 7
         },

@@ -87,33 +87,6 @@ export class UsermgtComponent implements OnInit {
       "columnDefs": [
         {
           "render": function ( data, type, row ) {
-
-           // const u = us.getUser(row.userid);
-           // console.log("xinxishi:"+u);
-            return '<a class="btn btn-warning btn-xs"  click="edit(u)" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>';
-          },
-          "targets": 7
-        },
-      ],
-      'columns': [
-        { 'data': 'userid' },
-        { 'data': 'username' },
-        { 'data': 'gender' },
-        { 'data': 'phone' },
-        { 'data': 'roleid' },
-        { 'data': 'password' },
-        { 'data': 'createdate',
-          'render': function ( data, type, row ) {
-            data = date.dateFmt(data);
-            return data;
-          }}
-      ],
-      "columnDefs": [
-        {
-          "render": function ( data, type, row ) {
-
-            // const u = us.getUser(row.userid);
-            // console.log("xinxishi:"+u);
             return '<a class="btn btn-warning btn-xs"  click="edit(u)" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>';
           },
           "targets": 7
