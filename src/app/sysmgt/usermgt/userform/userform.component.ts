@@ -82,7 +82,7 @@ export class UserformComponent implements OnInit {
               initialPreview.push(realDomainPath);
               const showName = path.substring(path.lastIndexOf('/') + 1);
               console.log(showName);
-              initialPreviewConfig.push({caption: '证件照', downloadUrl: realDomainPath ,  key: i });
+              initialPreviewConfig.push({caption: '证件照', downloadUrl: true , size: 1218822, width: '120px' ,  key: i });
             });
           }
           this.initFileUpload('certpath', initialPreview , initialPreviewConfig );
@@ -102,6 +102,9 @@ export class UserformComponent implements OnInit {
     const fileInput = $('#' + id + 'Upload').fileinput({
       theme: 'fa',
       language: 'zh',
+      showUpload: false,
+      showPreview: true,
+      overwriteInitial: false,
       allowedPreviewTypes : [ 'image' ],
       allowedFileExtensions : ['jpg', 'png', 'gif'],
       uploadUrl: '/api/upload',
@@ -109,7 +112,8 @@ export class UserformComponent implements OnInit {
       initialPreviewAsData: true,
       initialPreviewFileType: 'image',
       initialPreview: initialPreview ,
-      initialPreviewConfig: initialPreviewConfig ,
+      initialPreviewDownloadUrl: '{key}',
+      initialPreviewConfig: initialPreviewConfig,
       uploadExtraData: {
         moduleName: 'user'
       }
@@ -121,10 +125,11 @@ export class UserformComponent implements OnInit {
       if (this.result.code == 0) {
         const relativeStorePath =  $('#' + id ).val() ;
         console.log(relativeStorePath);
+        const path = this.result.data.relativeStorePath;
         if (relativeStorePath != '' ) {
-          _formModel.get('certpath').setValue(relativeStorePath + ',' + this.result.data.relativeStorePath);
+          _formModel.get('certpath').setValue(relativeStorePath + ',' + path);
         } else {
-          _formModel.get('certpath').setValue(this.result.data.relativeStorePath);
+          _formModel.get('certpath').setValue(path);
         }
       }
 
