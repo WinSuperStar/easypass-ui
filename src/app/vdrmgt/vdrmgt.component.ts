@@ -5,6 +5,7 @@ import 'rxjs/Rx';
 import {AddrSelectService, Area, City, Province} from '../shared/services/addr-select.service';
 import {Observable} from 'rxjs/Observable';
 import {Vendor, VendorService} from '../service/vendor.service';
+import {DateService} from '../shared/services/date.service';
 
 declare var $: any;
 
@@ -38,12 +39,18 @@ export class VdrmgtComponent implements OnInit {
   constructor(public router: Router,
               private vendorService: VendorService,
               private addrService: AddrSelectService,
+              private date: DateService,
               private fb: FormBuilder) {
   }
 
   ngOnInit() {
+<<<<<<< HEAD
     var data = ['aaa','bbb','ccc'];
     $("#vdrcontact").typehead({source:data});
+=======
+    const date = this.date;
+    // sid = this.showItemDetail(Vendor);
+>>>>>>> 74cb8473519bec45573253bff021d6b9e55941c9
     this.province = this.addrService.getPros();
     // this.vdrs = this.vendorService.getVendors();
     this.nameFilter.valueChanges
@@ -80,6 +87,124 @@ export class VdrmgtComponent implements OnInit {
     //     }
     //   });
     // });
+    $('#vdrmgtTable').DataTable({
+
+      'processing': true,
+      'serverSide': true,
+      'paging': true,
+      lengthMenu: [
+        [ 10 , 20 , 30, 50, 80, 100 ],
+        [ '10 页', '20 页', '30 页', '50 页', '80 页', '100页' ]
+      ],
+      ordering: false,
+      'ajax': {
+        'url': '/api/vendorPage',
+        'type': 'POST',
+        'data': function (d) {
+          for (const key in d) {
+            if (key.indexOf('columns') == 0 || key.indexOf('order') == 0 || key.indexOf('search') == 0 ) {
+              delete d[key];
+            }
+          }
+          const searchParams = {};
+          if (searchParams) {
+            $.extend( d, searchParams );
+          }
+        },
+        'dataType' : 'json',
+        'dataFilter': function (json) {
+          console.log(json)
+          json = JSON.parse(json);
+          console.log(json);
+          return JSON.stringify(json);
+        }
+      },
+
+      'searching': false,
+      'columns':[
+        { 'data': 'vdrid' },
+        { 'data': 'vdraddr' },
+        { 'data': 'vdrplate' },
+        { 'data': 'vdrname' },
+        { 'data': 'vdrid',
+          'render': function ( data, type, row ) {
+                    let list:string ='' ;
+                    let v:Vendor = row;
+            if(v.itemTidang == 'true'){
+              list = '提档'+',';
+            }else if (v.itemGuohu == 'true'){
+              list = list + '过户' +',';
+            }else if (v.itemShangpai == 'true'){
+              list = list + '上牌' +',';
+            }else if (v.itemWeizhang == 'true'){
+              list = list + '违章' +',';
+            }else if (v.itemDiya == 'true'){
+              list = list + '抵押' +',';
+            }else if (v.itemJiechudiya == 'true'){
+              list = list + '解除抵押' +',';
+            }else if (v.itemWeituo == 'true'){
+              list = list + '委托' +',';
+            }else if (v.itemNianjian == 'true'){
+              list = list + '年检' +',';
+            }else if (v.itemBuhuan == 'true'){
+              list = list + '换补牌证' +',';
+            }else if (v.itemQita == 'true'){
+              list = list + '其他';
+            }
+            return list;
+          }
+        },
+        { 'data': 'contact' },
+        { 'data': 'contactphone' },
+        { 'data': 'createdate','render': function ( data, type, row ) {
+            data = date.dateFmt(data);
+            return data;
+          } },
+        { 'data': 'state' },
+        { 'data': 'creator' },
+        { 'data': 'contactphone'},
+      ],
+      "columnDefs": [
+        {
+          "render": function ( data, type, row ) {
+            return  ''
+            +'<p>'
+            +'<a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="submit('+row.vdrid+')"></span>提交</a>'
+            +'<a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="view('+row.vdrid+')"></span>查看</a>'
+            +'</p>'
+            +'<p>'
+            +'<a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="edit('+row.vdrid+')"></span>编辑</a>'
+            +'<a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" (click)="delete('+row.vdrid+')"></span>删除</a>'
+            +'</p>;'
+          },
+          "targets": 10
+        },
+      ],
+      'info': true,
+      'autoWidth': false,
+      'oLanguage': {
+        'sProcessing': '正在获取数据，请稍后...',
+        'sLengthMenu': '显示 _MENU_ 条',
+        'sZeroRecords': '没有您要搜索的内容',
+        'sInfo': '从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条',
+        'sInfoEmpty': '记录数为0',
+        'sInfoFiltered': '(全部记录数 _MAX_ 条)',
+        'sInfoPostFix': '',
+        'sSearch': '搜索',
+        'sUrl': '',
+        'oPaginate': {
+          'sFirst': '第一页',
+          'sPrevious': '上一页',
+          'sNext': '下一页',
+          'sLast': '最后一页'
+        }
+      }
+    });
+
+
+
+
+
   }
 
   create() {

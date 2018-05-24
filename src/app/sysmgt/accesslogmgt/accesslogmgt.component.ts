@@ -26,7 +26,6 @@ export class AccesslogmgtComponent implements OnInit {
 
   ngOnInit() {
     const date = this.dateServie;
-    // this.search('1', '10') ;
     myTable = $('#accessLogmgtTable').DataTable( {
       'processing': true,
       'serverSide': true,
@@ -50,13 +49,13 @@ export class AccesslogmgtComponent implements OnInit {
             $.extend( d, searchParams );
           }
         },
-        'dataType' : 'json',
-        'dataFilter': function (json) {
-          console.log(json)
-          json = JSON.parse(json);
-          console.log(json);
-          return JSON.stringify(json);
-        }
+        'dataType' : 'json'
+        // 'dataFilter': function (json) {
+        //   console.log(json)
+        //   json = JSON.parse(json);
+        //   console.log(json);
+        //   return JSON.stringify(json);
+        // }
       },
       'searching' : false,
       'columns': [

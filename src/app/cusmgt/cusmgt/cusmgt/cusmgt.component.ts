@@ -24,6 +24,7 @@ export class CusmgtComponent implements OnInit {
   }
 
   ngOnInit() {
+    const date = this.date;
     this.formGroup = this.fb.group({
         cusname: [''],
         cusmode: [''],
@@ -35,10 +36,59 @@ export class CusmgtComponent implements OnInit {
       }
     )
     $('#cusmgtTable').DataTable({
+      'processing': true,
+      'serverSide': true,
       'paging': true,
-      'lengthChange': false,
+      lengthMenu: [
+        [ 10 , 20 , 30, 50, 80, 100 ],
+        [ '10 页', '20 页', '30 页', '50 页', '80 页', '100页' ]
+      ],
+      ordering: false,
+      'ajax': {
+        'url': '/api/cusPage',
+        'type': 'POST',
+        'data': function (d) {
+          for (const key in d) {
+            if (key.indexOf('columns') == 0 || key.indexOf('order') == 0 || key.indexOf('search') == 0 ) {
+              delete d[key];
+            }
+          }
+          const searchParams = {};
+          if (searchParams) {
+            $.extend( d, searchParams );
+          }
+        },
+        'dataType' : 'json',
+        'dataFilter': function (json) {
+          console.log(json)
+          json = JSON.parse(json);
+          console.log(json);
+          return JSON.stringify(json);
+        }
+      },
+      'columns': [
+        { 'data': 'cusid' },
+        { 'data': 'cusname' },
+        { 'data': 'contactPhone' },
+        { 'data': 'cusmode' },
+        { 'data': 'address' },
+        { 'data': 'createdate',
+          'render': function ( data, type, row ) {
+            data = date.dateFmt(data);
+            return data;
+           }
+        },
+        { 'data': 'creator'}
+      ],
       'searching': false,
-      'ordering': true,
+      "columnDefs": [
+        {
+          "render": function ( data, type, row ) {
+            return ' <a class="btn btn-warning btn-xs" (click)="edit('+row+')"><span class="glyphicon glyphicon-pencil"></span>编辑</a>';
+          },
+          "targets": 7
+        },
+      ],
       'info': true,
       'autoWidth': false,
       'oLanguage': { //国际化配置
