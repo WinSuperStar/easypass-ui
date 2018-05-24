@@ -42,6 +42,8 @@ export class VdrmgtComponent implements OnInit {
   }
 
   ngOnInit() {
+    var data = ['aaa','bbb','ccc'];
+    $("#vdrcontact").typehead({source:data});
     this.province = this.addrService.getPros();
     // this.vdrs = this.vendorService.getVendors();
     this.nameFilter.valueChanges

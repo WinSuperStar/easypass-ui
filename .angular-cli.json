@@ -45,7 +45,8 @@
         "assets/bower_components/bootstrap-fileinput/themes/explorer-fa/theme.js",
         "assets/bower_components/bootstrap-fileinput/themes/fa/theme.js",
         "../node_modules/bootbox/bootbox.js",
-        "../node_modules/bootpopup/bootpopup.min.js"
+        "../node_modules/bootpopup/bootpopup.min.js",
+        "assets/js/bootstrap3-typeahead.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
