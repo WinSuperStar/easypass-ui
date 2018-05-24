@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {Vendor, VendorService} from '../../service/vendor.service';
 import {ItemdetailService} from '../../service/itemdetail.service';
 import {ValidationService} from '../../shared/services/validation.service';
+import {mobileValidator} from '../../shared/validators/Validators';
 
 @Component({
   selector: 'app-vdr-form',
@@ -99,7 +100,7 @@ export class VdrFormComponent implements OnInit {
       itemQitaDesc: [''],
       // contacts: this.fb.array([this.createContact()])
       contact: ['', Validators.required],
-      contactphone: ['', Validators.required]
+      contactphone: ['', [Validators.required, mobileValidator]]
     });
     this.vendorService.getVdr(id).subscribe(
       res => {
@@ -394,7 +395,23 @@ export class VdrFormComponent implements OnInit {
   }
 
   submit() {
+    let id = this.vdr.vdrid;
     // 提交请求
+    if (this.formGroup.valid) {
+      if (confirm("确定提交？")) {
+        this.vendorService.smtVdr(id).subscribe(
+          res => {
+            alert('提交成功！');
+            this.router.navigateByUrl('/home/vdrmgt');
+          },
+          err => {
+            alert('提交失败：' + err.message);
+          }
+        );
+      }
+    }else{
+      this.validation.validateAllFormFields(this.formGroup);
+    }
   }
 
   addContact() {

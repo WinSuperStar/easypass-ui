@@ -115,8 +115,8 @@
         <td>{{p.contact}}</td>
         <td>{{p.creator}}</td>
         <td>
-          <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)=edit(p.saleid)></span>编辑</a>
-          <a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" (click)=delete(p.saleid)></span>删除</a>
+          <a class="btn btn-warning btn-xs" (click)="edit(p.saleid)"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
+          <a class="btn btn-danger btn-xs" (click)="delete(p.saleid)"><span class="glyphicon glyphicon-remove"></span>删除</a>
         </td>
       </tr>
       </tbody>

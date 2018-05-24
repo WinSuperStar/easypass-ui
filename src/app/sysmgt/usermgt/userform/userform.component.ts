@@ -50,8 +50,8 @@ export class UserformComponent implements OnInit {
         passwordConfirm: ['', Validators.required]
       }, {validator: passwordValidator}),
       position: ['', Validators.required],
-      gender: ['女'],
-      state: ['失效'],
+      gender: ['男'],
+      state: ['激活'],
       certpath: ['']
     });
 

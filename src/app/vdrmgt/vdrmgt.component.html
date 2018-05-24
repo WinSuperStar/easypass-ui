@@ -152,12 +152,12 @@
         <td>{{v.creator}}</td>
         <td>
           <p>
-            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="submit(v.vdrid)"></span>提交</a>
-            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="view(v.vdrid)"></span>查看</a>
+            <a class="btn btn-primary btn-xs" (click)="submit(v.vdrid)"><span class="glyphicon glyphicon-ok"></span>提交</a>
+            <a class="btn btn-info btn-xs" (click)="view(v.vdrid)"><span class="glyphicon glyphicon-search"></span>查看</a>
           </p>
           <p>
-            <a class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil" (click)="edit(v.vdrid)"></span>编辑</a>
-            <a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" (click)="delete(v.vdrid)"></span>删除</a>
+            <a class="btn btn-warning btn-xs" (click)="edit(v.vdrid)"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
+            <a class="btn btn-danger btn-xs" (click)="delete(v.vdrid)"><span class="glyphicon glyphicon-remove"></span>删除</a>
           </p>
         </td>
       </tr>

@@ -8,6 +8,18 @@ export class VendorService {
   constructor(private httpClient: HttpClient) {
   }
 
+  smtVdr(id:any): Observable<any>{
+    let params = new HttpParams()
+      .set('vdrid', id);
+    return this.httpClient.post('/api/smtVdr', params);
+  }
+
+  delVdr(id:any): Observable<any>{
+    let params = new HttpParams()
+      .set('vdrid', id);
+    return this.httpClient.post('/api/delVdr', params);
+  }
+
   createVdr(creator: any): Observable<any> {
     let params = new HttpParams()
       .set('creator', creator);

@@ -44,13 +44,8 @@ export class VdrmgtComponent implements OnInit {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
-    var data = ['aaa','bbb','ccc'];
-    $("#vdrcontact").typehead({source:data});
-=======
     const date = this.date;
     // sid = this.showItemDetail(Vendor);
->>>>>>> 74cb8473519bec45573253bff021d6b9e55941c9
     this.province = this.addrService.getPros();
     // this.vdrs = this.vendorService.getVendors();
     this.nameFilter.valueChanges
@@ -289,12 +284,33 @@ export class VdrmgtComponent implements OnInit {
 
   submit(id:any){
     //提交
+    if(confirm("确定提交？")){
+      this.vendorService.smtVdr(id).subscribe(
+        res=>{
+          alert('提交成功！');
+          this.router.navigateByUrl('/home/vdrmgt');
+        },
+        err=>{
+          alert('提交失败：'+err.message);
+        }
+      );
+    }
   }
 
   view(id:any){
     this.router.navigateByUrl('/home/vdrmgt/'+id);
   }
   delete(id:any){
-    //删除
+    if(confirm("确定删除？")){
+      this.vendorService.delVdr(id).subscribe(
+        res=>{
+          alert('删除成功！');
+          this.router.navigateByUrl('/home/vdrmgt');
+        },
+        err=>{
+          alert('删除失败：'+err.message);
+        }
+      );
+    }
   }
 }

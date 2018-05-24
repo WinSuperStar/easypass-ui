@@ -9,7 +9,7 @@ import 'rxjs/add/operator/filter';
 })
 export class ContentComponent implements OnInit {
   ContentTitle = '首页';
-  ContentDesc = '这里是首页';
+  ContentDesc = '易过户管理系统欢迎您！';
 
   constructor(public router: Router) {
     // router.events.filter(event => event

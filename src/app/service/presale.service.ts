@@ -8,6 +8,12 @@ export class PresaleService {
   constructor(private httpClient: HttpClient) {
   }
 
+  delPresale(id:any): Observable<any>{
+    let params = new HttpParams()
+      .set('saleid', id);
+    return this.httpClient.post('/api/delPresale', params);
+  }
+
   createPresale(creator: any): Observable<any> {
     let params = new HttpParams()
       .set('creator', creator);
