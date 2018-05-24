@@ -19,10 +19,11 @@ export class UsermgtComponent implements OnInit {
   public users: Observable<User[]>;
   public roles: Observable<Role[]>;
 
+
   constructor(private router: Router,
               private fb: FormBuilder,
               private userService: UserServiceService,
-              public date: DateService,
+              private date: DateService,
               private roleService: RoleService
   ) {
     this.formGroup = fb.group({
@@ -33,13 +34,64 @@ export class UsermgtComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(){
     this.roles = this.roleService.getRoles();
+    const date = this.date;
     $('#usermgtTable').DataTable({
+
+      'processing': true,
+      'serverSide': true,
       'paging': true,
-      'lengthChange': false,
+      lengthMenu: [
+        [ 10 , 20 , 30, 50, 80, 100 ],
+        [ '10 页', '20 页', '30 页', '50 页', '80 页', '100页' ]
+      ],
+      ordering: false,
+      'ajax': {
+        'url': '/api/userPage',
+        'type': 'POST',
+        'data': function (d) {
+          for (const key in d) {
+            if (key.indexOf('columns') == 0 || key.indexOf('order') == 0 || key.indexOf('search') == 0 ) {
+              delete d[key];
+            }
+          }
+          const searchParams = {};
+          if (searchParams) {
+            $.extend( d, searchParams );
+          }
+        },
+        'dataType' : 'json',
+        'dataFilter': function (json) {
+          console.log(json)
+          json = JSON.parse(json);
+          console.log(json);
+          return JSON.stringify(json);
+        }
+      },
+
       'searching': false,
-      'ordering': true,
+      'columns': [
+        { 'data': 'userid' },
+        { 'data': 'username' },
+        { 'data': 'gender' },
+        { 'data': 'phone' },
+        { 'data': 'roleid' },
+        { 'data': 'password' },
+        { 'data': 'createdate',
+          'render': function ( data, type, row ) {
+            data = date.dateFmt(data);
+            return data;
+          }}
+      ],
+      "columnDefs": [
+        {
+          "render": function ( data, type, row ) {
+            return '<a class="btn btn-warning btn-xs"  click="edit(u)" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>';
+          },
+          "targets": 7
+        },
+      ],
       'info': true,
       'autoWidth': false,
       'oLanguage': {
