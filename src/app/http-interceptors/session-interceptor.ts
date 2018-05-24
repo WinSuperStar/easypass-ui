@@ -24,10 +24,17 @@ export class SessionInterceptor implements HttpInterceptor {
             if (event instanceof HttpResponse) {
               if (event.status === 200) {
                 ok = 'succeeded';
-              } else if (event.status === 302 || event.status === 304) {
-                ok = 'failed';
-              } else if (event.status === 403 || event.status === 401) {
-                ok = 'failed';
+                console.log(event);
+                const data = event.body;
+                if ( data.code !== undefined &&  data.code === 403) {
+                  ok = 'no_function_auth';
+                } else  if ( data.code === 401) {
+                  ok = 'no_login_auth';
+                }
+              } else if (event.status === 403 ) {
+                ok = 'no_function_auth';
+              } else if (event.status === 401 ) {
+                ok = 'no_login_auth';
               } else {
                 ok = '';
               }
@@ -38,9 +45,13 @@ export class SessionInterceptor implements HttpInterceptor {
         ),
         // Log when response observable either completes or errors
         finalize(() => {
-            if (ok === 'failed') {
+            if ( ok === 'no_function_auth') {
+              alert('此功能您没有权限访问！');
+              return ;
+            } else if ( ok === 'no_login_auth') {
+              alert('此账号在其他地方登陆，若要继续访问，请重新登陆！');
               this.router.navigateByUrl('/index');
-            }
+            } else { }
         })
       );
   }
@@ -49,6 +60,7 @@ export class SessionInterceptor implements HttpInterceptor {
 
 $.ajaxSetup({
   complete : function(xhr, status) {
+    alert(status);
     if (status === '' || status.indexOf('error') > 0 ) {
       let win = window;
       while (win != win.top) {
