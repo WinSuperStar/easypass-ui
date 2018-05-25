@@ -36,7 +36,8 @@ export class CustomerService {
       .set('address', cus.address)
       .set('state', cus.state)
       .set('createdate', cus.createdate)
-      .set('creator', cus.creator);
+      .set('creator', cus.creator)
+      .set('add1',cus.add1);
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
     return this.httpClient.put('/api/customer', params, {headers}).map(
@@ -86,7 +87,8 @@ export class CustomerService {
       .set('cusmode', cus.cusmode)
       .set('address', cus.address)
       .set('state', cus.state)
-      .set('creator', cus.creator);
+      .set('creator', cus.creator)
+      .set('add1', cus.add1);
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
     return this.httpClient.post('/api/addCus', params, {headers}).map(

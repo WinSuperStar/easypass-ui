@@ -98,7 +98,7 @@ export class VdrFormComponent implements OnInit {
       itemQitaCost: [''],
       itemQitaCompletedate: [''],
       itemQitaDesc: [''],
-      // contacts: this.fb.array([this.createContact()])
+      contacts: this.fb.array([this.createContact()]),
       contact: ['', Validators.required],
       contactphone: ['', [Validators.required, mobileValidator]]
     });
@@ -467,8 +467,8 @@ export class VdrFormComponent implements OnInit {
 
   createContact(): FormGroup {
     return this.fb.group({
-      contact: '',
-      contactphone: ''
+      cname: '',
+      cphone: ''
     });
   }
 

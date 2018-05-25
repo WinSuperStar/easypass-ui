@@ -14,20 +14,13 @@
             [displayError]="validation.isFiledValid(formGroup, 'vdrname')"
             errorMsg="*必填项"></app-field-error-display>
         </div>
-        <label class="col-sm-1 control-label">代办商地址<span>*</span></label>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" placeholder="地址" formControlName="vdraddrdetail">
-          <app-field-error-display
-            [displayError]="validation.isFiledValid(formGroup, 'vdraddrdetail')"
-            errorMsg="*必填项"></app-field-error-display>
-        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">详细地址<span>*</span></label>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">省</div>
           <select class="form-control" (change)="showCity($event)" formControlName="vdraddr1">
-            <option disabled selected="selected">请选择省</option>
+            <option selected="selected" value="">请选择省</option>
             <option *ngFor="let pro of province | async; let i = index" value="{{pro.name}}">{{pro.name}}</option>
           </select>
           <app-field-error-display
@@ -37,7 +30,7 @@
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">市</div>
           <select class="form-control" (change)="showArea($event)" formControlName="vdraddr2">
-            <option disabled selected="selected">请选择市</option>
+            <option selected="selected" value="">请选择市</option>
             <option *ngFor="let c of city | async; let i = index" value="{{c.name}}">{{c.name}}</option>
           </select>
           <app-field-error-display
@@ -47,7 +40,7 @@
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">县</div>
           <select class="form-control" formControlName="vdraddr3">
-            <option disabled selected="selected">请选择区</option>
+            <option selected="selected" value="">请选择区</option>
             <option *ngFor="let a of area | async; let i = index" value="{{a.name}}">{{a.name}}</option>
           </select>
           <app-field-error-display
@@ -75,7 +68,7 @@
             [displayError]="validation.isFiledValid(formGroup, 'contact')"
             errorMsg="*必填项"></app-field-error-display>
         </div>
-        <label class="col-sm-1 control-label">联系人电话(主)<span>*</span></label>
+        <label class="col-sm-2 control-label">联系人电话(主)<span>*</span></label>
         <div class="col-sm-2">
           <input type="text" class="form-control" formControlName="contactphone">
           <app-field-error-display
@@ -84,24 +77,33 @@
         </div>
       </div>
       <!-- 误删 待用 -->
-      <!--<div class="form-group">-->
-        <!--<label class="col-sm-2 control-label">联系人<span><i class="fa fa-fw fa-plus-square-o" (click)="addContact()"></i></span></label>-->
-        <!--<div class="col-sm-8" formArrayName="contacts">-->
-          <!--<div *ngFor="let e of formGroup.get('contacts').controls;let i = index;">-->
-            <!--<div class="form-group" [formGroupName]="i">-->
-              <!--<label class="col-sm-2 control-label">联系人</label>-->
-              <!--<div class="col-sm-3">-->
-                <!--<input class="form-control" formControlName="contact">-->
-              <!--</div>-->
-              <!--<label class="col-sm-3 control-label">联系人电话</label>-->
-              <!--<div class="col-sm-3">-->
-                <!--<input class="form-control" formControlName="contactphone">-->
-              <!--</div>-->
-              <!--<span><i class="fa fa-fw  fa-minus-square-o" (click)="removeContact(i)"></i></span>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
+      <div class="form-group">
+        <label class="col-sm-2 control-label">其他联系人<span><i class="fa fa-fw fa-plus-square-o" (click)="addContact()"></i></span></label>
+        <div class="col-sm-8" formArrayName="contacts">
+          <div *ngFor="let e of formGroup.get('contacts').controls;let i = index;">
+            <div class="form-group" [formGroupName]="i">
+              <label class="col-sm-1 control-label">联系人</label>
+              <div class="col-sm-3">
+                <input class="form-control" formControlName="cname">
+              </div>
+              <label class="col-sm-2 control-label">联系人电话</label>
+              <div class="col-sm-3">
+                <input class="form-control" formControlName="cphone">
+              </div>
+              <span><i class="fa fa-fw  fa-minus-square-o" (click)="removeContact(i)"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">代办商地址<span>*</span></label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" placeholder="地址" formControlName="vdraddrdetail">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'vdraddrdetail')"
+            errorMsg="*必填项"></app-field-error-display>
+        </div>
+      </div>
     </div>
     <!-- /.box-body -->
     <!-- /.box-footer -->
@@ -129,16 +131,16 @@
           <td></td>
           <td>
             <div class="form-group">
-              <label class="col-sm-2 control-label">提档交易税</label>
-              <div class="col-sm-2">
-                <input type="text" class="form-control" formControlName="itemTidangTax">
-              </div>
               <label class="col-sm-2 control-label">提档金额</label>
               <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemTidangCost">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemTidangCost')"
                   errorMsg="*必填项"></app-field-error-display>
+              </div>
+              <label class="col-sm-2 control-label">提档交易税</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" formControlName="itemTidangTax">
               </div>
             </div>
             <div class="form-group">
@@ -171,16 +173,16 @@
           <td></td>
           <td>
             <div class="form-group">
-              <label class="col-sm-2 control-label">过户交易税</label>
-              <div class="col-sm-2">
-                <input type="text" class="form-control" formControlName="itemGuohuTax">
-              </div>
               <label class="col-sm-2 control-label">过户金额</label>
               <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemGuohuCost">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemGuohuCost')"
                   errorMsg="*必填项"></app-field-error-display>
+              </div>
+              <label class="col-sm-2 control-label">过户交易税</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" formControlName="itemGuohuTax">
               </div>
             </div>
             <div class="form-group">
@@ -411,10 +413,6 @@
           <td></td>
           <td>
             <div class="form-group">
-              <label class="col-sm-2 control-label">年检交易税</label>
-              <div class="col-sm-2">
-                <input type="text" class="form-control" formControlName="itemNianjianTax">
-              </div>
               <label class="col-sm-2 control-label">年检金额</label>
               <div class="col-sm-2">
                 <input type="text" class="form-control" formControlName="itemNianjianCost">

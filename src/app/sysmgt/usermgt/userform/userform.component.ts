@@ -43,7 +43,7 @@ export class UserformComponent implements OnInit {
     this.roles = this.roleService.getRoles();
     this.userid = this.routeInfo.snapshot.params['id'];
     this.formModel = this.fb.group({
-      userName: ['', [Validators.required, chineseValidator]],
+      userName: ['', [Validators.required]],
       phone: ['', [Validators.required, mobileValidator], mobileUniqueValidator],
       passwordInfo: this.fb.group({
         password: ['', [Validators.required, passwordValidatorLength]],
@@ -193,7 +193,7 @@ export class UserformComponent implements OnInit {
           },
           err => {
             console.log(err);
-            if(err.message.indexOf('phone_UNIQUE')){
+            if(err.message.indexOf('phone_UNIQUE')!=-1){
               alert('创建失败，手机号码已存在');
               this.user = null;
             }

@@ -3,14 +3,14 @@ import {Observable} from 'rxjs/Observable';
 
 export function mobileValidator(mobile: FormControl): any {
   let value = (mobile.value || '') + '';
-  var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+  var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
   let valid = myreg.test(value);
   return valid ? null : {phone: {description: '手机号格式不正确'}};  // 如果返回为空，则表示校验通过
 }
 
 export function carnumValidator(mobile: FormControl): any {
   let value = (mobile.value || '') + '';
-  var myreg = /^[A-Za-z0-9]{8}$/;
+  var myreg = /^[A-Za-z0-9]{8,}$/;
   let valid = myreg.test(value);
   return valid ? null : {carnum: {description: '车架号'}};  // 如果返回为空，则表示校验通过
 }
@@ -39,7 +39,7 @@ export function passwordValidator(info: FormGroup): any {
 // async validator for phone number unique validation
 export function mobileUniqueValidator(phone: FormControl): any {
   let value = (phone.value || '') + '';
-  var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+  var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
   let valid = myreg.test(value);
   return Observable.of(valid ? null : {phone: true});
 }

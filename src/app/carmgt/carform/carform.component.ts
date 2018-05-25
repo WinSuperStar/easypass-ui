@@ -119,7 +119,7 @@ export class CarformComponent implements OnInit {
           },
           err => {
             console.log(err);
-            if(err.message.indexOf('carnum_UNIQUE')){
+            if(err.message.indexOf('carnum_UNIQUE')!=-1){
               alert('更新失败，车架号已存在');
               this.car = null;
             }

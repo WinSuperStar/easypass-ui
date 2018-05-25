@@ -14,7 +14,7 @@ import {Observable} from "rxjs/Observable";
 })
 export class CusformComponent implements OnInit {
   private fb: FormBuilder = new FormBuilder();
-  private formGroup: FormGroup;
+  public formGroup: FormGroup;
   public cusid;
   public cus: Customer;
   public city: Observable<City[]>;
@@ -34,12 +34,13 @@ export class CusformComponent implements OnInit {
     this.formGroup = this.fb.group({
       cusname: ['', Validators.required],
       contact: ['', Validators.required],
-      contactPhone: ['', [Validators.required, mobileValidator], mobileUniqueValidator],
+      contactPhone: ['', [Validators.required, mobileValidator]],
       cusmode: ['', Validators.required],
       province: [''],
-      state: ['',Validators.required],
+      state: ['正常',Validators.required],
       city: [''],
-      area: ['']
+      area: [''],
+      add1:['']
     });
     if (this.cusid != 0) {
       this.cusService.getCustomer(this.cusid).subscribe(
@@ -56,6 +57,7 @@ export class CusformComponent implements OnInit {
             province: u[0],
             city: u[1],
             area: u[2],
+            add1: data.add1,
             state:data.state
           })
         }
@@ -86,7 +88,7 @@ export class CusformComponent implements OnInit {
           this.formGroup.value['state'],
           null,
           JSON.parse(localStorage.getItem('currentUser'))['username'],
-          null,
+          this.formGroup.value['add1'],
           null,
           null
         )
@@ -97,8 +99,8 @@ export class CusformComponent implements OnInit {
             this.router.navigateByUrl('/home/cusmgt');
           },
           err => {
-            console.log(err);
-            if(err.message.indexOf('contact_phone_UNIQUE')){
+            console.log('错误信息是：'+err.message);
+            if(err.message.indexOf('contact_phone_UNIQUE')!=-1){
               alert('创建失败，手机号码已存在');
             } else {
               alert('创建失败: ' + err.message)
@@ -111,6 +113,7 @@ export class CusformComponent implements OnInit {
         this.cus.contact = this.formGroup.value['contact'];
         this.cus.contactPhone = this.formGroup.value['contactPhone'];
         this.cus.cusmode = this.formGroup.value['cusmode'];
+        this.cus.add1 = this.formGroup.value['add1'];
         this.cus.address = this.formGroup.value['province'] + ' ' + this.formGroup.value['city'] + ' ' + this.formGroup.value['area'];
         console.log(this.cus);
         this.cusService.updateCustomer(this.cus).subscribe(

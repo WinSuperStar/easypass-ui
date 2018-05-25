@@ -60,6 +60,7 @@
       <tr>
         <th>客户编号</th>
         <th>客户名称</th>
+        <th>联系人</th>
         <th>联系人手机号</th>
         <th>客户模式</th>
         <th>详细地址</th>
@@ -72,6 +73,7 @@
       <tr *ngFor="let cus of customers | async; let i = index;">
         <td>{{cus.cusid}}</td>
         <td>{{cus.cusname}}</td>
+        <td>{{cus.contact}}</td>
         <td>{{cus.contactPhone}}</td>
         <td>{{cus.cusmode}}</td>
         <td>{{cus.address}}</td>

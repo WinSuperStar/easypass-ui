@@ -7,206 +7,271 @@
     <!-- /.box-header -->
     <!-- form start -->
     <div class="box-body">
-      <table style="width:100%;">
-        <tr>车辆所需材料</tr>
-        <tr>
-          <td>车辆登记证书<input type="checkbox" formControlName="matDengji"></td>
-          <td>行驶证<input type="checkbox" formControlName="matXingshi"></td>
-          <td>交强险保单<input type="checkbox" formControlName="matJiaoqiang"></td>
-          <td>购置税本<input type="checkbox" formControlName="matGouzhi"></td>
-          <td colspan="2">新车发票<input type="checkbox" formControlName="matFapiao"></td>
-        </tr>
-        <tr>
-          <td colspan="3">其他<input type="checkbox" formControlName="matQita">
-          <td>其他摘要说明</td>
-          <td colspan="2"><textarea formControlName="matQitaDesc"></textarea></td>
-        </tr>
-        <tr>
-          <td>车辆是否需要到场</td>
-          <td>
-            <label>
-              是<input type="radio" name="carPresent" value="是" formControlName="carPresent">
-            </label>
-            <label>
-              否<input type="radio" name="carPresent" value="否" formControlName="carPresent">
-            </label>
-          </td>
-          <td>金额</td>
-          <td><input formControlName="carPresentCost"></td>
-          <td>摘要说明</td>
-          <td><textarea formControlName="carPresentDesc"></textarea></td>
-        </tr>
-        <tr>
-        <tr>
-          原车主
-        </tr>
-        <tr>
-          <td>身份证</td>
-          <td>
-            原件<input type="radio" name="oriIdType"  value="原件" formControlName="oriIdType">
-            复印件<input type="radio" name="oriIdType" value="复印件" formControlName="oriIdType">
-          </td>
-          <td>摘要说明</td>
-          <td><textarea formControlName="oriIdDesc"></textarea></td>
-          <td>费用</td>
-          <td><input formControlName="oriIdCost"></td>
-        </tr>
-        <tr>
-          <td>其他证件</td>
-          <td colspan="2"><input type="checkbox" formControlName="oriOtherCert"></td>
-          <td>金额</td>
-          <td colspan="2"><input type="number" formControlName="oriOtherCertCost"></td>
-        </tr>
-        <tr>
-          <td>本人是否到场</td>
-          <td>
-            是<input type="radio" name="oriPresent" value="是" formControlName="oriPresent">
-            否<input type="radio" name="oriPresent" value="否" formControlName="oriPresent">
-          </td>
-          <td>摘要说明</td>
-          <td><textarea formControlName="oriPresentDesc"></textarea></td>
-          <td>金额</td>
-          <td><input type="number" formControlName="oriPresentCost"></td>
-        </tr>
-        <tr>
-          <td>上传样板视频 </td>
-          <td colspan="5">
-            <div class="col-sm-7">
-              <input type="hidden" id="oriSampleVideoPath" name="oriSampleVideoPath"  formControlName="oriSampleVideoPath" >
-              <div class="file-loading">
-                <input id="oriSampleVideoPathUpload" name="files" type="file" multiple >
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>上传样板图片
-          </td>
-          <td colspan="5">
-            <div class="col-sm-7">
-              <input type="hidden" id="oriSampleImagePath" name="oriSampleImagePath"  formControlName="oriSampleImagePath" >
-              <div class="file-loading">
-                <input id="oriSampleImagePathUpload" name="files" type="file" multiple >
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>上传样板公证书
-            <button type="button">上传</button>
-          </td>
-          <td colspan="5">
-            <div class="col-sm-7">
-              <input type="hidden" id="oriSampleCertPath" name="oriSampleCertPath"  formControlName="oriSampleCertPath" >
-              <div class="file-loading">
-                <input id="oriSampleCertPathUpload" name="files" type="file" multiple >
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>原车主单位营业执照</td>
-          <td>
-            原件<input type="radio" name="oriLisenceType" value="原件" formControlName="oriLisenceType">
-            复印件<input type="radio" name="oriLisenceType" value="复印件" formControlName="oriLisenceType">
-          </td>
-          <td>摘要说明</td>
-          <td><textarea formControlName="oriLisenceDesc"></textarea></td>
-          <td>金额</td>
-          <td><input type="number" formControlName="oriLisenceCost"></td>
-        </tr>
-        <tr>
-          <td>摘要说明</td>
-          <td colspan="2"><textarea formControlName="oriComments"></textarea></td>
-          <td>金额</td>
-          <td colspan="2"><input type="number" formControlName="oriCost"></td>
-        </tr>
-        <tr>
-          新车主
-        </tr>
-        <tr>
-          <td>身份证</td>
-          <td>
-            原件<input type="radio" name="newIdType" value="原件" formControlName="newIdType">
-            复印件<input type="radio" name="newIdType" value="复印件" formControlName="newIdType">
-          </td>
-          <td>摘要说明</td>
-          <td><textarea formControlName="newIdDesc"></textarea></td>
-          <td>费用</td>
-          <td><input formControlName="newIdCost"></td>
-        </tr>
-        <tr>
-          <td>其他证件</td>
-          <td colspan="2"><input type="checkbox" formControlName="newOtherCert"></td>
-          <td>金额</td>
-          <td colspan="2"><input type="number" formControlName="newOtherCertCost"></td>
-        </tr>
-        <tr>
-          <td>本人是否到场</td>
-          <td>
-            是<input type="radio" name="newPresent" value="是"  formControlName="newPresent">
-            否<input type="radio" name="newPresent" value="否" formControlName="newPresent">
-          </td>
-          <td>摘要说明</td>
-          <td><textarea formControlName="newPresentDesc"></textarea></td>
-          <td>金额</td>
-          <td><input type="number" formControlName="newPresentCost"></td>
-        </tr>
-        <tr>
-          <td>上传样板视频
-          </td>
-          <td colspan="5">
-            <div class="col-sm-7">
-              <input type="hidden" id="newSampleVideoPath" name="newSampleVideoPath"  formControlName="newSampleVideoPath" >
-              <div class="file-loading">
-                <input id="newSampleVideoPathUpload" name="files" type="file" multiple >
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>上传样板图片
-          </td>
-          <td colspan="5">
-            <div class="col-sm-7">
-              <input type="hidden" id="newSampleImagePath" name="newSampleImagePath"  formControlName="newSampleImagePath" >
-              <div class="file-loading">
-                <input id="newSampleImagePathUpload" name="files" type="file" multiple >
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>上传样板公证书
-          </td>
-          <td colspan="5">
-            <div class="col-sm-7">
-              <input type="hidden" id="newSampleCertPath" name="newSampleCertPath"  formControlName="newSampleCertPath" >
-              <div class="file-loading">
-                <input id="newSampleCertPathUpload" name="files" type="file" multiple >
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>新车主单位营业执照</td>
-          <td>
-            原件<input type="radio" name="newLisenceType" value="原件" formControlName="newLisenceType">
-            复印件<input type="radio" name="newLisenceType" value="复印件" formControlName="newLisenceType">
-          </td>
-          <td>摘要说明</td>
-          <td><textarea formControlName="newLisenceDesc"></textarea></td>
-          <td>金额</td>
-          <td><input type="number" formControlName="newLisenceCost"></td>
-        </tr>
-        <tr>
-          <td>摘要说明</td>
-          <td colspan="2"><textarea formControlName="newComments"></textarea></td>
-          <td>金额</td>
-          <td colspan="2"><input type="number" formControlName="newCost"></td>
-        </tr>
-      </table>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车辆所需材料</label>
+        <div class="col-sm-1 formMulCheckBox">
+          <div>车辆登记证书</div>
+          <input type="checkbox" formControlName="matDengji">
+        </div>
+        <div class="col-sm-1 formMulCheckBox">
+          <div>行驶证</div>
+          <input type="checkbox" formControlName="matXingshi">
+        </div>
+        <div class="col-sm-1 formMulCheckBox">
+          <div>交强险保单</div>
+          <input type="checkbox" formControlName="matJiaoqiang">
+        </div>
+        <div class="col-sm-1 formMulCheckBox">
+          <div>购置税本</div>
+          <input type="checkbox" formControlName="matGouzhi">
+        </div>
+        <div class="col-sm-1 formMulCheckBox">
+          <div>新车发票</div>
+          <input type="checkbox" formControlName="matFapiao">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车辆是否到场</label>
+        <div class="col-xs-1" style="padding-top: 5px;">
+          <label>
+            是<input type="radio" name="gender" value="是" formControlName="carPresent">
+          </label>
+          <label>
+            否<input type="radio" name="gender" value="否" formControlName="carPresent">
+          </label>
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="carPresentCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="carPresentDesc"></textarea>
+        </div>
+      </div>
     </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <div class="box-header with-border">
+      <h4>原车主</h4>
+    </div>
+    <div class="box-body">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">身份证</label>
+        <div class="col-xs-1" style="padding-top: 5px;">
+          <label>
+            原件<input type="radio" name="oriIdType" value="原件" formControlName="oriIdType">
+          </label>
+          <label>
+            复印件<input type="radio" name="oriIdType" value="复印件" formControlName="oriIdType">
+          </label>
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="oriIdCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="oriIdDesc"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">其他证件</label>
+        <div class="col-sm-1">
+          <input type="checkbox" formControlName="oriOtherCert">
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="oriOtherCertCost">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">本人是否到场</label>
+        <div class="col-xs-1" style="padding-top: 5px;">
+          <label>
+            是<input type="radio" name="oriPresent" value="是" formControlName="oriPresent">
+          </label>
+          <label>
+            否<input type="radio" name="oriPresent" value="否" formControlName="oriPresent">
+          </label>
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="oriPresentCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="oriPresentDesc"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">上传样板视频</label>
+        <div class="col-sm-7">
+          <input type="hidden" id="oriSampleVideoPath" name="oriSampleVideoPath"  formControlName="oriSampleVideoPath" >
+          <div class="file-loading">
+            <input id="oriSampleVideoPathUpload" name="files" type="file" multiple >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">上传样板图片</label>
+        <div class="col-sm-7">
+          <input type="hidden" id="oriSampleImagePath" name="oriSampleImagePath"  formControlName="oriSampleImagePath" >
+          <div class="file-loading">
+            <input id="oriSampleImagePathUpload" name="files" type="file" multiple >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">上传样板公证书</label>
+        <div class="col-sm-7">
+          <input type="hidden" id="oriSampleCertPath" name="oriSampleCertPath"  formControlName="oriSampleCertPath" >
+          <div class="file-loading">
+            <input id="oriSampleCertPathUpload" name="files" type="file" multiple >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">原车主单位营业执照</label>
+        <div class="col-xs-1" style="padding-top: 5px;">
+          <label>
+            原件<input type="radio" name="oriLisenceType" value="原件" formControlName="oriLisenceType">
+          </label>
+          <label>
+            复印件<input type="radio" name="oriLisenceType" value="复印件" formControlName="oriLisenceType">
+          </label>
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="oriLisenceCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="oriLisenceDesc"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="oriCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="oriComments"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-header with-border">
+      <h4>新车主</h4>
+    </div>
+    <div class="box-body">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">身份证</label>
+        <div class="col-xs-1" style="padding-top: 5px;">
+          <label>
+            原件<input type="radio" name="newIdType" value="原件" formControlName="newIdType">
+          </label>
+          <label>
+            复印件<input type="radio" name="newIdType" value="复印件" formControlName="newIdType">
+          </label>
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="newIdCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="newIdDesc"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">其他证件</label>
+        <div class="col-sm-1">
+          <input type="checkbox" formControlName="newOtherCert">
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="newOtherCertCost">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">本人是否到场</label>
+        <div class="col-xs-1" style="padding-top: 5px;">
+          <label>
+            是<input type="radio" name="newPresent" value="是" formControlName="newPresent">
+          </label>
+          <label>
+            否<input type="radio" name="newPresent" value="否" formControlName="newPresent">
+          </label>
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="newPresentCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="newPresentDesc"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">上传样板视频</label>
+        <div class="col-sm-7">
+          <input type="hidden" id="newSampleVideoPath" name="newSampleVideoPath"  formControlName="newSampleVideoPath" >
+          <div class="file-loading">
+            <input id="newSampleVideoPathUpload" name="files" type="file" multiple >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">上传样板图片</label>
+        <div class="col-sm-7">
+          <input type="hidden" id="newSampleImagePath" name="newSampleImagePath"  formControlName="newSampleImagePath" >
+          <div class="file-loading">
+            <input id="newSampleImagePathUpload" name="files" type="file" multiple >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">上传样板公证书</label>
+        <div class="col-sm-7">
+          <input type="hidden" id="newSampleCertPath" name="newSampleCertPath"  formControlName="newSampleCertPath" >
+          <div class="file-loading">
+            <input id="newSampleCertPathUpload" name="files" type="file" multiple >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">原车主单位营业执照</label>
+        <div class="col-xs-1" style="padding-top: 5px;">
+          <label>
+            原件<input type="radio" name="newLisenceType" value="原件" formControlName="newLisenceType">
+          </label>
+          <label>
+            复印件<input type="radio" name="newLisenceType" value="复印件" formControlName="newLisenceType">
+          </label>
+        </div>
+        <label class="col-sm-1 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="newLisenceCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="newLisenceDesc"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">金额</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" formControlName="newCost">
+        </div>
+        <label class="col-sm-1 control-label">摘要说明：</label>
+        <div class="col-sm-2">
+          <textarea class="form-control" formControlName="newComments"></textarea>
+        </div>
+      </div>
+    </div>
+
     <!-- /.box-body -->
     <!-- /.box-footer -->
   </div>
