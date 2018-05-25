@@ -26,7 +26,7 @@ export class SessionInterceptor implements HttpInterceptor {
                 ok = 'succeeded';
                 console.log(event);
                 const data = event.body;
-                if ( data.code !== undefined &&  data.code === 403) {
+                if ( data != null && data.code !== undefined &&  data.code === 403) {
                   ok = 'no_function_auth';
                 } else  if ( data.code === 401) {
                   ok = 'no_login_auth';
@@ -60,7 +60,6 @@ export class SessionInterceptor implements HttpInterceptor {
 
 $.ajaxSetup({
   complete : function(xhr, status) {
-    alert(status);
     if (status === '' || status.indexOf('error') > 0 ) {
       let win = window;
       while (win != win.top) {

@@ -10,11 +10,11 @@
         <div class="box-body" style="padding:5px;">
           <label class="col-sm-2 control-label">用户名</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" formControlName="username">
+            <input type="text" class="form-control" formControlName="username" id="username">
           </div>
           <label class="col-sm-2 control-label">手机号码</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" formControlName="phone">
+            <input type="text" class="form-control" formControlName="phone" id="phone">
           </div>
         </div>
       </div>
@@ -22,13 +22,13 @@
         <div class="box-body " style="padding:5px;">
           <label class="col-sm-2 control-label">岗位</label>
           <div class="col-sm-2">
-            <select class="form-control" formControlName="roleid">
+            <select class="form-control" formControlName="roleid" id="roleid">
               <option *ngFor="let role of roles | async; let i = index;" value={{role.roleid}}>{{role.rolename}}</option>
             </select>
           </div>
           <label class="col-sm-2 control-label">状态</label>
           <div class="col-sm-2">
-            <select class="form-control" formControlName="state">
+            <select class="form-control" formControlName="state" id="state">
               <option value="所有" selected="selected">所有</option>
               <option value="激活">激活</option>
               <option value="失效">失效</option>
