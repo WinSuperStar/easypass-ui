@@ -8,6 +8,7 @@ import {Role, RoleService} from "../../../service/role.service";
 
 declare var $: any;
 
+let usermgtDatatable ;
 @Component({
   selector: 'app-usermgt',
   templateUrl: './usermgt.component.html',
@@ -34,11 +35,32 @@ export class UsermgtComponent implements OnInit {
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.roles = this.roleService.getRoles();
-    const date = this.date;
-    $('#usermgtTable').DataTable({
+    this.init( this.formGroup.value);
+  }
 
+
+
+  create() {
+    this.router.navigateByUrl('/home/userform/0');
+  }
+
+  search (value: any) {
+    usermgtDatatable.ajax.reload();
+  }
+
+  edit(userid: number) {
+    console.log(userid);
+    this.router.navigateByUrl('/home/userform/' + userid);
+  }
+
+  init (value: any) {
+    const date = this.date;
+    if (usermgtDatatable) {
+      usermgtDatatable.ajax.reload();
+    }
+    usermgtDatatable = $('#usermgtTable').DataTable({
       'processing': true,
       'serverSide': true,
       'paging': true,
@@ -48,7 +70,7 @@ export class UsermgtComponent implements OnInit {
       ],
       ordering: false,
       'ajax': {
-        'url': '/api/userPage',
+        'url': '/api/users',
         'type': 'POST',
         'data': function (d) {
           for (const key in d) {
@@ -56,18 +78,16 @@ export class UsermgtComponent implements OnInit {
               delete d[key];
             }
           }
-          const searchParams = {};
+          const username = $('#username').val();
+          const phone = $('#phone').val();
+          const roleid = $('#roleid').val();
+          const state = $('#state').val();
+          const searchParams = {username: username, phone: phone , roleid: roleid, state: state };
           if (searchParams) {
             $.extend( d, searchParams );
           }
         },
-        'dataType' : 'json',
-        'dataFilter': function (json) {
-          console.log(json)
-          json = JSON.parse(json);
-          console.log(json);
-          return JSON.stringify(json);
-        }
+        'dataType' : 'json'
       },
 
       'searching': false,
@@ -76,7 +96,7 @@ export class UsermgtComponent implements OnInit {
         { 'data': 'username' },
         { 'data': 'gender' },
         { 'data': 'phone' },
-        { 'data': 'roleid' },
+        { 'data': 'rolename' },
         { 'data': 'password' },
         { 'data': 'createdate',
           'render': function ( data, type, row ) {
@@ -84,12 +104,14 @@ export class UsermgtComponent implements OnInit {
             return data;
           }}
       ],
-      "columnDefs": [
+      'columnDefs': [
         {
-          "render": function ( data, type, row ) {
-            return '<a class="btn btn-warning btn-xs"  click="edit(u)" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>';
+          'render': function ( data, type, row ) {
+            console.log(row);
+            const userid = row.userid;
+            return '<a class="btn btn-warning btn-xs"  onclick="javascript:edit(' + userid + ')" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>';
           },
-          "targets": 7
+          'targets': 7
         },
       ],
       'info': true,
@@ -113,18 +135,8 @@ export class UsermgtComponent implements OnInit {
       }
     });
 
+    // this.users = this.userService.getUsers(value);
   }
 
-  create() {
-    this.router.navigateByUrl('/home/userform/0');
-  }
 
-  search(value:any){
-    this.users = this.userService.getUsers(value);
-  }
-
-  edit(user: User) {
-    console.log(user.userid);
-    this.router.navigateByUrl('/home/userform/' + user.userid);
-  }
 }
