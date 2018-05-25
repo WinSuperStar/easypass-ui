@@ -66,7 +66,8 @@ export class CustomerService {
       .set('cusname', form['cusname'])
       .set('cusmode', form['cusmode'])
       .set('contact', form['contact'])
-      .set('contactPhone', form['contactPhone']);
+      .set('contactPhone', form['contactPhone'])
+      .set('state', form['state']);
     return this.httpClient.post('/api/customers', params).map(
       res => {
         return res;

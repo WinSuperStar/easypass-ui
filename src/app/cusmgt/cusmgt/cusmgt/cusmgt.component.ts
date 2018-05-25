@@ -32,7 +32,8 @@ export class CusmgtComponent implements OnInit {
         contactPhone: [''],
         province: [''],
         city: [''],
-        area: ['']
+        area: [''],
+        state:['正常']
       }
     )
     $('#cusmgtTable').DataTable({

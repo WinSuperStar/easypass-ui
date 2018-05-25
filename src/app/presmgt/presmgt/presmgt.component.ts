@@ -101,8 +101,18 @@ export class PresmgtComponent implements OnInit {
   edit(id:any){
     this.router.navigateByUrl('/home/presmgt/'+id);
   }
-  delete(){
-
+  delete(id:any){
+    if(confirm("确定删除？")){
+      this.presaleService.delPresale(id).subscribe(
+        res=>{
+          alert('删除成功！');
+          this.router.navigateByUrl('/home/presmgt');
+        },
+        err=>{
+          alert('删除失败：'+err.message);
+        }
+      );
+    }
   }
 
   showItemDetail(v: Presale){

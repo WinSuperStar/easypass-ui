@@ -10,7 +10,7 @@ export function mobileValidator(mobile: FormControl): any {
 
 export function carnumValidator(mobile: FormControl): any {
   let value = (mobile.value || '') + '';
-  var myreg = /^[A-Z0-9]{17}$/;
+  var myreg = /^[A-Za-z0-9]{8}$/;
   let valid = myreg.test(value);
   return valid ? null : {carnum: {description: '车架号'}};  // 如果返回为空，则表示校验通过
 }
