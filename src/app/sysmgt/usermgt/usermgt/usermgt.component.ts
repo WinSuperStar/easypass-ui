@@ -109,7 +109,7 @@ export class UsermgtComponent implements OnInit {
           'render': function ( data, type, row ) {
             console.log(row);
             const userid = row.userid;
-            return '<a class="btn btn-warning btn-xs"  onclick="javascript:edit(' + userid + ')" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>';
+            return '<a class="btn btn-warning btn-xs"  onclick="edit(' + userid + ')" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>';
           },
           'targets': 7
         },
