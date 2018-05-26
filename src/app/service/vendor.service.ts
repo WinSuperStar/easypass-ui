@@ -31,6 +31,7 @@ export class VendorService {
   }
 
   saveVdr(vendor: any): Observable<any> {
+    console.log('前台保存vendor：'+vendor);
     let params = new HttpParams()
       .set('vendor', vendor);
     return this.httpClient.post('/api/saveVdr', params);

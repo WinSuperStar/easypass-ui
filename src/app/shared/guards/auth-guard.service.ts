@@ -22,7 +22,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad 
 
   canLoad(route: Route): boolean {
     let url = `/${route.path}`;
-
+    console.log('canload:'+url);
     return this.checkLogin(url);
   }
 

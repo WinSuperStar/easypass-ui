@@ -36,6 +36,15 @@ export function passwordValidator(info: FormGroup): any {
   return valid ? null : {passwordConfirm: {description: '密码验证不匹配'}};
 }
 
+export function arrayMobileValidator(info: FormGroup): any {
+  let cphone: FormControl = info.get('cphone') as FormControl;
+  // let passwordConfirm: FormControl = info.get('passwordConfirm') as FormControl;
+  let value = (cphone.value || '') + '';
+  var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+  let valid = myreg.test(value);
+  return valid ? null : {cphone: {description: '手机号格式不正确'}};  // 如果返回为空，则表示校验通过
+}
+
 // async validator for phone number unique validation
 export function mobileUniqueValidator(phone: FormControl): any {
   let value = (phone.value || '') + '';

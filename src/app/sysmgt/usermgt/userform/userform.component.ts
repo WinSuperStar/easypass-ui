@@ -44,7 +44,7 @@ export class UserformComponent implements OnInit {
     this.userid = this.routeInfo.snapshot.params['id'];
     this.formModel = this.fb.group({
       userName: ['', [Validators.required]],
-      phone: ['', [Validators.required, mobileValidator], mobileUniqueValidator],
+      phone: ['', [Validators.required, mobileValidator]],
       passwordInfo: this.fb.group({
         password: ['', [Validators.required, passwordValidatorLength]],
         passwordConfirm: ['', Validators.required]

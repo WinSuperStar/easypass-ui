@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import {Vendor, VendorService} from '../../service/vendor.service';
 import {ItemdetailService} from '../../service/itemdetail.service';
 import {ValidationService} from '../../shared/services/validation.service';
-import {mobileValidator} from '../../shared/validators/Validators';
+import {arrayMobileValidator, mobileValidator} from '../../shared/validators/Validators';
 
 @Component({
   selector: 'app-vdr-form',
@@ -111,9 +111,9 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.reset({
           vdrname: res.vdrname,
           vdraddrdetail: res.vdraddrdetail,
-          vdraddr1:res.vdraddr.split(' ')[0],
-          vdraddr2:res.vdraddr.split(' ')[1],
-          vdraddr3:res.vdraddr.split(' ')[2],
+          vdraddr1: res.vdraddr.split(' ')[0],
+          vdraddr2: res.vdraddr.split(' ')[1],
+          vdraddr3: res.vdraddr.split(' ')[2],
           vdrplate1: res.vdrplate.split(' ')[0],
           vdrplate2: res.vdrplate.split(' ')[1],
           contact: res.contact,
@@ -167,7 +167,8 @@ export class VdrFormComponent implements OnInit {
           checkboxQita: res.itemQita,
           itemQitaCost: res.itemQitaCost,
           itemQitaCompletedate: res.itemQitaCompletedate,
-          itemQitaDesc: res.itemQitaDesc
+          itemQitaDesc: res.itemQitaDesc,
+          contacts: JSON.parse(res.contacts)
         })
         ;
       }
@@ -300,7 +301,7 @@ export class VdrFormComponent implements OnInit {
   }
 
   cancel() {
-    if(confirm('确定要返回？')) {
+    if (confirm('确定要返回？')) {
       this.router.navigateByUrl('/home/vdrmgt');
     }
   }
@@ -373,6 +374,7 @@ export class VdrFormComponent implements OnInit {
       this.vdr.itemQitaCost = this.formGroup.get('itemQitaCost').value;
       this.vdr.itemQitaCompletedate = this.formGroup.get('itemQitaCompletedate').value;
       this.vdr.itemQitaDesc = this.formGroup.get('itemQitaDesc').value;
+      this.vdr.contacts = JSON.stringify(this.formGroup.value['contacts']);
       // this.vdr.state = this.formGroup.get('').value;
       // this.vdr.createdate = this.formGroup.get('').value;
       // this.vdr.creator = this.formGroup.get('').value;
@@ -390,6 +392,7 @@ export class VdrFormComponent implements OnInit {
       );
     } else {
       // 触发所有校验
+      console.log(JSON.stringify(this.formGroup.value['contacts']));
       this.validation.validateAllFormFields(this.formGroup);
     }
   }
@@ -398,7 +401,7 @@ export class VdrFormComponent implements OnInit {
     let id = this.vdr.vdrid;
     // 提交请求
     if (this.formGroup.valid) {
-      if (confirm("确定提交？")) {
+      if (confirm('确定提交？')) {
         this.vendorService.smtVdr(id).subscribe(
           res => {
             alert('提交成功！');
@@ -409,14 +412,14 @@ export class VdrFormComponent implements OnInit {
           }
         );
       }
-    }else{
+    } else {
       this.validation.validateAllFormFields(this.formGroup);
     }
   }
 
   addContact() {
     let contacts = this.formGroup.get('contacts') as FormArray;
-    contacts.push(new FormControl);
+    contacts.push(this.createContact());
   }
 
   removeContact(num: number) {
@@ -429,10 +432,10 @@ export class VdrFormComponent implements OnInit {
   }
 
   showCity(item) {
-    let p:string;
-    if(typeof item == 'string' ){
-      p = item
-    }else{
+    let p: string;
+    if (typeof item == 'string') {
+      p = item;
+    } else {
       p = item.target.value;
     }
     this.addrService.getProCode(p).subscribe(
@@ -446,10 +449,10 @@ export class VdrFormComponent implements OnInit {
   }
 
   showArea(item) {
-    let c:string;
-    if(typeof item == 'string' ){
-      c = item
-    }else{
+    let c: string;
+    if (typeof item == 'string') {
+      c = item;
+    } else {
       c = item.target.value;
     }
     this.addrService.getShotCode(c).subscribe(
@@ -467,8 +470,8 @@ export class VdrFormComponent implements OnInit {
 
   createContact(): FormGroup {
     return this.fb.group({
-      cname: '',
-      cphone: ''
+      cname:[''],
+      cphone:['']
     });
   }
 
@@ -484,7 +487,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemTidangReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -507,7 +510,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemGuohuReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -530,7 +533,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemShangpaiReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -553,7 +556,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemWeizhangReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -576,7 +579,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemDiyaReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -599,7 +602,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemJiechudiyaReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -622,7 +625,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemWeituoReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -645,7 +648,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemNianjianReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -668,7 +671,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemBuhuanReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -691,7 +694,7 @@ export class VdrFormComponent implements OnInit {
                 this.vdr.itemQitaReqId = res;
                 this.vendorService.saveVdr(JSON.stringify(this.vdr)).subscribe(
                   res => {
-                    alert('为当前项目创建办证要求' );
+                    alert('为当前项目创建办证要求');
                   },
                   err => {
                     alert('错误：' + err.message);
@@ -715,7 +718,7 @@ export class VdrFormComponent implements OnInit {
 }
 
 export class Contact {
-  constructor(public name: string,
-              public phone: number) {
+  constructor(public cname: string,
+              public cphone: number) {
   }
 }
