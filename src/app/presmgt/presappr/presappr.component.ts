@@ -41,4 +41,8 @@ export class PresapprComponent implements OnInit {
     }
     return list;
   }
+
+  approve(id:any){
+
+  }
 }

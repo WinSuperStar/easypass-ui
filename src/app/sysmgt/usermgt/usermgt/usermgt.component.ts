@@ -24,7 +24,7 @@ export class UsermgtComponent implements OnInit {
   constructor(private router: Router,
               private fb: FormBuilder,
               private userService: UserServiceService,
-              private date: DateService,
+              public date: DateService,
               private roleService: RoleService
   ) {
     this.formGroup = fb.group({

@@ -27,7 +27,7 @@
         <td>{{p.contact}}</td>
         <td>{{p.state}}</td>
         <td>{{p.creator}}</td>
-        <td></td>
+        <td><a class="btn btn-primary btn-xs" (click)="approve(p.saleid)"><span class="glyphicon glyphicon-check"></span>审批</a></td>
       </tr>
       </tbody>
     </table>

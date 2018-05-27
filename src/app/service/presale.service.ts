@@ -62,7 +62,7 @@ export class PresaleService {
       .set('cusmode','')
       .set('cusname', '')
       .set('state', state)
-      .set('itemlist', '');
+      .set('itemlist', 'false,false,false,false,false,false,false,false,false,false');
     // .set('form', str);
     return this.httpClient.post('/api/getPresales', params);
   }

@@ -9,6 +9,10 @@ export class CarService {
   constructor(private httpClient: HttpClient) {
   }
 
+  getAllCars():Observable<any>{
+    return this.httpClient.get('/api/allCars');
+  }
+
   saveCar(car: any): Observable<any>{
     let params = new HttpParams()
       .set('car', car);

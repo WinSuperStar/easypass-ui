@@ -20,7 +20,7 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "assets/bower_components/bootstrap/dist/css/bootstrap.min.css",
+        "assets/bower_components/bootstrap/dist/css/bootstrap.css",
         "assets/bower_components/font-awesome/css/font-awesome.min.css",
         "assets/bower_components/Ionicons/css/ionicons.min.css",
         "../node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
@@ -35,7 +35,7 @@
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/datatables.net/js/jquery.dataTables.js",
         "../node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+        "assets/bower_components/bootstrap/dist/js/bootstrap.js",
         "../node_modules/admin-lte/dist/js/adminlte.min.js",
         "../node_modules/moment/min/moment.min.js",
         "../node_modules/bootstrap-daterangepicker/daterangepicker.js",
