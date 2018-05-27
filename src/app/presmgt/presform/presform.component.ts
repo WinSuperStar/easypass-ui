@@ -25,8 +25,36 @@ export class PresformComponent implements OnInit {
   public city: Observable<City[]>;
   public area: Observable<Area[]>;
   public province: Observable<Province[]>;
-
   public formGroup: FormGroup;
+  // for cost beyond indication
+  public itemTidangCost_vdr: string;
+  public itemTidangTax_vdr: string;
+  public itemGuohuCost_vdr: string;
+  public itemGuohuTax_vdr: string;
+  public itemShangpaiCost_vdr: string;
+  public itemWeizhangCost_vdr: string;
+  public itemWeizhangCost2_vdr: string;
+  public itemDiyaCost_vdr: string;
+  public itemJiechudiyaCost_vdr: string;
+  public itemWeituoCost_vdr: string;
+  public itemNianjianCost_vdr: string;
+  public itemBuhuanCost_vdr: string;
+  public itemQitaCost_vdr: string;
+
+  public itemTidangCost_flag: boolean;
+  public itemTidangTax_flag: boolean;
+  public itemGuohuCost_flag: boolean;
+  public itemGuohuTax_flag: boolean;
+  public itemShangpaiCost_flag: boolean;
+  public itemWeizhangCost_flag: boolean;
+  public itemWeizhangCost2_flag: boolean;
+  public itemDiyaCost_flag: boolean;
+  public itemJiechudiyaCost_flag: boolean;
+  public itemWeituoCost_flag: boolean;
+  public itemNianjianCost_flag: boolean;
+  public itemBuhuanCost_flag: boolean;
+  public itemQitaCost_flag: boolean;
+  public validNumStatus: boolean;
 
   constructor(private router: Router,
               private routeInfo: ActivatedRoute,
@@ -41,7 +69,7 @@ export class PresformComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.customers = this.cusService.getAllCustomers();
+    // this.customers = this.cusService.getAllCustomers();
     this.vendors = this.vendorService.getAllVdrs();
     let id = this.routeInfo.snapshot.params['id'];
     this.formGroup = this.fb.group({
@@ -113,6 +141,60 @@ export class PresformComponent implements OnInit {
       // contacts: this.fb.array([this.createContact()])
       contactphone: ['']
     });
+    /************************ 销售限价金额校验 ******************************/
+    this.formGroup.get('itemTidangCost').valueChanges.subscribe(value => {
+      this.itemTidangCost_flag = this.compareNum(this.itemTidangCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemTidangTax').valueChanges.subscribe(value => {
+      this.checkValidNumStatus();
+      this.itemTidangTax_flag = this.compareNum(this.itemTidangTax_vdr, value);
+    });
+    this.formGroup.get('itemGuohuCost').valueChanges.subscribe(value => {
+      this.itemGuohuCost_flag = this.compareNum(this.itemGuohuCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemGuohuTax').valueChanges.subscribe(value => {
+      this.checkValidNumStatus();
+      this.itemGuohuTax_flag = this.compareNum(this.itemGuohuTax_vdr, value);
+    });
+    this.formGroup.get('itemShangpaiCost').valueChanges.subscribe(value => {
+      this.itemShangpaiCost_flag = this.compareNum(this.itemShangpaiCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemWeizhangCost').valueChanges.subscribe(value => {
+      this.itemWeizhangCost_flag = this.compareNum(this.itemWeizhangCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemWeizhangCost2').valueChanges.subscribe(value => {
+      this.itemWeizhangCost2_flag = this.compareNum(this.itemWeizhangCost2_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemDiyaCost').valueChanges.subscribe(value => {
+      this.itemDiyaCost_flag = this.compareNum(this.itemDiyaCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemJiechudiyaCost').valueChanges.subscribe(value => {
+      this.itemJiechudiyaCost_flag = this.compareNum(this.itemJiechudiyaCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemWeituoCost').valueChanges.subscribe(value => {
+      this.itemWeituoCost_flag = this.compareNum(this.itemWeituoCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemNianjianCost').valueChanges.subscribe(value => {
+      this.itemNianjianCost_flag = this.compareNum(this.itemNianjianCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemBuhuanCost').valueChanges.subscribe(value => {
+      this.itemBuhuanCost_flag = this.compareNum(this.itemBuhuanCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+    this.formGroup.get('itemQitaCost').valueChanges.subscribe(value => {
+      this.itemQitaCost_flag = this.compareNum(this.itemQitaCost_vdr, value);
+      this.checkValidNumStatus();
+    });
+
     this.presaleService.getPresale(id).subscribe(
       res => {
         this.presale = res;
@@ -127,7 +209,7 @@ export class PresformComponent implements OnInit {
           caraddr3: res.caraddr.split(' ')[2],
           carplate1: res.carplate.split(' ')[0],
           carplate2: res.carplate.split(' ')[1],
-          contact: res.contact,
+          contact: res.vdrid,
           contactphone: res.contactphone,
           state: res.state,
           checkboxTidang: res.itemTidang,
@@ -179,66 +261,82 @@ export class PresformComponent implements OnInit {
           itemQitaCompletedate: res.itemQitaCompletedate,
           itemQitaDesc: res.itemQitaDesc
         });
+        if (this.presale.vdrid != null) {
+          this.vendorService.getVdr(this.presale.vdrid).subscribe(
+            res => {
+              this.itemTidangCost_vdr = res.itemTidangCost;
+              this.itemTidangTax_vdr = res.itemTidangTax;
+              this.itemGuohuCost_vdr = res.itemGuohuCost;
+              this.itemGuohuTax_vdr = res.itemGuohuTax;
+              this.itemShangpaiCost_vdr = res.itemShangpaiCost;
+              this.itemWeizhangCost_vdr = res.itemWeizhangCost;
+              this.itemWeizhangCost2_vdr = res.itemWeizhangCost2;
+              this.itemDiyaCost_vdr = res.itemDiyaCost;
+              this.itemJiechudiyaCost_vdr = res.itemJiechudiyaCost;
+              this.itemWeituoCost_vdr = res.itemWeituoCost;
+              this.itemNianjianCost_vdr = res.itemNianjianCost;
+              this.itemBuhuanCost_vdr = res.itemBuhuanCost;
+              this.itemQitaCost_vdr = res.itemQitaCost;
+              this.itemTidangCost_flag = this.compareNum(res.itemTidangCost, this.presale.itemTidangCost);
+              this.itemTidangTax_flag = this.compareNum(res.itemTidangTax, this.presale.itemTidangTax);
+              this.checkValidNumStatus();
+            }
+          );
+        }
+
       },
       err => {
         return err;
       }
     );
     this.province = this.addrService.getPros();
+    // 根据客户模式带入客户名称
+    this.formGroup.get('cusmode').valueChanges.subscribe(
+      res => {
+        this.customers = this.cusService.getCusByMode(res);
+      }
+    );
     // 选择完代办商后，带入代办商信息
     this.formGroup.get('contact').valueChanges.subscribe(
       res => {
-        // let v: Vendor;
-        // for (let i = 0; i < this.vendors.length ;i++){
-        //   if (this.vendors[i].contact == this.formGroup.get('contact').value){
-        //     v = this.vendors[i];
-        //     break;
-        //   }
-        // }
-        this.vendorService.getVdr(this.formGroup.get('contact').value).subscribe(res=>{
-          this.presale.contact = res.vdrname;
-          this.formGroup.reset({
-            checkboxTidang: res.itemTidang,
-            itemTidangTax: res.itemTidangTax,
-            itemTidangCost: res.itemTidangCost,
-            itemTidangDesc: res.itemTidangDesc,
-            checkboxGuohu: res.itemGuohu,
-            itemGuohuTax: res.itemGuohuTax,
-            itemGuohuCost: res.itemGuohuCost,
-            itemGuohuDesc: res.itemGuohuDesc,
-            checkboxShangpai: res.itemShangpai,
-            itemShangpaiTax: res.itemShangpaiTax,
-            itemShangpaiCost: res.itemShangpaiCost,
-            itemShangpaiDesc: res.itemShangpaiDesc,
-            checkboxWeizhang: res.itemWeizhang,
-            itemWeizhangTax: res.itemWeizhangTax,
-            itemWeizhangCost: res.itemWeizhangCost,
-            itemWeizhangCost2: res.itemWeizhangCost2,
-            itemWeizhangDesc: res.itemWeizhangDesc,
-            checkboxDiya: res.itemDiya,
-            itemDiyaCost: res.itemDiyaCost,
-            itemDiyaDesc: res.itemDiyaDesc,
-            checkboxJiechudiya: res.itemJiechudiya,
-            itemJiechudiyaCost: res.itemJiechudiyaCost,
-            itemJiechudiyaDesc: res.itemJiechudiyaDesc,
-            checkboxWeituo: res.itemWeituo,
-            itemWeituoTax: res.itemWeituoTax,
-            itemWeituoCost: res.itemWeituoCost,
-            itemWeituoDesc: res.itemWeituoDesc,
-            checkboxNianjian: res.itemNianjian,
-            itemNianjianTax: res.itemNianjianTax,
-            itemNianjianCost: res.itemNianjianCost,
-            itemNianjianDesc: res.itemNianjianDesc,
-            checkboxBuhuan: res.itemBuhuan,
-            itemBuhuanTax: res.itemBuhuanTax,
-            itemBuhuanCost: res.itemBuhuanCost,
-            itemBuhuanDesc: res.itemBuhuanDesc,
-            checkboxQita: res.itemQita,
-            itemQitaCost: res.itemQitaCost,
-            itemQitaDesc: res.itemQitaDesc
-          });
+        this.vendorService.getVdr(this.formGroup.get('contact').value).subscribe(res => {
+          this.presale.contact = res.contact;
+          this.presale.vdrname = res.vdrname;
+          this.presale.vdrid = res.vdrid;
+          this.formGroup.get('checkboxTidang').setValue(res.itemTidang);
+          this.formGroup.get('itemTidangDesc').setValue(res.itemTidangDesc);
+          this.formGroup.get('checkboxGuohu').setValue(res.itemGuohu);
+          this.formGroup.get('itemGuohuDesc').setValue(res.itemGuohuDesc);
+          this.formGroup.get('checkboxShangpai').setValue(res.itemShangpai);
+          this.formGroup.get('itemShangpaiDesc').setValue(res.itemShangpaiDesc);
+          this.formGroup.get('checkboxWeizhang').setValue(res.itemWeizhang);
+          this.formGroup.get('itemWeizhangDesc').setValue(res.itemWeizhangDesc);
+          this.formGroup.get('checkboxDiya').setValue(res.itemDiya);
+          this.formGroup.get('itemDiyaDesc').setValue(res.itemDiyaDesc);
+          this.formGroup.get('checkboxJiechudiya').setValue(res.itemJiechudiya);
+          this.formGroup.get('itemJiechudiyaDesc').setValue(res.itemJiechudiyaDesc);
+          this.formGroup.get('checkboxWeituo').setValue(res.itemWeituo);
+          this.formGroup.get('itemWeituoDesc').setValue(res.itemWeituoDesc);
+          this.formGroup.get('checkboxNianjian').setValue(res.itemNianjian);
+          this.formGroup.get('itemNianjianDesc').setValue(res.itemNianjianDesc);
+          this.formGroup.get('checkboxBuhuan').setValue(res.itemBuhuan);
+          this.formGroup.get('itemBuhuanDesc').setValue(res.itemBuhuanDesc);
+          this.formGroup.get('checkboxQita').setValue(res.itemQita);
+          this.formGroup.get('itemQitaDesc').setValue(res.itemQitaDesc);
+          this.itemTidangCost_vdr = res.itemTidangCost;
+          this.itemTidangTax_vdr = res.itemTidangTax;
+          this.itemGuohuCost_vdr = res.itemGuohuCost;
+          this.itemGuohuTax_vdr = res.itemGuohuTax;
+          this.itemShangpaiCost_vdr = res.itemShangpaiCost;
+          this.itemWeizhangCost_vdr = res.itemWeizhangCost;
+          this.itemWeizhangCost2_vdr = res.itemWeizhangCost2;
+          this.itemDiyaCost_vdr = res.itemDiyaCost;
+          this.itemJiechudiyaCost_vdr = res.itemJiechudiyaCost;
+          this.itemWeituoCost_vdr = res.itemWeituoCost;
+          this.itemNianjianCost_vdr = res.itemNianjianCost;
+          this.itemBuhuanCost_vdr = res.itemBuhuanCost;
+          this.itemQitaCost_vdr = res.itemQitaCost;
         });
-
       });
 
     $('#fileUpload').fileinput({
@@ -387,6 +485,10 @@ export class PresformComponent implements OnInit {
     }
   }
 
+  compareNum(vdr: any, pres: any) {
+    return (vdr >= pres);
+  }
+
   save() {
     if (this.formGroup.valid) {
       // this.presale.presaleid= this.formGroup.get('').value;
@@ -469,10 +571,26 @@ export class PresformComponent implements OnInit {
           alert('错误：' + err.message);
         }
       );
+
     } else {
       // 触发所有校验
       this.validation.validateAllFormFields(this.formGroup);
     }
+  }
+
+  checkValidNumStatus() {
+    // let flag: boolean = true;
+    this.validNumStatus = (this.formGroup.get('checkboxTidang').value == 'true') ? (this.itemTidangTax_flag && this.itemTidangCost_flag) : true;
+    this.validNumStatus = (this.formGroup.get('checkboxGuohu').value == 'true') ? (this.itemGuohuTax_flag && this.itemGuohuCost_flag) : true;
+    this.validNumStatus = (this.formGroup.get('checkboxShangpai').value == 'true') ?  this.itemShangpaiCost_flag : true;
+    this.validNumStatus = (this.formGroup.get('checkboxWeizhang').value == 'true') ?  (this.itemWeizhangCost_flag && this.itemWeizhangCost2_flag) : true;
+    this.validNumStatus = (this.formGroup.get('checkboxDiya').value == 'true') ?  this.itemDiyaCost_flag : true;
+    this.validNumStatus = (this.formGroup.get('checkboxJiechudiya').value == 'true') ?  this.itemJiechudiyaCost_flag : true;
+    this.validNumStatus = (this.formGroup.get('checkboxWeituo').value == 'true') ?  this.itemWeituoCost_flag : true;
+    this.validNumStatus = (this.formGroup.get('checkboxNianjian').value == 'true') ?  this.itemNianjianCost_flag : true;
+    this.validNumStatus = (this.formGroup.get('checkboxBuhuan').value == 'true') ?  this.itemBuhuanCost_flag : true;
+    this.validNumStatus = (this.formGroup.get('checkboxQita').value == 'true') ?  this.itemQitaCost_flag : true;
+    // return flag;
   }
 
   showCity(item) {
@@ -751,5 +869,40 @@ export class PresformComponent implements OnInit {
       //
     }
 
+  }
+
+  submit() {
+    if (this.validNumStatus) {
+      if (this.presale.state == '审批中') {
+        alert('正在审批，请稍后再试！');
+      } else {
+        if (confirm('确认录入销售信息吗？')) {
+          this.presaleService.updatePresaleState('已录入', this.presale.saleid).subscribe(
+            res => {
+              alert('销售预录信息录入成功！');
+            },
+            err => {
+              alert('录入失败：' + err.message);
+            }
+          );
+        }
+      }
+    } else {
+      if (this.presale.state == '审批中') {
+        alert('正在审批，请稍后再试！');
+      } else {
+        if (confirm('确认提交审批吗？')) {
+          this.presaleService.updatePresaleState('审批中', this.presale.saleid).subscribe(
+            res => {
+              alert('提交审批成功！');
+              this.presale.state = '审批中';
+            },
+            err => {
+              alert('提交失败：' + err.message);
+            }
+          );
+        }
+      }
+    }
   }
 }

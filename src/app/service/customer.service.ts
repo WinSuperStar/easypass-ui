@@ -18,6 +18,15 @@ export class CustomerService {
     );
   }
 
+  getCusByMode(mode:any): Observable<any>{
+    let params = new HttpParams().set('cusmode', mode);
+    return this.httpClient.post('/api/customersByMode', params).map(
+      res => {
+        return res;
+      }
+    );
+  }
+
   getCusnames(): Observable<any> {
     return this.httpClient.get('/api/allCustomers').map(
       res => {

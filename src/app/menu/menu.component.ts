@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
         { id: 14, name: '访问日志', link: 'home/accessLogmgt' },
       ]),
       new Menu(2, '客户管理', [{id: 21, name: '客户管理', link: 'home/cusmgt'}, {id: 22, name: '代办商管理', link: 'home/vdrmgt'}]),
-      new Menu(3, '销售限价管理', [{id: 31, name: '销售限价管理', link: 'home/presmgt'}]),
+      new Menu(3, '销售限价管理', [{id: 31, name: '销售限价管理', link: 'home/presmgt'},{id: 32, name: '销售限价审批', link: 'home/presappr'}]),
       new Menu(4, '订单管理',
         [{id: 41, name: '办证车辆管理', link: 'home/carmgt'},
           {id: 42, name: '创建订单', link: 'home/orderform/0'},

@@ -7,6 +7,7 @@ import {Vendor, VendorService} from '../../service/vendor.service';
 import {ItemdetailService} from '../../service/itemdetail.service';
 import {ValidationService} from '../../shared/services/validation.service';
 import {arrayMobileValidator, mobileValidator} from '../../shared/validators/Validators';
+import {DateService} from '../../shared/services/date.service';
 
 @Component({
   selector: 'app-vdr-form',
@@ -27,7 +28,8 @@ export class VdrFormComponent implements OnInit {
               private router: Router,
               private addrService: AddrSelectService,
               private idService: ItemdetailService,
-              public validation: ValidationService) {
+              public validation: ValidationService,
+              public dateService: DateService) {
   }
 
   ngOnInit() {
@@ -123,54 +125,54 @@ export class VdrFormComponent implements OnInit {
           checkboxTidang: res.itemTidang,
           itemTidangTax: res.itemTidangTax,
           itemTidangCost: res.itemTidangCost,
-          itemTidangCompletedate: res.itemTidangCompletedate,
+          itemTidangCompletedate: this.dateService.dateFmt(res.itemTidangCompletedate),
           itemTidangDesc: res.itemTidangDesc,
           checkboxGuohu: res.itemGuohu,
           itemGuohuTax: res.itemGuohuTax,
           itemGuohuCost: res.itemGuohuCost,
-          itemGuohuCompletedate: res.itemGuohuCompletedate,
+          itemGuohuCompletedate: this.dateService.dateFmt(res.itemGuohuCompletedate),
           itemGuohuDesc: res.itemGuohuDesc,
           checkboxShangpai: res.itemShangpai,
           itemShangpaiTax: res.itemShangpaiTax,
           itemShangpaiCost: res.itemShangpaiCost,
-          itemShangpaiCompletedate: res.itemShangpaiCompletedate,
+          itemShangpaiCompletedate: this.dateService.dateFmt(res.itemShangpaiCompletedate),
           itemShangpaiDesc: res.itemShangpaiDesc,
           checkboxWeizhang: res.itemWeizhang,
           itemWeizhangTax: res.itemWeizhangTax,
           itemWeizhangCost: res.itemWeizhangCost,
           itemWeizhangCost2: res.itemWeizhangCost2,
-          itemWeizhangCompletedate: res.itemWeizhangCompletedate,
+          itemWeizhangCompletedate:this.dateService.dateFmt(res.itemWeizhangCompletedate),
           itemWeizhangDesc: res.itemWeizhangDesc,
           checkboxDiya: res.itemDiya,
           itemDiyaCost: res.itemDiyaCost,
-          itemDiyaCompletedate: res.itemDiyaCompletedate,
+          itemDiyaCompletedate: this.dateService.dateFmt(res.itemDiyaCompletedate),
           itemDiyaDesc: res.itemDiyaDesc,
           checkboxJiechudiya: res.itemJiechudiya,
           itemJiechudiyaCost: res.itemJiechudiyaCost,
-          itemJiechudiyaCompletedate: res.itemJiechudiyaCompletedate,
+          itemJiechudiyaCompletedate: this.dateService.dateFmt(res.itemJiechudiyaCompletedate),
           itemJiechudiyaDesc: res.itemJiechudiyaDesc,
           checkboxWeituo: res.itemWeituo,
           itemWeituoTax: res.itemWeituoTax,
           itemWeituoCost: res.itemWeituoCost,
-          itemWeituoCompletedate: res.itemWeituoCompletedate,
+          itemWeituoCompletedate: this.dateService.dateFmt(res.itemWeituoCompletedate),
           itemWeituoDesc: res.itemWeituoDesc,
           checkboxNianjian: res.itemNianjian,
           itemNianjianTax: res.itemNianjianTax,
           itemNianjianCost: res.itemNianjianCost,
-          itemNianjianCompletedate: res.itemNianjianCompletedate,
+          itemNianjianCompletedate: this.dateService.dateFmt(res.itemNianjianCompletedate),
           itemNianjianDesc: res.itemNianjianDesc,
           checkboxBuhuan: res.itemBuhuan,
           itemBuhuanTax: res.itemBuhuanTax,
           itemBuhuanCost: res.itemBuhuanCost,
-          itemBuhuanCompletedate: res.itemBuhuanCompletedate,
+          itemBuhuanCompletedate: this.dateService.dateFmt(res.itemBuhuanCompletedate),
           itemBuhuanDesc: res.itemBuhuanDesc,
           checkboxQita: res.itemQita,
           itemQitaCost: res.itemQitaCost,
-          itemQitaCompletedate: res.itemQitaCompletedate,
+          itemQitaCompletedate: this.dateService.dateFmt(res.itemQitaCompletedate),
           itemQitaDesc: res.itemQitaDesc,
+          // contacts: this.loadContacts(res.contacts)
           contacts: JSON.parse(res.contacts)
-        })
-        ;
+        });
       }
     );
     // this.vdr = new Vdr(1, '车王', 13390988765, '上海浦东门店', [{id: 1, name: '办证', desc: '办理牌照证件', price: 9000}]);
@@ -182,7 +184,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemTidangCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemTidangCost').setValidators(null);
-        this.formGroup.get('itemTidangCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemTidangCompletedate').setValidators(null);
       }
       this.formGroup.get('itemTidangCost').updateValueAndValidity();
       this.formGroup.get('itemTidangCompletedate').updateValueAndValidity();
@@ -194,7 +196,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemGuohuCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemGuohuCost').setValidators(null);
-        this.formGroup.get('itemGuohuCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemGuohuCompletedate').setValidators(null);
       }
       this.formGroup.get('itemGuohuCost').updateValueAndValidity();
       this.formGroup.get('itemGuohuCompletedate').updateValueAndValidity();
@@ -206,7 +208,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemShangpaiCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemShangpaiCost').setValidators(null);
-        this.formGroup.get('itemShangpaiCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemShangpaiCompletedate').setValidators(null);
       }
       this.formGroup.get('itemShangpaiCost').updateValueAndValidity();
       this.formGroup.get('itemShangpaiCompletedate').updateValueAndValidity();
@@ -220,7 +222,7 @@ export class VdrFormComponent implements OnInit {
       } else {
         this.formGroup.get('itemWeizhangCost').setValidators(null);
         this.formGroup.get('itemWeizhangCost2').setValidators(null);
-        this.formGroup.get('itemWeizhangCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemWeizhangCompletedate').setValidators(null);
       }
       this.formGroup.get('itemWeizhangCost').updateValueAndValidity();
       this.formGroup.get('itemWeizhangCost2').updateValueAndValidity();
@@ -233,7 +235,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemDiyaCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemDiyaCost').setValidators(null);
-        this.formGroup.get('itemDiyaCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemDiyaCompletedate').setValidators(null);
       }
       this.formGroup.get('itemDiyaCost').updateValueAndValidity();
       this.formGroup.get('itemDiyaCompletedate').updateValueAndValidity();
@@ -245,7 +247,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemJiechudiyaCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemJiechudiyaCost').setValidators(null);
-        this.formGroup.get('itemJiechudiyaCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemJiechudiyaCompletedate').setValidators(null);
       }
       this.formGroup.get('itemJiechudiyaCost').updateValueAndValidity();
       this.formGroup.get('itemJiechudiyaCompletedate').updateValueAndValidity();
@@ -257,7 +259,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemWeituoCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemWeituoCost').setValidators(null);
-        this.formGroup.get('itemWeituoCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemWeituoCompletedate').setValidators(null);
       }
       this.formGroup.get('itemWeituoCost').updateValueAndValidity();
       this.formGroup.get('itemWeituoCompletedate').updateValueAndValidity();
@@ -269,7 +271,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemNianjianCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemNianjianCost').setValidators(null);
-        this.formGroup.get('itemNianjianCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemNianjianCompletedate').setValidators(null);
       }
       this.formGroup.get('itemNianjianCost').updateValueAndValidity();
       this.formGroup.get('itemNianjianCompletedate').updateValueAndValidity();
@@ -281,7 +283,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemBuhuanCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemBuhuanCost').setValidators(null);
-        this.formGroup.get('itemBuhuanCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemBuhuanCompletedate').setValidators(null);
       }
       this.formGroup.get('itemBuhuanCost').updateValueAndValidity();
       this.formGroup.get('itemBuhuanCompletedate').updateValueAndValidity();
@@ -293,7 +295,7 @@ export class VdrFormComponent implements OnInit {
         this.formGroup.get('itemQitaCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemQitaCost').setValidators(null);
-        this.formGroup.get('itemQitaCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemQitaCompletedate').setValidators(null);
       }
       this.formGroup.get('itemQitaCost').updateValueAndValidity();
       this.formGroup.get('itemQitaCompletedate').updateValueAndValidity();
@@ -304,6 +306,21 @@ export class VdrFormComponent implements OnInit {
     if (confirm('确定要返回？')) {
       this.router.navigateByUrl('/home/vdrmgt');
     }
+  }
+
+  loadContacts(contacts: any) {
+    console.log(contacts);
+    let cts = JSON.parse(contacts);
+    console.log(cts);
+    let array = this.fb.array([]);
+    cts.map(contact => {
+      array.push(this.fb.group({
+        cname: [contact.cname],
+        cphone: [contact.cphone]
+      }));
+    });
+    console.log(array);
+    return array;
   }
 
   save() {
@@ -320,59 +337,59 @@ export class VdrFormComponent implements OnInit {
       this.vdr.itemTidang = this.formGroup.get('checkboxTidang').value;
       this.vdr.itemTidangTax = this.formGroup.get('itemTidangTax').value;
       this.vdr.itemTidangCost = this.formGroup.get('itemTidangCost').value;
-      this.vdr.itemTidangCompletedate = this.formGroup.get('itemTidangCompletedate').value;
+      this.vdr.itemTidangCompletedate = this.dateService.comDate(this.formGroup.get('itemTidangCompletedate').value);
       this.vdr.itemTidangDesc = this.formGroup.get('itemTidangDesc').value;
       // this.vdr.itemTidangReqId = this.formGroup.get('').value;
       this.vdr.itemGuohu = this.formGroup.get('checkboxGuohu').value;
       this.vdr.itemGuohuTax = this.formGroup.get('itemGuohuTax').value;
       this.vdr.itemGuohuCost = this.formGroup.get('itemGuohuCost').value;
-      this.vdr.itemGuohuCompletedate = this.formGroup.get('itemGuohuCompletedate').value;
+      this.vdr.itemGuohuCompletedate = this.dateService.comDate(this.formGroup.get('itemGuohuCompletedate').value);
       this.vdr.itemGuohuDesc = this.formGroup.get('itemGuohuDesc').value;
       // this.vdr.itemGuohuReqId = this.formGroup.get('').value;
       this.vdr.itemShangpai = this.formGroup.get('checkboxShangpai').value;
       this.vdr.itemShangpaiTax = this.formGroup.get('itemShangpaiTax').value;
       this.vdr.itemShangpaiCost = this.formGroup.get('itemShangpaiCost').value;
-      this.vdr.itemShangpaiCompletedate = this.formGroup.get('itemShangpaiCompletedate').value;
+      this.vdr.itemShangpaiCompletedate = this.dateService.comDate(this.formGroup.get('itemShangpaiCompletedate').value);
       this.vdr.itemShangpaiDesc = this.formGroup.get('itemShangpaiDesc').value;
       // this.vdr.itemShangpaiReqId = this.formGroup.get('').value;
       this.vdr.itemWeizhang = this.formGroup.get('checkboxWeizhang').value;
       this.vdr.itemWeizhangTax = this.formGroup.get('itemWeizhangTax').value;
       this.vdr.itemWeizhangCost = this.formGroup.get('itemWeizhangCost').value;
       this.vdr.itemWeizhangCost2 = this.formGroup.get('itemWeizhangCost2').value;
-      this.vdr.itemWeizhangCompletedate = this.formGroup.get('itemWeizhangCompletedate').value;
+      this.vdr.itemWeizhangCompletedate = this.dateService.comDate(this.formGroup.get('itemWeizhangCompletedate').value);
       this.vdr.itemWeizhangDesc = this.formGroup.get('itemWeizhangDesc').value;
       // this.vdr.itemWeizhangReqId = this.formGroup.get('').value;
       this.vdr.itemDiya = this.formGroup.get('checkboxDiya').value;
       this.vdr.itemDiyaCost = this.formGroup.get('itemDiyaCost').value;
-      this.vdr.itemDiyaCompletedate = this.formGroup.get('itemDiyaCompletedate').value;
+      this.vdr.itemDiyaCompletedate = this.dateService.comDate(this.formGroup.get('itemDiyaCompletedate').value);
       this.vdr.itemDiyaDesc = this.formGroup.get('itemDiyaDesc').value;
       // this.vdr.itemDiyaReqId = this.formGroup.get('').value;
       this.vdr.itemJiechudiya = this.formGroup.get('checkboxJiechudiya').value;
       this.vdr.itemJiechudiyaCost = this.formGroup.get('itemJiechudiyaCost').value;
-      this.vdr.itemJiechudiyaCompletedate = this.formGroup.get('itemJiechudiyaCompletedate').value;
+      this.vdr.itemJiechudiyaCompletedate = this.dateService.comDate(this.formGroup.get('itemJiechudiyaCompletedate').value);
       this.vdr.itemJiechudiyaDesc = this.formGroup.get('itemJiechudiyaDesc').value;
       // this.vdr.itemJiechudiyaReqId = this.formGroup.get('').value;
       this.vdr.itemWeituo = this.formGroup.get('checkboxWeituo').value;
       this.vdr.itemWeituoTax = this.formGroup.get('itemWeituoTax').value;
       this.vdr.itemWeituoCost = this.formGroup.get('itemWeituoCost').value;
-      this.vdr.itemWeituoCompletedate = this.formGroup.get('itemWeituoCompletedate').value;
+      this.vdr.itemWeituoCompletedate = this.dateService.comDate(this.formGroup.get('itemWeituoCompletedate').value);
       this.vdr.itemWeituoDesc = this.formGroup.get('itemWeituoDesc').value;
       // this.vdr.itemWeituoReqId = this.formGroup.get('').value;
       this.vdr.itemNianjian = this.formGroup.get('checkboxNianjian').value;
       this.vdr.itemNianjianTax = this.formGroup.get('itemNianjianTax').value;
       this.vdr.itemNianjianCost = this.formGroup.get('itemNianjianCost').value;
-      this.vdr.itemNianjianCompletedate = this.formGroup.get('itemNianjianCompletedate').value;
+      this.vdr.itemNianjianCompletedate = this.dateService.comDate(this.formGroup.get('itemNianjianCompletedate').value);
       this.vdr.itemNianjianDesc = this.formGroup.get('itemNianjianDesc').value;
       // this.vdr.itemNianjianReqId = this.formGroup.get('').value;
       this.vdr.itemBuhuan = this.formGroup.get('checkboxBuhuan').value;
       this.vdr.itemBuhuanTax = this.formGroup.get('itemBuhuanTax').value;
       this.vdr.itemBuhuanCost = this.formGroup.get('itemBuhuanCost').value;
-      this.vdr.itemBuhuanCompletedate = this.formGroup.get('itemBuhuanCompletedate').value;
+      this.vdr.itemBuhuanCompletedate = this.dateService.comDate(this.formGroup.get('itemBuhuanCompletedate').value);
       this.vdr.itemBuhuanDesc = this.formGroup.get('itemBuhuanDesc').value;
       // this.vdr.itemBuhuanReqId = this.formGroup.get('').value;
       this.vdr.itemQita = this.formGroup.get('checkboxQita').value;
       this.vdr.itemQitaCost = this.formGroup.get('itemQitaCost').value;
-      this.vdr.itemQitaCompletedate = this.formGroup.get('itemQitaCompletedate').value;
+      this.vdr.itemQitaCompletedate = this.dateService.comDate(this.formGroup.get('itemQitaCompletedate').value);
       this.vdr.itemQitaDesc = this.formGroup.get('itemQitaDesc').value;
       this.vdr.contacts = JSON.stringify(this.formGroup.value['contacts']);
       // this.vdr.state = this.formGroup.get('').value;
@@ -470,8 +487,8 @@ export class VdrFormComponent implements OnInit {
 
   createContact(): FormGroup {
     return this.fb.group({
-      cname:[''],
-      cphone:['']
+      cname: [''],
+      cphone: ['']
     });
   }
 

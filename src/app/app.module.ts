@@ -57,6 +57,7 @@ import {PermissionService} from './shared/services/permission.service';
 import {CarService} from './service/car.service';
 import {PresaleService} from './service/presale.service';
 import {httpInterceptorProviders} from './http-interceptors/index';
+import { PresapprComponent } from './presmgt/presappr/presappr.component';
 
 const routeConfig: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -88,7 +89,8 @@ const routeConfig: Routes = [
         {path: 'presmgt', component: PresmgtComponent},
         {path: 'presmgt/:id', component: PresformComponent},
         {path: 'itemform', component: ItemFormComponent},
-        {path: 'itemform/:id', component: ItemFormComponent},],
+        {path: 'itemform/:id', component: ItemFormComponent},
+        {path: 'presappr', component: PresapprComponent}],
     }], canActivate: [AuthGuardService]
   },
   // {path: '**', redirectTo: '/login', pathMatch: 'full'}
@@ -131,7 +133,8 @@ const routeConfig: Routes = [
     FieldErrorDisplayComponent,
     ItemFormComponent,
     TipComponent,
-    AccesslogmgtComponent
+    AccesslogmgtComponent,
+    PresapprComponent
   ],
   imports: [
     BrowserModule,

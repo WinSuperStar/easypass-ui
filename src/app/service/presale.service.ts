@@ -8,6 +8,11 @@ export class PresaleService {
   constructor(private httpClient: HttpClient) {
   }
 
+  updatePresaleState(state:any, id:any): Observable<any>{
+    let params = new HttpParams().set('state',state).set('saleid',id);
+    return this.httpClient.post('/api/updatePresaleState', params);
+  }
+
   delPresale(id:any): Observable<any>{
     let params = new HttpParams()
       .set('saleid', id);
@@ -47,6 +52,21 @@ export class PresaleService {
     return this.httpClient.post('/api/getPresales', params);
   }
 
+  getPresalesByState(state:any): Observable<any>{
+    let params = new HttpParams()
+      .set('caraddr1', '')
+      .set('caraddr2', '')
+      .set('caraddr3', '')
+      .set('carplate1', '')
+      .set('carplate2', '')
+      .set('cusmode','')
+      .set('cusname', '')
+      .set('state', state)
+      .set('itemlist', '');
+    // .set('form', str);
+    return this.httpClient.post('/api/getPresales', params);
+  }
+
   transfer(a: any) {
     let str = '';
     for (let i = 0; i < a.length; i++) {
@@ -67,6 +87,7 @@ export class Presale {
               public carplate:string,
               public cusname:string,
               public cusmode:string,
+              public vdrid:number,
               public  vdrname: string,
               public  vdraddr: string,
               public  vdraddrdetail: string,
@@ -142,6 +163,7 @@ export class Presale {
               public itemQitaCompletedate: string,
               public  itemQitaDesc: string,
               public itemQitaReqId:number,
+              public salesum:number,
               public  state: string,
               public createdate: string,
               public  creator: string,

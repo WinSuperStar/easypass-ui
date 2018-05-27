@@ -10,7 +10,23 @@ export class DateService {
       return '';
     }else {
       var crtTime = new Date(val);
-      return this.dateFtt("yyyy-MM-dd hh:mm:ss", crtTime);
+      return this.dateFtt("yyyy-MM-dd", crtTime);
+    }
+  }
+
+  autoCompleteDate(){
+    let date = new Date();
+    // let uom = new Date(date-0+15*86400000);
+    date.setDate(date.getDate()+15);
+    // uom = uom.getFullYear() + "-" + (uom.getMonth()+1) + "-" + uom.getDate();
+    return this.dateFmt(date);
+  }
+
+  comDate(date:any){
+    if(date==''){
+      return '';
+    }else{
+      return date;
     }
   }
 
