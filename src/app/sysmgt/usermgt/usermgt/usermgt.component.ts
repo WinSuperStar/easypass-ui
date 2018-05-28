@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Observable} from "rxjs/Observable";
-import {User, UserServiceService} from "../../../service/user-service.service";
-import {DateService} from "../../../shared/services/date.service";
-import {Role, RoleService} from "../../../service/role.service";
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+import {User, UserServiceService} from '../../../service/user-service.service';
+import {DateService} from '../../../shared/services/date.service';
+import {Role, RoleService} from '../../../service/role.service';
 
 declare var $: any;
 
-let usermgtDatatable ;
+let usermgtDatatable;
+
 @Component({
   selector: 'app-usermgt',
   templateUrl: './usermgt.component.html',
@@ -25,8 +26,7 @@ export class UsermgtComponent implements OnInit {
               private fb: FormBuilder,
               private userService: UserServiceService,
               public date: DateService,
-              private roleService: RoleService
-  ) {
+              private roleService: RoleService) {
     this.formGroup = fb.group({
       username: [''],
       phone: [''],
@@ -37,16 +37,15 @@ export class UsermgtComponent implements OnInit {
 
   ngOnInit() {
     this.roles = this.roleService.getRoles();
-    this.init( this.formGroup.value);
+    this.init(this.formGroup.value);
   }
-
 
 
   create() {
     this.router.navigateByUrl('/home/userform/0');
   }
 
-  search (value: any) {
+  search(value: any) {
     usermgtDatatable.ajax.reload();
   }
 
@@ -55,7 +54,7 @@ export class UsermgtComponent implements OnInit {
     this.router.navigateByUrl('/home/userform/' + userid);
   }
 
-  init (value: any) {
+  init(value: any) {
     const date = this.date;
     if (usermgtDatatable) {
       usermgtDatatable.ajax.reload();
@@ -65,8 +64,8 @@ export class UsermgtComponent implements OnInit {
       'serverSide': true,
       'paging': true,
       lengthMenu: [
-        [ 10 , 20 , 30, 50, 80, 100 ],
-        [ '10 页', '20 页', '30 页', '50 页', '80 页', '100页' ]
+        [10, 20, 30, 50, 80, 100],
+        ['10 页', '20 页', '30 页', '50 页', '80 页', '100页']
       ],
       ordering: false,
       'ajax': {
@@ -74,7 +73,7 @@ export class UsermgtComponent implements OnInit {
         'type': 'POST',
         'data': function (d) {
           for (const key in d) {
-            if (key.indexOf('columns') == 0 || key.indexOf('order') == 0 || key.indexOf('search') == 0 ) {
+            if (key.indexOf('columns') == 0 || key.indexOf('order') == 0 || key.indexOf('search') == 0) {
               delete d[key];
             }
           }
@@ -82,31 +81,33 @@ export class UsermgtComponent implements OnInit {
           const phone = $('#phone').val();
           const roleid = $('#roleid').val();
           const state = $('#state').val();
-          const searchParams = {username: username, phone: phone , roleid: roleid, state: state };
+          const searchParams = {username: username, phone: phone, roleid: roleid, state: state};
           if (searchParams) {
-            $.extend( d, searchParams );
+            $.extend(d, searchParams);
           }
         },
-        'dataType' : 'json'
+        'dataType': 'json'
       },
 
       'searching': false,
       'columns': [
-        { 'data': 'userid' },
-        { 'data': 'username' },
-        { 'data': 'gender' },
-        { 'data': 'phone' },
-        { 'data': 'rolename' },
-        { 'data': 'password' },
-        { 'data': 'createdate',
-          'render': function ( data, type, row ) {
+        {'data': 'userid'},
+        {'data': 'username'},
+        {'data': 'gender'},
+        {'data': 'phone'},
+        {'data': 'rolename'},
+        {'data': 'password'},
+        {
+          'data': 'createdate',
+          'render': function (data, type, row) {
             data = date.dateFmt(data);
             return data;
-          }}
+          }
+        }
       ],
       'columnDefs': [
         {
-          'render': function ( data, type, row ) {
+          'render': function (data, type, row) {
             console.log(row);
             const userid = row.userid;
             return '<a class="btn btn-warning btn-xs"  onclick="edit(' + userid + ')" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>';
