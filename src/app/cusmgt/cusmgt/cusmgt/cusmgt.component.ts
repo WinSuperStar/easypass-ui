@@ -6,7 +6,7 @@ import {DateService} from "../../../shared/services/date.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 declare var $: any;
-
+let cusmgtDataTable ;
 @Component({
   selector: 'app-cusmgt',
   templateUrl: './cusmgt.component.html',
@@ -36,7 +36,10 @@ export class CusmgtComponent implements OnInit {
         state:['正常']
       }
     )
-    $('#cusmgtTable').DataTable({
+    if (cusmgtDataTable) {
+      cusmgtDataTable.ajax.reload();
+    }
+    cusmgtDataTable=$('#cusmgtTable').DataTable({
       'processing': true,
       'serverSide': true,
       'paging': true,
@@ -46,7 +49,7 @@ export class CusmgtComponent implements OnInit {
       ],
       ordering: false,
       'ajax': {
-        'url': '/api/cusPage',
+        'url': '/api/customers',
         'type': 'POST',
         'data': function (d) {
           for (const key in d) {
@@ -54,7 +57,14 @@ export class CusmgtComponent implements OnInit {
               delete d[key];
             }
           }
-          const searchParams = {};
+
+          const cusname = $('#cusname').val();
+          const cusmode = $('#cusmode').val();
+          const contact = $('#contact').val();
+          const contactPhone = $('#contactPhone').val();
+          const state = $("input:checkbox[cusState='cusState']:checked").val();
+          //alert(this.formGroup.state);
+          const searchParams = {cusname: cusname, cusmode: cusmode , contact: contact, contactPhone: contactPhone,state:state };
           if (searchParams) {
             $.extend( d, searchParams );
           }
@@ -121,6 +131,6 @@ export class CusmgtComponent implements OnInit {
   }
 
   search(form: any) {
-    this.customers = this.cusService.getCustomers(form);
+    cusmgtDataTable.ajax.reload();
   }
 }

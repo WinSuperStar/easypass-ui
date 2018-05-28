@@ -9,11 +9,11 @@
       <div class="form-group" style="padding:5px;">
         <label class="col-sm-2 control-label">客户名称</label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" formControlName="cusname">
+          <input type="text" class="form-control" formControlName="cusname"  id="cusname">
         </div>
         <label class="col-sm-2 control-label">客户模式</label>
         <div class="col-sm-2">
-          <select class="form-control" formControlName="cusmode">
+          <select class="form-control" formControlName="cusmode"  id="cusmode">
             <option>全部</option>
             <option>个人</option>
             <option>公司</option>
@@ -24,18 +24,18 @@
         <div class="form-group " style="padding:5px;">
           <label class="col-sm-2 control-label">联系人</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" formControlName="contact">
+            <input type="text" class="form-control" formControlName="contact"   id="contact">
           </div>
           <label class="col-sm-2 control-label">联系人手机号码</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" formControlName="contactPhone">
+            <input type="text" class="form-control" formControlName="contactPhone"   id="contactPhone">
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">是否战败</label>
           <div class="col-sm-2">
-            是<input type="radio" value="战败" name="state" formControlName="state">
-            否<input type="radio" value="正常" name="state" formControlName="state">
+            是<input type="radio" value="战败" name="state"  cusState="cusState"  formControlName="state">
+            否<input type="radio" value="正常" name="state"  cusState="cusState"  formControlName="state">
           </div>
         </div>
       </div>

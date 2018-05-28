@@ -8,7 +8,7 @@ import {Vendor, VendorService} from '../service/vendor.service';
 import {DateService} from '../shared/services/date.service';
 
 declare var $: any;
-
+let vdrmgtDataTable ;
 @Component({
   selector: 'app-vdrmgt',
   templateUrl: './vdrmgt.component.html',
@@ -82,7 +82,11 @@ export class VdrmgtComponent implements OnInit {
     //     }
     //   });
     // });
-    $('#vdrmgtTable').DataTable({
+
+    if (vdrmgtDataTable) {
+      vdrmgtDataTable.ajax.reload();
+    }
+    vdrmgtDataTable = $('#vdrmgtTable').DataTable({
 
       'processing': true,
       'serverSide': true,
@@ -93,7 +97,7 @@ export class VdrmgtComponent implements OnInit {
       ],
       ordering: false,
       'ajax': {
-        'url': '/api/vendorPage',
+        'url': '/api/getVdrs',
         'type': 'POST',
         'data': function (d) {
           for (const key in d) {
@@ -101,7 +105,24 @@ export class VdrmgtComponent implements OnInit {
               delete d[key];
             }
           }
-          const searchParams = {};
+          const vdraddr1 = $('#vdraddr1').val();
+          const vdraddr2 = $('#vdraddr2').val();
+          const vdraddr3 = $('#vdraddr3').val();
+          const vdrplate1 = $('#vdrplate1').val();
+          const vdrplate2 = $('#vdrplate2').val();
+          const vdrcontact = $('#vdrcontact').val();
+          const contactphone = $('#contactphone').val();
+          const firstdate = $('#firstdate').val();
+          const vdrState = $('.vdr_state').val();
+          let itemlist;
+          $("input:checkbox[vdrItem='vdrItem']").each(function(i){
+            itemlist=itemlist+$(this).val()+",";
+          });
+          itemlist=itemlist.substr(1,itemlist.length);
+          const searchParams = {vdraddr1: vdraddr1, vdraddr2: vdraddr2 , vdraddr3: vdraddr3,
+                                 vdrplate1: vdrplate1,vdrplate2:vdrplate2,contact:vdrcontact,
+                                 contactphone:contactphone,firstdate:firstdate,vdrState:vdrState,
+                                 itemlist:itemlist};
           if (searchParams) {
             $.extend( d, searchParams );
           }
@@ -249,7 +270,8 @@ export class VdrmgtComponent implements OnInit {
 
   search(form: any) {
     // console.log(form['itemlist']);
-    this.vendors = this.vendorService.getVdrs(form);
+    //this.vendors = this.vendorService.getVdrs(form);
+    vdrmgtDataTable.ajax.reload();
   }
 
   showItemDetail(v: Vendor){
