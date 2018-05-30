@@ -58,8 +58,6 @@ import {CarService} from './service/car.service';
 import {PresaleService} from './service/presale.service';
 import {httpInterceptorProviders} from './http-interceptors/index';
 import { PresapprComponent } from './presmgt/presappr/presappr.component';
-import { TypeaheadModule } from 'ngx-bootstrap';
-import { setTheme } from 'ngx-bootstrap/utils';
 
 const routeConfig: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -147,8 +145,7 @@ const routeConfig: Routes = [
     RouterModule.forRoot(routeConfig, {useHash: true}),
     ReactiveFormsModule,
     ReactiveFormsModule,
-    FileUploaderModule,
-    TypeaheadModule.forRoot()
+    FileUploaderModule
   ],
   providers: [
     httpInterceptorProviders,
@@ -171,7 +168,7 @@ const routeConfig: Routes = [
   bootstrap: [AppComponent] // main component
 })
 export class AppModule {
-  constructor(){
-    setTheme('bs3');
+  constructor() {
+    // setTheme('bs3');
   }
 }
