@@ -1,0 +1,41 @@
+* {
+  padding:0;
+  margin:0;
+  font-family:"微软雅黑";
+}
+li {
+  list-style:none;
+}
+a {
+  text-decoration:none;
+}
+img {
+  border:none;
+}
+.box {
+  /*background:url("images/xtb.png") no-repeat;*/
+  margin-top:100px;
+  margin-left:100px;
+}
+.winBox {
+  width:350px;
+  height:40px;
+  overflow:hidden;
+  position:relative;
+  background:#ecf0f5;
+  margin-left: 20%;
+}
+.scroll {
+  /*width的大小是根据下面li的长度和多少个li而定的，需注意！*/
+  width:500px;
+  position:absolute;
+  left:0px;
+  top:0px;
+  font-size:20px;
+}
+.scroll li {
+  width:220px;
+  float:left;
+  line-height:40px;
+  text-align:center;
+}

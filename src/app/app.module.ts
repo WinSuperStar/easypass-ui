@@ -69,6 +69,7 @@ const routeConfig: Routes = [
       path: '',
       canActivateChild: [AuthGuardService],
       children: [
+        {path: '',component: HometestComponent},
         {path: 'tip', component: TipComponent},
         {path: 'usermgt', component: UsermgtComponent},
         {path: 'accessLogmgt', component: AccesslogmgtComponent},
