@@ -147,16 +147,16 @@ export class PresformComponent implements OnInit {
       this.checkValidNumStatus();
     });
     this.formGroup.get('itemTidangTax').valueChanges.subscribe(value => {
-      this.checkValidNumStatus();
       this.itemTidangTax_flag = this.compareNum(this.itemTidangTax_vdr, value);
+      this.checkValidNumStatus();
     });
     this.formGroup.get('itemGuohuCost').valueChanges.subscribe(value => {
       this.itemGuohuCost_flag = this.compareNum(this.itemGuohuCost_vdr, value);
       this.checkValidNumStatus();
     });
     this.formGroup.get('itemGuohuTax').valueChanges.subscribe(value => {
-      this.checkValidNumStatus();
       this.itemGuohuTax_flag = this.compareNum(this.itemGuohuTax_vdr, value);
+      this.checkValidNumStatus();
     });
     this.formGroup.get('itemShangpaiCost').valueChanges.subscribe(value => {
       this.itemShangpaiCost_flag = this.compareNum(this.itemShangpaiCost_vdr, value);
@@ -279,7 +279,19 @@ export class PresformComponent implements OnInit {
               this.itemQitaCost_vdr = res.itemQitaCost;
               this.itemTidangCost_flag = this.compareNum(res.itemTidangCost, this.presale.itemTidangCost);
               this.itemTidangTax_flag = this.compareNum(res.itemTidangTax, this.presale.itemTidangTax);
+              this.itemGuohuCost_flag= this.compareNum(res.itemGuohuCost, this.presale.itemGuohuCost);
+              this.itemGuohuTax_flag= this.compareNum(res.itemGuohuTax, this.presale.itemGuohuTax);
+              this.itemShangpaiCost_flag= this.compareNum(res.itemShangpaiCost, this.presale.itemShangpaiCost);
+              this.itemWeizhangCost_flag= this.compareNum(res.itemWeizhangCost,this.presale.itemWeizhangCost);
+              this.itemWeizhangCost2_flag= this.compareNum(res.itemWeizhangCost2, this.presale.itemWeizhangCost2);
+              this.itemDiyaCost_flag= this.compareNum(res.itemDiyaCost, this.presale.itemDiyaCost);
+              this.itemJiechudiyaCost_flag= this.compareNum(res.itemJiechudiyaCost, this.presale.itemJiechudiyaCost);
+              this.itemWeituoCost_flag= this.compareNum(res.itemWeituoCost, this.presale.itemWeituoCost);
+              this.itemNianjianCost_flag= this.compareNum(res.itemNianjianCost, this.presale.itemNianjianCost);
+              this.itemBuhuanCost_flag= this.compareNum(res.itemBuhuanCost, this.presale.itemBuhuanCost);
+              this.itemQitaCost_flag= this.compareNum(res.itemQitaCost, this.presale.itemQitaCost);
               this.checkValidNumStatus();
+              console.log(this.validNumStatus);
             }
           );
         }
@@ -580,21 +592,20 @@ export class PresformComponent implements OnInit {
 
   checkValidNumStatus() {
     // let flag: boolean = true;
-    this.validNumStatus = (this.formGroup.get('checkboxTidang').value == 'true') ? (this.itemTidangTax_flag && this.itemTidangCost_flag) : true;
-    this.validNumStatus = (this.formGroup.get('checkboxGuohu').value == 'true') ? (this.itemGuohuTax_flag && this.itemGuohuCost_flag) : true;
-    this.validNumStatus = (this.formGroup.get('checkboxShangpai').value == 'true') ?  this.itemShangpaiCost_flag : true;
-    this.validNumStatus = (this.formGroup.get('checkboxWeizhang').value == 'true') ?  (this.itemWeizhangCost_flag && this.itemWeizhangCost2_flag) : true;
-    this.validNumStatus = (this.formGroup.get('checkboxDiya').value == 'true') ?  this.itemDiyaCost_flag : true;
-    this.validNumStatus = (this.formGroup.get('checkboxJiechudiya').value == 'true') ?  this.itemJiechudiyaCost_flag : true;
-    this.validNumStatus = (this.formGroup.get('checkboxWeituo').value == 'true') ?  this.itemWeituoCost_flag : true;
-    this.validNumStatus = (this.formGroup.get('checkboxNianjian').value == 'true') ?  this.itemNianjianCost_flag : true;
-    this.validNumStatus = (this.formGroup.get('checkboxBuhuan').value == 'true') ?  this.itemBuhuanCost_flag : true;
-    this.validNumStatus = (this.formGroup.get('checkboxQita').value == 'true') ?  this.itemQitaCost_flag : true;
+    this.validNumStatus = (this.formGroup.get('checkboxTidang').value == ('true') ? (this.itemTidangTax_flag && this.itemTidangCost_flag) : true) &&
+      (this.formGroup.get('checkboxGuohu').value == ('true') ? (this.itemGuohuTax_flag && this.itemGuohuCost_flag) : true) &&
+        (this.formGroup.get('checkboxShangpai').value == ('true') ?  this.itemShangpaiCost_flag : true) &&
+          (this.formGroup.get('checkboxWeizhang').value == ('true') ?  (this.itemWeizhangCost_flag && this.itemWeizhangCost2_flag) : true) &&
+            (this.formGroup.get('checkboxDiya').value == ('true') ?  this.itemDiyaCost_flag : true) &&
+              (this.formGroup.get('checkboxJiechudiya').value == ('true') ?  this.itemJiechudiyaCost_flag : true) &&
+                (this.formGroup.get('checkboxWeituo').value == ('true') ?  this.itemWeituoCost_flag : true) &&
+                  (this.formGroup.get('checkboxNianjian').value == ('true') ?  this.itemNianjianCost_flag : true) &&
+                    (this.formGroup.get('checkboxBuhuan').value == ('true') ?  this.itemBuhuanCost_flag : true) &&
+                      (this.formGroup.get('checkboxQita').value == ('true') ?  this.itemQitaCost_flag : true);
     // return flag;
   }
 
   showCity(item) {
-    console.log(typeof item);
     let p: string;
     if (typeof item == 'string') {
       p = item;
