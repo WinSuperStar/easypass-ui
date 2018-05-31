@@ -60,19 +60,19 @@
         </div>
         <label class="col-sm-2 control-label">状态</label>
         <div class="col-sm-2">
-          <select class="form-control  vdr_state" formControlName="state">
-            <option value="所有">所有</option>
+          <select class="form-control" id="vdrState"  formControlName="state">
+            <option value="">所有</option>
             <option value="已提交">已提交</option>
             <option value="未提交">未提交</option>
           </select>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group"   id="vdrItem">
         <label class="col-sm-2 control-label">办证项目</label>
         <div *ngFor="let item of formGroup.get('itemlist').controls; let i=index">
           <div class="col-sm-2 formMulCheckBox">
             <div>{{itemlist[i].name}}</div>
-            <input type="checkbox"   vdrItem="vdrItem"  [formControl]="item" value="{{itemlist[i].state}}">
+            <input type="checkbox"   class="vdrItem" [formControl]="item" value="{{itemlist[i].state}}">
           </div>
         </div>
       </div>

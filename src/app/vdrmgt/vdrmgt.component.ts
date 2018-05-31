@@ -83,9 +83,7 @@ export class VdrmgtComponent implements OnInit {
     //   });
     // });
 
-    if (vdrmgtDataTable) {
-      vdrmgtDataTable.ajax.reload();
-    }
+
     vdrmgtDataTable = $('#vdrmgtTable').DataTable({
 
       'processing': true,
@@ -113,16 +111,17 @@ export class VdrmgtComponent implements OnInit {
           const vdrcontact = $('#vdrcontact').val();
           const contactphone = $('#contactphone').val();
           const firstdate = $('#firstdate').val();
-          const vdrState = $('.vdr_state').val();
-          let itemlist;
-          $("input:checkbox[vdrItem='vdrItem']").each(function(i){
+          const vdrState = $("#vdrState").val();
+          let itemlist = '';
+         /* $("#vdrItem").find(".vdrItem").each(function(i){
             itemlist=itemlist+$(this).val()+",";
-          });
+          });*/
           itemlist=itemlist.substr(1,itemlist.length);
           const searchParams = {vdraddr1: vdraddr1, vdraddr2: vdraddr2 , vdraddr3: vdraddr3,
                                  vdrplate1: vdrplate1,vdrplate2:vdrplate2,contact:vdrcontact,
-                                 contactphone:contactphone,firstdate:firstdate,vdrState:vdrState,
+                                 contactphone:contactphone,firstdate:firstdate,state:vdrState,
                                  itemlist:itemlist};
+          console.log(searchParams);
           if (searchParams) {
             $.extend( d, searchParams );
           }

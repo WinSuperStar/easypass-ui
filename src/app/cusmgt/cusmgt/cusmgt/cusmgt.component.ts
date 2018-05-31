@@ -36,9 +36,8 @@ export class CusmgtComponent implements OnInit {
         state:['正常']
       }
     )
-    if (cusmgtDataTable) {
-      cusmgtDataTable.ajax.reload();
-    }
+
+
     cusmgtDataTable=$('#cusmgtTable').DataTable({
       'processing': true,
       'serverSide': true,
@@ -62,9 +61,23 @@ export class CusmgtComponent implements OnInit {
           const cusmode = $('#cusmode').val();
           const contact = $('#contact').val();
           const contactPhone = $('#contactPhone').val();
-          const state = $("input:checkbox[cusState='cusState']:checked").val();
-          //alert(this.formGroup.state);
+         /* let state = $("input:checkbox[cusState='cusState']:checked").val();
+          if(state==undefined){
+            state = '';
+          }*/
+         let state='';
+          $("#cusState").children().each(function(i){
+              if($(this).is(':checked')){
+                state=$(this).val();
+              }
+          });
+         if(state==''){
+             state='正常';
+         }
+
+
           const searchParams = {cusname: cusname, cusmode: cusmode , contact: contact, contactPhone: contactPhone,state:state };
+          console.log(searchParams);
           if (searchParams) {
             $.extend( d, searchParams );
           }
@@ -80,6 +93,7 @@ export class CusmgtComponent implements OnInit {
       'columns': [
         { 'data': 'cusid' },
         { 'data': 'cusname' },
+        { 'data': 'contact'},
         { 'data': 'contactPhone' },
         { 'data': 'cusmode' },
         { 'data': 'address' },
@@ -97,7 +111,7 @@ export class CusmgtComponent implements OnInit {
           "render": function ( data, type, row ) {
             return ' <a class="btn btn-warning btn-xs" (click)="edit('+row+')"><span class="glyphicon glyphicon-pencil"></span>编辑</a>';
           },
-          "targets": 7
+          "targets": 8
         },
       ],
       'info': true,
@@ -120,6 +134,7 @@ export class CusmgtComponent implements OnInit {
         }
       }
     });
+
   }
 
   edit(cus: Customer) {
