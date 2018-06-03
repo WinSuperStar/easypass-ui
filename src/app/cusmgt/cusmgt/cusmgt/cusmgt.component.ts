@@ -6,7 +6,7 @@ import {DateService} from "../../../shared/services/date.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 declare var $: any;
-
+let cusmgtDataTable ;
 @Component({
   selector: 'app-cusmgt',
   templateUrl: './cusmgt.component.html',
@@ -36,6 +36,7 @@ export class CusmgtComponent implements OnInit {
         state:['正常']
       }
     )
+<<<<<<< HEAD
     // $('#cusmgtTable').DataTable({
     //   'processing': true,
     //   'serverSide': true,
@@ -110,6 +111,107 @@ export class CusmgtComponent implements OnInit {
     //     }
     //   }
     // });
+=======
+
+
+    cusmgtDataTable=$('#cusmgtTable').DataTable({
+      'processing': true,
+      'serverSide': true,
+      'paging': true,
+      lengthMenu: [
+        [ 10 , 20 , 30, 50, 80, 100 ],
+        [ '10 页', '20 页', '30 页', '50 页', '80 页', '100页' ]
+      ],
+      ordering: false,
+      'ajax': {
+        'url': '/api/customers',
+        'type': 'POST',
+        'data': function (d) {
+          for (const key in d) {
+            if (key.indexOf('columns') == 0 || key.indexOf('order') == 0 || key.indexOf('search') == 0 ) {
+              delete d[key];
+            }
+          }
+
+          const cusname = $('#cusname').val();
+          const cusmode = $('#cusmode').val();
+          const contact = $('#contact').val();
+          const contactPhone = $('#contactPhone').val();
+         /* let state = $("input:checkbox[cusState='cusState']:checked").val();
+          if(state==undefined){
+            state = '';
+          }*/
+         let state='';
+          $("#cusState").children().each(function(i){
+              if($(this).is(':checked')){
+                state=$(this).val();
+              }
+          });
+         if(state==''){
+             state='正常';
+         }
+
+
+          const searchParams = {cusname: cusname, cusmode: cusmode , contact: contact, contactPhone: contactPhone,state:state };
+          console.log(searchParams);
+          if (searchParams) {
+            $.extend( d, searchParams );
+          }
+        },
+        'dataType' : 'json',
+        'dataFilter': function (json) {
+          console.log(json)
+          json = JSON.parse(json);
+          console.log(json);
+          return JSON.stringify(json);
+        }
+      },
+      'columns': [
+        { 'data': 'cusid' },
+        { 'data': 'cusname' },
+        { 'data': 'contact'},
+        { 'data': 'contactPhone' },
+        { 'data': 'cusmode' },
+        { 'data': 'address' },
+        { 'data': 'createdate',
+          'render': function ( data, type, row ) {
+            data = date.dateFmt(data);
+            return data;
+           }
+        },
+        { 'data': 'creator'}
+      ],
+      'searching': false,
+      "columnDefs": [
+        {
+          "render": function ( data, type, row ) {
+            return ' <a class="btn btn-warning btn-xs" (click)="edit('+row+')"><span class="glyphicon glyphicon-pencil"></span>编辑</a>';
+          },
+          "targets": 8
+        },
+      ],
+      'info': true,
+      'autoWidth': false,
+      'oLanguage': { //国际化配置
+        'sProcessing': '正在获取数据，请稍后...',
+        'sLengthMenu': '显示 _MENU_ 条',
+        'sZeroRecords': '没有您要搜索的内容',
+        'sInfo': '从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条',
+        'sInfoEmpty': '记录数为0',
+        'sInfoFiltered': '(全部记录数 _MAX_ 条)',
+        'sInfoPostFix': '',
+        'sSearch': '搜索',
+        'sUrl': '',
+        'oPaginate': {
+          'sFirst': '第一页',
+          'sPrevious': '上一页',
+          'sNext': '下一页',
+          'sLast': '最后一页'
+        }
+      }
+    });
+
+>>>>>>> 177d4128f1ffc2ff6173c2ea06f003927e2a3d60
   }
 
   edit(cus: Customer) {
@@ -121,6 +223,6 @@ export class CusmgtComponent implements OnInit {
   }
 
   search(form: any) {
-    this.customers = this.cusService.getCustomers(form);
+    cusmgtDataTable.ajax.reload();
   }
 }
