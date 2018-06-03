@@ -45,10 +45,11 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">初次登记日期</label>
         <div class="col-sm-3" style="display:table;">
-          <div class="input-group-addon">
+          <div class="input-group-addon" (click)="d.toggle()">
             <i class="fa fa-calendar"></i>
           </div>
-          <input type="text" class="form-control" id="carform_dp" formControlName="firstdate">
+          <input type="text" class="form-control" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker"
+                 formControlName="firstdate">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'firstdate')"
             errorMsg="*必填项"></app-field-error-display>

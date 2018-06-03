@@ -80,7 +80,7 @@
     <!-- /.box-body -->
     <div class="box-footer">
       <button type="submit" class="btn btn-primary pull-left" (click)="create()">新建代办商</button>&nbsp;&nbsp;
-      <button type="submit" class="btn btn-success pull-left" style="margin-left:5px;" (click)="search(formGroup.value)">查询</button>
+      <button type="submit" class="btn btn-success pull-left" style="margin-left:5px;" (click)="search()">查询</button>
     </div>
     <!-- /.box-footer -->
   </form>
@@ -92,7 +92,7 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body">
-    <table id="vdrmgtTable" class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover">
       <thead>
       <tr>
         <th>商家编号</th>
@@ -109,7 +109,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let v of vendors | async; let i = index">
+      <tr *ngFor="let v of vendors | paginate: { id: 'vdrmgt_id',itemsPerPage:10, currentPage: page}; let i = index">
         <td>{{v.vdrid}}</td>
         <td>{{v.vdraddr}}</td>
         <td>{{v.vdrplate}}</td>
@@ -119,7 +119,7 @@
         </td>
         <td>{{v.contactphone}}
         </td>
-        <td>{{v.createdate}}</td>
+        <td>{{date.dateFmt(v.createdate)}}</td>
         <td>{{v.state}}</td>
         <td>{{v.creator}}</td>
         <td>
@@ -137,6 +137,12 @@
       <tfoot>
       </tfoot>
     </table>
+    <div class="has-text-centered">
+      <pagination-controls id="vdrmgt_id" (pageChange)="page = $event"
+                           autoHide="true"
+                           previousLabel="上一页"
+                           nextLabel="下一页"></pagination-controls>
+    </div>
   </div>
   <!-- /.box-body -->
 </div>

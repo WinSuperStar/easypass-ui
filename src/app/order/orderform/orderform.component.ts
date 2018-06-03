@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Car, CarService} from '../../service/car.service';
 import {Observable} from 'rxjs/Observable';
 import {Customer, CustomerService} from '../../service/customer.service';
@@ -8,6 +8,7 @@ import {DateService} from '../../shared/services/date.service';
 import {Vendor, VendorService} from '../../service/vendor.service';
 import {AddrSelectService, Area, City, Province} from '../../shared/services/addr-select.service';
 import {ValidationService} from '../../shared/services/validation.service';
+import {Order, OrderService} from '../../service/order.service';
 
 declare var $: any;
 
@@ -24,6 +25,8 @@ export class OrderformComponent implements OnInit {
   province: Observable<Province[]>;
   city: Observable<City[]>;
   area: Observable<Area[]>;
+  public order: Order;
+  model;
 
   public formGroup: FormGroup = this.fb.group({
     carnum:['',],
@@ -136,11 +139,14 @@ export class OrderformComponent implements OnInit {
               private customerSerivce: CustomerService,
               private vdrService: VendorService,
               private addrService: AddrSelectService,
-              public validation: ValidationService) {
+              public validation: ValidationService,
+              private routeInfo: ActivatedRoute,
+              private orderService: OrderService) {
   }
 
   ngOnInit() {
     this.province = this.addrService.getPros();
+    let id = this.routeInfo.snapshot.params['id'];
     /**************** 代入车辆信息 ******************/
     let $inputcar = $("#odr_carnum");
     this.carService.getAllCars().subscribe(
@@ -203,13 +209,112 @@ export class OrderformComponent implements OnInit {
       }
     );
     /**************** 代入代办商信息 ******************/
-    $('#odrform_dp').datepicker({
-      autoclose: true
-    });
     $('#odrform_dp2').datepicker({
       autoclose: true
     });
 
+    /****************** 获取订单信息 *********************/
+    this.orderService.getOdr(id).subscribe(
+      res=>{
+        this.order = res;
+        this.province = this.addrService.getPros();
+        this.showCity(res.carAddr.split(' ')[0]);
+        this.showArea(res.carAddr.split(' ')[1]);
+        this.formGroup.reset({
+          carnum: res.carnum,
+          carbrand: res.carbrand,
+          carset: res.carset,
+          firstdate: res.firstdate,
+          cusname: res.cusname,
+          caraddr1: res.carAddr.split(' ')[0],
+          caraddr2: res.carAddr.split(' ')[1],
+          caraddr3: res.carAddr.split(' ')[2],
+          carplate1: res.carPlateCode.split(' ')[0],
+          carplate2:res.carPlateCode.split(' ')[1],
+          carplatenum: res.carPlateNum,
+          vdrcontact: res.vdrContact,
+          oriownername: res.oriOwnerName,
+          oriownerphone: res.oriOwnerPhone,
+          newownername: res.newOwnerName,
+          newownerphone: res.newOwnerPhone,
+          itemdeadline:res.itemDeadline,
+          itemplandate: res.itemPlanDate,
+          WeizhangStatus: res.weizhangStatus,
+          WeizhangHandle: res.weizhangHandle,
+          WeizhangDesc: res.weizhangDesc,
+          NianjianStatus: res.nianjianStatus,
+          NianjianHandle: res.nianjianHandle,
+          NianjianDesc: res.nianjianDesc,
+          DiyaStatus: res.diyaStatus,
+          DiyaHandle: res.diyaHandle,
+          DiyaDesc: res.diyaDesc,
+          PaizhengStatus: res.paizhengStatus,
+          PaizhengHandle: res.paizhengHandle,
+          PaizhengDesc: res.paizhengDesc,
+          QitaCost: res.qitaCost,
+          QitaDesc: res.qitaDesc,
+          Cheliangcailiaoi: res.cheliangcailiao,
+          Cheliangdengjizhengjian: res.cheliangdengjizhengjian,
+          Xingshizheng: res.xingshizheng,
+          Gongzhang: res.gongzhang,
+          Orishenfenzheng: res.oriShenfenzheng,
+          OriJuzhuzheng: res.oriJuzhuzheng,
+          Yingyezhizhao: res.yingyezhizhao,
+          Qitaxinxi: res.qitaxinxi,
+          Kuaididanhao: res.kuaidiNum,
+          KuaidiCost:res.kuaidiCost,
+          kuaidiImgPath: res.kuaidiImgPath,
+          checkboxTidang: res.itemTidang,
+          itemTidangTax: res.itemTidangTax,
+          itemTidangCost: res.itemTidangCost,
+          itemTidangCompletedate: this.dateService.dateFmt(res.itemTidangCompletedate),
+          itemTidangDesc: res.itemTidangDesc,
+          checkboxGuohu: res.itemGuohu,
+          itemGuohuTax: res.itemGuohuTax,
+          itemGuohuCost: res.itemGuohuCost,
+          itemGuohuCompletedate: this.dateService.dateFmt(res.itemGuohuCompletedate),
+          itemGuohuDesc: res.itemGuohuDesc,
+          checkboxShangpai: res.itemShangpai,
+          itemShangpaiTax: res.itemShangpaiTax,
+          itemShangpaiCost: res.itemShangpaiCost,
+          itemShangpaiCompletedate: this.dateService.dateFmt(res.itemShangpaiCompletedate),
+          itemShangpaiDesc: res.itemShangpaiDesc,
+          checkboxWeizhang: res.itemWeizhang,
+          itemWeizhangTax: res.itemWeizhangTax,
+          itemWeizhangCost: res.itemWeizhangCost,
+          itemWeizhangCost2: res.itemWeizhangCost2,
+          itemWeizhangCompletedate:this.dateService.dateFmt(res.itemWeizhangCompletedate),
+          itemWeizhangDesc: res.itemWeizhangDesc,
+          checkboxDiya: res.itemDiya,
+          itemDiyaCost: res.itemDiyaCost,
+          itemDiyaCompletedate: this.dateService.dateFmt(res.itemDiyaCompletedate),
+          itemDiyaDesc: res.itemDiyaDesc,
+          checkboxJiechudiya: res.itemJiechudiya,
+          itemJiechudiyaCost: res.itemJiechudiyaCost,
+          itemJiechudiyaCompletedate: this.dateService.dateFmt(res.itemJiechudiyaCompletedate),
+          itemJiechudiyaDesc: res.itemJiechudiyaDesc,
+          checkboxWeituo: res.itemWeituo,
+          itemWeituoTax: res.itemWeituoTax,
+          itemWeituoCost: res.itemWeituoCost,
+          itemWeituoCompletedate: this.dateService.dateFmt(res.itemWeituoCompletedate),
+          itemWeituoDesc: res.itemWeituoDesc,
+          checkboxNianjian: res.itemNianjian,
+          itemNianjianTax: res.itemNianjianTax,
+          itemNianjianCost: res.itemNianjianCost,
+          itemNianjianCompletedate: this.dateService.dateFmt(res.itemNianjianCompletedate),
+          itemNianjianDesc: res.itemNianjianDesc,
+          checkboxBuhuan: res.itemBuhuan,
+          itemBuhuanTax: res.itemBuhuanTax,
+          itemBuhuanCost: res.itemBuhuanCost,
+          itemBuhuanCompletedate: this.dateService.dateFmt(res.itemBuhuanCompletedate),
+          itemBuhuanDesc: res.itemBuhuanDesc,
+          checkboxQita: res.itemQita,
+          itemQitaCost: res.itemQitaCost,
+          itemQitaCompletedate: this.dateService.dateFmt(res.itemQitaCompletedate),
+          itemQitaDesc: res.itemQitaDesc,
+        });
+      }
+    );
   }
 
   cancel() {

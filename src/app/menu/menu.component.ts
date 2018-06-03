@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PermissionService} from "../shared/services/permission.service";
+import {OrderService} from '../service/order.service';
 
 @Component({
   selector: 'app-menu',
@@ -15,7 +16,8 @@ export class MenuComponent implements OnInit {
   // rolename: string;
 
   constructor(public router: Router,
-              private pService: PermissionService) {
+              private pService: PermissionService,
+              private orderService: OrderService) {
   }
 
   ngOnInit() {
@@ -48,8 +50,27 @@ export class MenuComponent implements OnInit {
 
   // target to hold menu information and enable the active-highlight function
   nav(m: subMenu) {
-    this.router.navigateByUrl(m.link);
-    this.currentMenuId = m.id;
+    if(m.name == '创建订单'){
+      if(confirm('确定要新建订单？')){
+        let creator = JSON.parse(localStorage.getItem('currentUser'))['username'];
+        this.orderService.createOdr(creator).subscribe(
+          res => {
+            let id = res;
+            // console.log(id);
+            this.router.navigateByUrl('/home/orderform/' + id);
+          },
+          err => {
+
+          }
+        );
+        // this.router.navigateByUrl(m.link);
+        this.currentMenuId = m.id;
+      }
+    }else {
+      this.router.navigateByUrl(m.link);
+      this.currentMenuId = m.id;
+    }
+
   }
 }
 

@@ -16,7 +16,7 @@ export class HometestComponent implements OnInit {
 
   ngOnInit() {
     $(function() {
-      var num = 0;
+      let num = 0;
       function goLeft() {
         //750是根据你给的尺寸，可变的
         if (num == -450) {

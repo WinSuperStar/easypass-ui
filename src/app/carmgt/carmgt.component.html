@@ -84,7 +84,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let car of cars | async; let i = index;">
+      <tr *ngFor="let car of cars | async | paginate: { id: 'carmgt_id',itemsPerPage:10, currentPage: page}; let i = index;">
         <td>{{car.carid}}</td>
         <td>{{car.carbrand}}</td>
         <td>{{car.carset}}</td>
@@ -102,6 +102,12 @@
       <tfoot>
       </tfoot>
     </table>
+    <div class="has-text-centered">
+      <pagination-controls id="carmgt_id" (pageChange)="page = $event"
+                           autoHide="true"
+                           previousLabel="上一页"
+                           nextLabel="下一页"></pagination-controls>
+    </div>
   </div>
   <!-- /.box-body -->
 </div>

@@ -49,15 +49,20 @@ import {CustomerService} from './service/customer.service';
 import {AddrSelectService} from './shared/services/addr-select.service';
 import {VendorService} from './service/vendor.service';
 import {ItemFormComponent} from './vdrmgt/item-form/item-form.component';
-import { TipComponent } from './tip/tip.component';
+import {TipComponent} from './tip/tip.component';
 import {AccessLogService} from './service/access-log.service';
-import { AccesslogmgtComponent } from './sysmgt/accesslogmgt/accesslogmgt.component';
+import {AccesslogmgtComponent} from './sysmgt/accesslogmgt/accesslogmgt.component';
 import {ItemdetailService} from './service/itemdetail.service';
 import {PermissionService} from './shared/services/permission.service';
 import {CarService} from './service/car.service';
 import {PresaleService} from './service/presale.service';
 import {httpInterceptorProviders} from './http-interceptors/index';
-import { PresapprComponent } from './presmgt/presappr/presappr.component';
+import {PresapprComponent} from './presmgt/presappr/presappr.component';
+import {PaginationComponent} from './shared/components/pagination/pagination.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {OrderHomeComponent} from './order/order-home/order-home.component';
+import {OrderService} from './service/order.service';
 
 const routeConfig: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -67,7 +72,7 @@ const routeConfig: Routes = [
       path: '',
       canActivateChild: [AuthGuardService],
       children: [
-        {path: '',component: HometestComponent},
+        {path: '', component: HometestComponent},
         {path: 'tip', component: TipComponent},
         {path: 'usermgt', component: UsermgtComponent},
         {path: 'accessLogmgt', component: AccesslogmgtComponent},
@@ -136,6 +141,8 @@ const routeConfig: Routes = [
     TipComponent,
     AccesslogmgtComponent,
     PresapprComponent,
+    PaginationComponent,
+    OrderHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -145,7 +152,10 @@ const routeConfig: Routes = [
     RouterModule.forRoot(routeConfig, {useHash: true}),
     ReactiveFormsModule,
     ReactiveFormsModule,
-    FileUploaderModule
+    FileUploaderModule,
+    NgxPaginationModule,
+    NgbModule,
+    NgbModule.forRoot()
   ],
   providers: [
     httpInterceptorProviders,
@@ -164,7 +174,8 @@ const routeConfig: Routes = [
     PermissionService,
     CarService,
     AccessLogService,
-    PresaleService], // used to mention what service to provide in this module
+    PresaleService,
+    OrderService], // used to mention what service to provide in this module
   bootstrap: [AppComponent] // main component
 })
 export class AppModule {

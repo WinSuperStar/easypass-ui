@@ -119,14 +119,14 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <input type="text" class="form-control" id="odrform_dp" formControlName="itemdeadline">
+          <input type="text" class="form-control" disabled formControlName="itemdeadline">
         </div>
         <label class="col-sm-2 control-label">办证预定日期</label>
         <div class="col-sm-2" style="display:table;">
-          <div class="input-group-addon">
+          <div class="input-group-addon" (click)="d2.toggle()">
             <i class="fa fa-calendar"></i>
           </div>
-          <input type="text" class="form-control" id="odrform_dp2" formControlName="itemplandate">
+          <input type="text" class="form-control" name="dp2" [(ngModel)]="model" ngbDatepicker #d2="ngbDatepicker" formControlName="itemplandate">
         </div>
       </div>
     </div>

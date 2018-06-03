@@ -23,6 +23,7 @@
           <label class="col-sm-2 control-label">岗位</label>
           <div class="col-sm-2">
             <select class="form-control" formControlName="roleid" id="roleid">
+              <option value="" selected="selected">请选择</option>
               <option *ngFor="let role of roles | async; let i = index;" value={{role.roleid}}>{{role.rolename}}</option>
             </select>
           </div>
@@ -52,7 +53,8 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body">
-    <table id="usermgtTable" class="table table-bordered table-hover">
+    <div style="height:450px;">
+    <table  class="table table-bordered table-hover">
       <thead>
       <tr>
         <th>编号</th>
@@ -66,7 +68,19 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let user of users | async; let i = index;">
+      <!--<tr *ngFor="let user of users | async; let i = index;">-->
+        <!--<td>{{user.userid}}</td>-->
+        <!--<td>{{user.username}}</td>-->
+        <!--<td>{{user.gender}}</td>-->
+        <!--<td>{{user.phone}}</td>-->
+        <!--<td>{{user.rolename}}</td>-->
+        <!--<td>{{user.password}}</td>-->
+        <!--<td>{{date.dateFmt(user.createdate)}}</td>-->
+        <!--<td>-->
+          <!--<a class="btn btn-warning btn-xs" (click)="edit(user.userid)" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>-->
+        <!--</td>-->
+      <!--</tr>-->
+      <tr *ngFor="let user of users | async | paginate: { id:'usermgt_id', itemsPerPage:10, currentPage: page}; let i = index;">
         <td>{{user.userid}}</td>
         <td>{{user.username}}</td>
         <td>{{user.gender}}</td>
@@ -82,6 +96,14 @@
       <tfoot>
       </tfoot>
     </table>
+    </div>
+    <div class="has-text-centered">
+      <pagination-controls id="usermgt_id"
+                           (pageChange)="page = $event"
+                           autoHide="true"
+                           previousLabel="上一页"
+                           nextLabel="下一页"></pagination-controls>
+    </div>
   </div>
   <!-- /.box-body -->
 </div>

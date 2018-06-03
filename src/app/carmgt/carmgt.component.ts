@@ -45,14 +45,17 @@ export class CarmgtComponent implements OnInit {
         cancelLabel: '取消',
         resetLabel: '重置',
       }
-    }, function(start, end, label){
-      localStorage.setItem('carSearchDate',start.format('YYYY-MM-DD')+','+end.format('YYYY-MM-DD'))  ;
-      // console.log(timeRangeChange);
+    }, function(start, end, label) {
+      localStorage.removeItem('carmgt_date');
+      localStorage.setItem('carmgt_date',start.format('YYYY-MM-DD') + '~' + end.format('YYYY-MM-DD'));
+    }).on('cancel.daterangepicker', function(ev, picker) {
+      localStorage.removeItem('carmgt_date');
+      $(this).val('');
     });
   }
 
   search(){
-    this.formGroup.get('firstdate').setValue(localStorage.getItem('carSearchDate'))  ;
+    this.formGroup.get('firstdate').setValue(localStorage.getItem('carmgt_date'))  ;
     console.log('date is: '+this.formGroup.get('firstdate').value);
     this.cars = this.carService.getCars(this.formGroup);
   }
