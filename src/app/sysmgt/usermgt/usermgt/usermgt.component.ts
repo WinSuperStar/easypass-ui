@@ -18,7 +18,7 @@ let usermgtDatatable;
 export class UsermgtComponent implements OnInit {
 
   public formGroup: FormGroup;
-  public users: Observable<User[]>;
+  public users: User[];
   public roles: Observable<Role[]>;
 
   constructor(private router: Router,
@@ -39,6 +39,7 @@ export class UsermgtComponent implements OnInit {
   ngOnInit() {
     this.roles = this.roleService.getRoles();
     // this.init(this.formGroup.value);
+    this.search(this.formGroup.value);
   }
 
   // ngAfterViewInit() {
@@ -69,7 +70,13 @@ export class UsermgtComponent implements OnInit {
 
   search(value: any) {
     // usermgtDatatable.ajax.reload();
-    this.users = this.userService.getUsers(value);
+    this.userService.getUsers(value).subscribe(res=>{
+      if(res == null){
+        this.users.length = 0;
+      }else{
+        this.users = res;
+      }
+    });
   }
 
   edit(a: any) {

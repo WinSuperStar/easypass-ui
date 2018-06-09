@@ -17,7 +17,7 @@ export class PresmgtComponent implements OnInit {
   public area: Observable<Area[]>;
   public province: Observable<Province[]>;
   public formGroup: FormGroup;
-  public presales: Observable<Presale[]>;
+  public presales: Presale[];
 
   itemlist: any[] = [{state: '0', name: '提档'},{state: '0', name: '过户'},{state: '0', name: '上牌'},
     {state: '0', name: '违章'}, {state: '0', name: '抵押'}, {state: '0', name: '解除抵押'},
@@ -52,6 +52,7 @@ export class PresmgtComponent implements OnInit {
       itemlist: this.fb.array([])
     });
     this.formGroup.setControl('itemlist', this.initItemList());
+    this.search(this.formGroup.value);
   }
 
   create() {
@@ -95,7 +96,13 @@ export class PresmgtComponent implements OnInit {
   }
 
   search(form:any){
-    this.presales = this.presaleService.getPresales(form);
+    this.presaleService.getPresales(form).subscribe(res=>{
+      if(res == null){
+        this.presales.length = 0;
+      }else{
+        this.presales = res;
+      }
+    });
   }
 
   edit(id:any){
@@ -107,6 +114,7 @@ export class PresmgtComponent implements OnInit {
         res=>{
           alert('删除成功！');
           this.router.navigateByUrl('/home/presmgt');
+          this.search(this.formGroup.value);
         },
         err=>{
           alert('删除失败：'+err.message);

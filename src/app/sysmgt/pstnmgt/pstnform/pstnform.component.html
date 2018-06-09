@@ -9,7 +9,7 @@
       <div class="form-group" style="padding:5px;">
         <label class="col-sm-2 control-label">岗位名<span>*</span></label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" formControlName="rolename">
+          <input autocomplete="off" type="text" class="form-control" formControlName="rolename">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'rolename')"
             errorMsg="*岗位名不能为空"></app-field-error-display>

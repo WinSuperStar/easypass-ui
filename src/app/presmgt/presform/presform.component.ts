@@ -261,6 +261,7 @@ export class PresformComponent implements OnInit {
           itemQitaCompletedate: res.itemQitaCompletedate,
           itemQitaDesc: res.itemQitaDesc
         });
+        console.log('重置formgroup, 此时tidang的值为:'+this.formGroup.value['checkboxTidang']);
         if (this.presale.vdrid != null) {
           this.vendorService.getVdr(this.presale.vdrid).subscribe(
             res => {
@@ -291,7 +292,6 @@ export class PresformComponent implements OnInit {
               this.itemBuhuanCost_flag= this.compareNum(res.itemBuhuanCost, this.presale.itemBuhuanCost);
               this.itemQitaCost_flag= this.compareNum(res.itemQitaCost, this.presale.itemQitaCost);
               this.checkValidNumStatus();
-              console.log(this.validNumStatus);
             }
           );
         }
@@ -311,44 +311,47 @@ export class PresformComponent implements OnInit {
     // 选择完代办商后，带入代办商信息
     this.formGroup.get('contact').valueChanges.subscribe(
       res => {
-        this.vendorService.getVdr(this.formGroup.get('contact').value).subscribe(res => {
-          this.presale.contact = res.contact;
-          this.presale.vdrname = res.vdrname;
-          this.presale.vdrid = res.vdrid;
-          this.formGroup.get('checkboxTidang').setValue(res.itemTidang);
-          this.formGroup.get('itemTidangDesc').setValue(res.itemTidangDesc);
-          this.formGroup.get('checkboxGuohu').setValue(res.itemGuohu);
-          this.formGroup.get('itemGuohuDesc').setValue(res.itemGuohuDesc);
-          this.formGroup.get('checkboxShangpai').setValue(res.itemShangpai);
-          this.formGroup.get('itemShangpaiDesc').setValue(res.itemShangpaiDesc);
-          this.formGroup.get('checkboxWeizhang').setValue(res.itemWeizhang);
-          this.formGroup.get('itemWeizhangDesc').setValue(res.itemWeizhangDesc);
-          this.formGroup.get('checkboxDiya').setValue(res.itemDiya);
-          this.formGroup.get('itemDiyaDesc').setValue(res.itemDiyaDesc);
-          this.formGroup.get('checkboxJiechudiya').setValue(res.itemJiechudiya);
-          this.formGroup.get('itemJiechudiyaDesc').setValue(res.itemJiechudiyaDesc);
-          this.formGroup.get('checkboxWeituo').setValue(res.itemWeituo);
-          this.formGroup.get('itemWeituoDesc').setValue(res.itemWeituoDesc);
-          this.formGroup.get('checkboxNianjian').setValue(res.itemNianjian);
-          this.formGroup.get('itemNianjianDesc').setValue(res.itemNianjianDesc);
-          this.formGroup.get('checkboxBuhuan').setValue(res.itemBuhuan);
-          this.formGroup.get('itemBuhuanDesc').setValue(res.itemBuhuanDesc);
-          this.formGroup.get('checkboxQita').setValue(res.itemQita);
-          this.formGroup.get('itemQitaDesc').setValue(res.itemQitaDesc);
-          this.itemTidangCost_vdr = res.itemTidangCost;
-          this.itemTidangTax_vdr = res.itemTidangTax;
-          this.itemGuohuCost_vdr = res.itemGuohuCost;
-          this.itemGuohuTax_vdr = res.itemGuohuTax;
-          this.itemShangpaiCost_vdr = res.itemShangpaiCost;
-          this.itemWeizhangCost_vdr = res.itemWeizhangCost;
-          this.itemWeizhangCost2_vdr = res.itemWeizhangCost2;
-          this.itemDiyaCost_vdr = res.itemDiyaCost;
-          this.itemJiechudiyaCost_vdr = res.itemJiechudiyaCost;
-          this.itemWeituoCost_vdr = res.itemWeituoCost;
-          this.itemNianjianCost_vdr = res.itemNianjianCost;
-          this.itemBuhuanCost_vdr = res.itemBuhuanCost;
-          this.itemQitaCost_vdr = res.itemQitaCost;
-        });
+        if(this.presale.vdrid != this.formGroup.get('contact').value) {
+          this.vendorService.getVdr(this.formGroup.get('contact').value).subscribe(res => {
+            this.presale.contact = res.contact;
+            this.presale.vdrname = res.vdrname;
+            this.presale.vdrid = res.vdrid;
+            this.formGroup.get('checkboxTidang').setValue(res.itemTidang);
+            this.formGroup.get('itemTidangDesc').setValue(res.itemTidangDesc);
+            this.formGroup.get('checkboxGuohu').setValue(res.itemGuohu);
+            this.formGroup.get('itemGuohuDesc').setValue(res.itemGuohuDesc);
+            this.formGroup.get('checkboxShangpai').setValue(res.itemShangpai);
+            this.formGroup.get('itemShangpaiDesc').setValue(res.itemShangpaiDesc);
+            this.formGroup.get('checkboxWeizhang').setValue(res.itemWeizhang);
+            this.formGroup.get('itemWeizhangDesc').setValue(res.itemWeizhangDesc);
+            this.formGroup.get('checkboxDiya').setValue(res.itemDiya);
+            this.formGroup.get('itemDiyaDesc').setValue(res.itemDiyaDesc);
+            this.formGroup.get('checkboxJiechudiya').setValue(res.itemJiechudiya);
+            this.formGroup.get('itemJiechudiyaDesc').setValue(res.itemJiechudiyaDesc);
+            this.formGroup.get('checkboxWeituo').setValue(res.itemWeituo);
+            this.formGroup.get('itemWeituoDesc').setValue(res.itemWeituoDesc);
+            this.formGroup.get('checkboxNianjian').setValue(res.itemNianjian);
+            this.formGroup.get('itemNianjianDesc').setValue(res.itemNianjianDesc);
+            this.formGroup.get('checkboxBuhuan').setValue(res.itemBuhuan);
+            this.formGroup.get('itemBuhuanDesc').setValue(res.itemBuhuanDesc);
+            this.formGroup.get('checkboxQita').setValue(res.itemQita);
+            this.formGroup.get('itemQitaDesc').setValue(res.itemQitaDesc);
+            this.itemTidangCost_vdr = res.itemTidangCost;
+            this.itemTidangTax_vdr = res.itemTidangTax;
+            this.itemGuohuCost_vdr = res.itemGuohuCost;
+            this.itemGuohuTax_vdr = res.itemGuohuTax;
+            this.itemShangpaiCost_vdr = res.itemShangpaiCost;
+            this.itemWeizhangCost_vdr = res.itemWeizhangCost;
+            this.itemWeizhangCost2_vdr = res.itemWeizhangCost2;
+            this.itemDiyaCost_vdr = res.itemDiyaCost;
+            this.itemJiechudiyaCost_vdr = res.itemJiechudiyaCost;
+            this.itemWeituoCost_vdr = res.itemWeituoCost;
+            this.itemNianjianCost_vdr = res.itemNianjianCost;
+            this.itemBuhuanCost_vdr = res.itemBuhuanCost;
+            this.itemQitaCost_vdr = res.itemQitaCost;
+          });
+        }
+        // console.log('触发contact改变，且覆盖了form的值,此时tidang的值为:'+this.formGroup.value['checkboxTidang']);
       });
 
     $('#fileUpload').fileinput({

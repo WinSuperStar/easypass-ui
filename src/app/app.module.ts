@@ -63,6 +63,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {OrderHomeComponent} from './order/order-home/order-home.component';
 import {OrderService} from './service/order.service';
+import {VdrLeaveGuardService} from './shared/guards/vdr-leave-guard.service';
+import {PresLeaveGuardService} from './shared/guards/pres-leave-guard.service';
 
 const routeConfig: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -87,13 +89,13 @@ const routeConfig: Routes = [
         {path: 'presform/:id', component: PresformComponent},
         {path: 'authmgt', component: AuthmgtComponent},
         {path: 'vdrmgt', component: VdrmgtComponent},
-        {path: 'vdrmgt/:id', component: VdrFormComponent},
+        {path: 'vdrmgt/:id', component: VdrFormComponent, canDeactivate: [VdrLeaveGuardService]},
         {path: 'carmgt', component: CarmgtComponent},
         {path: 'carform/:id', component: CarformComponent},
         {path: 'odrmgt', component: OdrmgtComponent},
         {path: 'orderform/:id', component: OrderformComponent},
         {path: 'presmgt', component: PresmgtComponent},
-        {path: 'presmgt/:id', component: PresformComponent},
+        {path: 'presmgt/:id', component: PresformComponent, canDeactivate:[PresLeaveGuardService]},
         {path: 'itemform', component: ItemFormComponent},
         {path: 'itemform/:id', component: ItemFormComponent},
         {path: 'presappr', component: PresapprComponent}],
@@ -175,7 +177,9 @@ const routeConfig: Routes = [
     CarService,
     AccessLogService,
     PresaleService,
-    OrderService], // used to mention what service to provide in this module
+    OrderService,
+    VdrLeaveGuardService,
+    PresLeaveGuardService], // used to mention what service to provide in this module
   bootstrap: [AppComponent] // main component
 })
 export class AppModule {

@@ -80,7 +80,7 @@
           <!--<a class="btn btn-warning btn-xs" (click)="edit(user.userid)" ><span class="glyphicon glyphicon-pencil" ></span>编辑</a>-->
         <!--</td>-->
       <!--</tr>-->
-      <tr *ngFor="let user of users | async | paginate: { id:'usermgt_id', itemsPerPage:10, currentPage: page}; let i = index;">
+      <tr *ngFor="let user of users | paginate: { id:'usermgt_id', itemsPerPage:10, currentPage: page}; let i = index;">
         <td>{{user.userid}}</td>
         <td>{{user.username}}</td>
         <td>{{user.gender}}</td>

@@ -9,10 +9,10 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">车架号</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" formControlName="carnum">
+          <input  autocomplete="off"  type="text" class="form-control" formControlName="carnum">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'carnum')"
-            errorMsg="*至少17位，字母大写"></app-field-error-display>
+            errorMsg="*至少8位"></app-field-error-display>
         </div>
       </div>
       <div class="form-group">
@@ -48,8 +48,8 @@
           <div class="input-group-addon" (click)="d.toggle()">
             <i class="fa fa-calendar"></i>
           </div>
-          <input type="text" class="form-control" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker"
-                 formControlName="firstdate">
+          <input  autocomplete="off"  type="text" class="form-control" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker"
+                  formControlName="firstdate">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'firstdate')"
             errorMsg="*必填项"></app-field-error-display>

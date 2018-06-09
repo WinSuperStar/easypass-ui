@@ -105,6 +105,7 @@
         <th>更新时间</th>
         <th>状态</th>
         <th>创建人</th>
+        <th>创建时间</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -122,6 +123,7 @@
         <td>{{date.dateFmt(v.createdate)}}</td>
         <td>{{v.state}}</td>
         <td>{{v.creator}}</td>
+        <td>{{v.createdate}}</td>
         <td>
           <p>
             <a class="btn btn-primary btn-xs" (click)="submit(v.vdrid)"><span class="glyphicon glyphicon-ok"></span>提交</a>

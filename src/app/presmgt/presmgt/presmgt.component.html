@@ -105,7 +105,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr  *ngFor="let p of presales | async | paginate: { id: 'presmgt_id',itemsPerPage:10, currentPage: page}; let i=index ">
+      <tr  *ngFor="let p of presales | paginate: { id: 'presmgt_id',itemsPerPage:10, currentPage: page}; let i=index ">
         <td>{{p.saleid}}</td>
         <td>{{p.cusname}}</td>
         <td>{{p.caraddr}}</td>

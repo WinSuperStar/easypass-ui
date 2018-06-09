@@ -89,6 +89,8 @@ export class VdrmgtComponent implements OnInit {
     //     }
     //   });
     // });
+    // setTimeout(this.search(), 3000);
+    this.search();
   }
 
 
@@ -142,13 +144,15 @@ export class VdrmgtComponent implements OnInit {
     this.formGroup.get('firstdate').setValue(localStorage.getItem('vdrmgt_date'));
     // console.log(this.formGroup.value['firstdate']);
     this.vendorService.getVdrs(this.formGroup.value).subscribe(res => {
-        this.vendors = res;
+        if(res == null){
+          this.vendors.length = 0;
+        }else{
+          this.vendors = res;
+        }
       },
       err => {
         alert('错误:' + err.message);
       });
-    console.dir(this.vendors);
-    //this.vendors = this.vendorService.getVdrs(form);
   }
 
   showItemDetail(v: Vendor) {

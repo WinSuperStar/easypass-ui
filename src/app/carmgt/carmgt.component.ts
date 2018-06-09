@@ -52,6 +52,7 @@ export class CarmgtComponent implements OnInit {
       localStorage.removeItem('carmgt_date');
       $(this).val('');
     });
+    this.search();
   }
 
   search(){

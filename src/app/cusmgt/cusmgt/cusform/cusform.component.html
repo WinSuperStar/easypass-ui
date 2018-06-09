@@ -18,7 +18,7 @@
         </div>
         <label class="col-sm-2 control-label">客户名称<span>*</span></label>
         <div class="col-sm-2">
-          <input class="form-control" formControlName="cusname">
+          <input  autocomplete="off"  class="form-control" formControlName="cusname">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'cusname')" errorMsg="*必填项"></app-field-error-display>
         </div>
@@ -26,13 +26,13 @@
       <div class="form-group" style="padding:5px;">
         <label class="col-sm-2 control-label">联系人<span>*</span></label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" formControlName="contact">
+          <input  autocomplete="off"  type="text" class="form-control" formControlName="contact">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'contact')" errorMsg="*必填项"></app-field-error-display>
         </div>
         <label class="col-sm-2 control-label">联系人手机号<span>*</span></label>
         <div class="col-sm-2">
-          <input type="text" class="form-control" formControlName="contactPhone">
+          <input  autocomplete="off"  type="text" class="form-control" formControlName="contactPhone">
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'contactPhone')" errorMsg="*格式不正确"></app-field-error-display>
         </div>
@@ -64,19 +64,19 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">详细地址</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" formControlName="add1">
+          <input  autocomplete="off"  type="text" class="form-control" formControlName="add1">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">战败</label>
         <div class="col-sm-2">
           <label>
-            是<input type="radio" name="state" value='战败' formControlName="state" />
+            是<input  autocomplete="off"  type="radio" name="state" value='战败' formControlName="state" />
           </label>
           <app-field-error-display
             [displayError]="validation.isFiledValid(formGroup, 'state')" errorMsg="*必填"></app-field-error-display>
           <label>
-            否<input type="radio" name="state" value='正常' formControlName="state" />
+            否<input  autocomplete="off"  type="radio" name="state" value='正常' formControlName="state" />
           </label>
         </div>
       </div>

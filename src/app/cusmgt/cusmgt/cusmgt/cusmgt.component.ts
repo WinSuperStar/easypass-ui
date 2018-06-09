@@ -36,6 +36,7 @@ export class CusmgtComponent implements OnInit {
         state:['正常']
       }
     )
+    this.search(this.formGroup.value);
   }
 
   edit(cus: Customer) {

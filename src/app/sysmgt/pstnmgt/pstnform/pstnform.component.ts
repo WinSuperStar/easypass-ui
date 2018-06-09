@@ -15,13 +15,7 @@ export class PstnformComponent implements OnInit {
   public roleid: number;
   public role: Role;
   public formGroup: FormGroup;
-  // public auths = [
-  //   { name: '权限1-1', selected: false, id: 1 },
-  //   { name: '权限1-2', selected: false, id: 2 },
-  //   { name: '权限1-3', selected: false, id: 3 },
-  //   { name: '权限1-4', selected: false, id: 4 }
-  //   ];
-  // public auths: Observable<Auth[]>;
+
   public current_auths: Auth[];
 
   public selects: string[] = [];
