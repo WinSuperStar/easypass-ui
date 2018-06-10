@@ -127,23 +127,23 @@ export class PresmgtComponent implements OnInit {
     let list:string = '';
     if(v.itemTidang == 'true'){
       list = '提档'+',';
-    }else if (v.itemGuohu == 'true'){
+    } if (v.itemGuohu == 'true'){
       list = list + '过户' +',';
-    }else if (v.itemShangpai == 'true'){
+    } if (v.itemShangpai == 'true'){
       list = list + '上牌' +',';
-    }else if (v.itemWeizhang == 'true'){
+    } if (v.itemWeizhang == 'true'){
       list = list + '违章' +',';
-    }else if (v.itemDiya == 'true'){
+    } if (v.itemDiya == 'true'){
       list = list + '抵押' +',';
-    }else if (v.itemJiechudiya == 'true'){
+    } if (v.itemJiechudiya == 'true'){
       list = list + '解除抵押' +',';
-    }else if (v.itemWeituo == 'true'){
+    } if (v.itemWeituo == 'true'){
       list = list + '委托' +',';
-    }else if (v.itemNianjian == 'true'){
+    } if (v.itemNianjian == 'true'){
       list = list + '年检' +',';
-    }else if (v.itemBuhuan == 'true'){
+    } if (v.itemBuhuan == 'true'){
       list = list + '换补牌证' +',';
-    }else if (v.itemQita == 'true'){
+    } if (v.itemQita == 'true'){
       list = list + '其他';
     }
     return list;

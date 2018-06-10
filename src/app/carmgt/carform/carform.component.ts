@@ -114,7 +114,7 @@ export class CarformComponent implements OnInit {
           this.formGroup.value['carnum'],
           this.formGroup.value['carbrand'],
           this.formGroup.value['carset'],
-          model.year+'-'+model.month+model.day,
+          model.year+'-'+model.month+'-'+model.day,
           new Date().toLocaleString(),
           JSON.parse(localStorage.getItem('currentUser'))['username'],
           null,
@@ -142,7 +142,7 @@ export class CarformComponent implements OnInit {
         this.car.carnum = this.formGroup.value['carnum'];
         this.car.carbrand = this.formGroup.value['carbrand'];
         this.car.carset = this.formGroup.value['carset'];
-        this.car.firstdate = model.year+'-'+model.month+model.day;
+        this.car.firstdate = model.year+'-'+model.month+'-'+model.day;
         console.log('更新车辆：'+this.car.carnum);
         this.carService.saveCar(JSON.stringify(this.car)).subscribe(
           res => {

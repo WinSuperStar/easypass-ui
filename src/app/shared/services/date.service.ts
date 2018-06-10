@@ -15,18 +15,17 @@ export class DateService {
     }
   }
 
-      ngDateFmt(val: any) {
-        if (val == '' || val == null) {
-          return null;
-        } else {
-          var crtTime = new Date(val);
-          crtTime.getFullYear();
-          crtTime.getMonth();
-          crtTime.getDate();
-          // return JSON.parse('{"year":"' + crtTime.getFullYear() + '", "month":"' + crtTime.getMonth() + '", "day":"' + crtTime.getDay() + '"}');
-          let a = {"year":crtTime.getFullYear(), "month":crtTime.getMonth()+1 , "day":crtTime.getDate()};
-          return a;
-
+  ngDateFmt(val: any) {
+    if (val == '' || val == null) {
+      return null;
+    } else {
+      var crtTime = new Date(val);
+      crtTime.getFullYear();
+      crtTime.getMonth();
+      crtTime.getDate();
+      // return JSON.parse('{"year":"' + crtTime.getFullYear() + '", "month":"' + crtTime.getMonth() + '", "day":"' + crtTime.getDay() + '"}');
+      let a = {'year': crtTime.getFullYear(), 'month': crtTime.getMonth() + 1, 'day': crtTime.getDate()};
+      return a;
     }
 
   }

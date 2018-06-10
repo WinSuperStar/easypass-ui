@@ -19,6 +19,12 @@ export class OrderService {
     return this.httpClient.post('/api/getOdr', params);
   }
 
+  saveOdr(order:any):Observable<any>{
+    let params = new HttpParams()
+      .set('order',order);
+    return this.httpClient.post('/api/saveOdr',params);
+  }
+
 }
 
 export class Order {
