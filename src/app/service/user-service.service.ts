@@ -37,8 +37,7 @@ export class UserServiceService {
       .set('creator', user.creator)
       .set('certpath', user.certpath)
     let headers = new HttpHeaders()
-      .set('Content-Type', 'application/x-www-form-urlencoded')
-      .set('creator', user.creator);
+      .set('Content-Type', 'application/x-www-form-urlencoded');
     return this.httpClient.post('/api/addUser', params, {headers}).map(
       res => {
         return res;

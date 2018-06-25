@@ -215,17 +215,17 @@ export class PresformComponent implements OnInit {
           checkboxTidang: res.itemTidang,
           itemTidangTax: res.itemTidangTax,
           itemTidangCost: res.itemTidangCost,
-          itemTidangCompletedate: this.dateService.dateFmt(res.itemTidangCompletedate),
+          itemTidangCompletedate: res.itemTidangCompletedate,
           itemTidangDesc: res.itemTidangDesc,
           checkboxGuohu: res.itemGuohu,
           itemGuohuTax: res.itemGuohuTax,
           itemGuohuCost: res.itemGuohuCost,
-          itemGuohuCompletedate: this.dateService.dateFmt(res.itemGuohuCompletedate),
+          itemGuohuCompletedate: res.itemGuohuCompletedate,
           itemGuohuDesc: res.itemGuohuDesc,
           checkboxShangpai: res.itemShangpai,
           itemShangpaiTax: res.itemShangpaiTax,
           itemShangpaiCost: res.itemShangpaiCost,
-          itemShangpaiCompletedate: this.dateService.dateFmt(res.itemShangpaiCompletedate),
+          itemShangpaiCompletedate: res.itemShangpaiCompletedate,
           itemShangpaiDesc: res.itemShangpaiDesc,
           checkboxWeizhang: res.itemWeizhang,
           itemWeizhangTax: res.itemWeizhangTax,
@@ -317,24 +317,47 @@ export class PresformComponent implements OnInit {
             this.presale.vdrname = res.vdrname;
             this.presale.vdrid = res.vdrid;
             this.formGroup.get('checkboxTidang').setValue(res.itemTidang);
+            this.formGroup.get('itemTidangCost').setValue(res.itemTidangCost);
+            this.formGroup.get('itemTidangTax').setValue(res.itemTidangTax);
+            this.formGroup.get('itemTidangCompletedate').setValue(res.itemTidangCompletedate);
             this.formGroup.get('itemTidangDesc').setValue(res.itemTidangDesc);
             this.formGroup.get('checkboxGuohu').setValue(res.itemGuohu);
+            this.formGroup.get('itemGuohuCost').setValue(res.itemGuohuCost);
+            this.formGroup.get('itemGuohuTax').setValue(res.itemGuohuTax);
+            this.formGroup.get('itemGuohuCompletedate').setValue(res.itemGuohuCompletedate);
             this.formGroup.get('itemGuohuDesc').setValue(res.itemGuohuDesc);
             this.formGroup.get('checkboxShangpai').setValue(res.itemShangpai);
+            this.formGroup.get('itemShangpaiCost').setValue(res.itemShangpaiCost);
+            this.formGroup.get('itemShangpaiCompletedate').setValue(res.itemShangpaiCompletedate);
             this.formGroup.get('itemShangpaiDesc').setValue(res.itemShangpaiDesc);
             this.formGroup.get('checkboxWeizhang').setValue(res.itemWeizhang);
+            this.formGroup.get('itemWeizhangCost').setValue(res.itemWeizhangCost);
+            this.formGroup.get('itemWeizhangCost2').setValue(res.itemWeizhangCost2);
+            this.formGroup.get('itemWeizhangCompletedate').setValue(res.itemWeizhangCompletedate);
             this.formGroup.get('itemWeizhangDesc').setValue(res.itemWeizhangDesc);
             this.formGroup.get('checkboxDiya').setValue(res.itemDiya);
+            this.formGroup.get('itemDiyaCost').setValue(res.itemDiyaCost);
+            this.formGroup.get('itemDiyaCompletedate').setValue(res.itemDiyaCompletedate);
             this.formGroup.get('itemDiyaDesc').setValue(res.itemDiyaDesc);
             this.formGroup.get('checkboxJiechudiya').setValue(res.itemJiechudiya);
+            this.formGroup.get('itemJiechudiyaCost').setValue(res.itemJiechudiyaCost);
+            this.formGroup.get('itemJiechudiyaCompletedate').setValue(res.itemJiechudiyaCompletedate);
             this.formGroup.get('itemJiechudiyaDesc').setValue(res.itemJiechudiyaDesc);
             this.formGroup.get('checkboxWeituo').setValue(res.itemWeituo);
+            this.formGroup.get('itemWeituoCost').setValue(res.itemWeituoCost);
+            this.formGroup.get('itemWeituoCompletedate').setValue(res.itemWeituoCompletedate);
             this.formGroup.get('itemWeituoDesc').setValue(res.itemWeituoDesc);
             this.formGroup.get('checkboxNianjian').setValue(res.itemNianjian);
+            this.formGroup.get('itemNianjianCost').setValue(res.itemNianjianCost);
+            this.formGroup.get('itemNianjianCompletedate').setValue(res.itemNianjianCompletedate);
             this.formGroup.get('itemNianjianDesc').setValue(res.itemNianjianDesc);
             this.formGroup.get('checkboxBuhuan').setValue(res.itemBuhuan);
+            this.formGroup.get('itemBuhuanCost').setValue(res.itemBuhuanCost);
+            this.formGroup.get('itemBuhuanCompletedate').setValue(res.itemBuhuanCompletedate);
             this.formGroup.get('itemBuhuanDesc').setValue(res.itemBuhuanDesc);
             this.formGroup.get('checkboxQita').setValue(res.itemQita);
+            this.formGroup.get('itemQitaCost').setValue(res.itemQitaCost);
+            this.formGroup.get('itemQitaCompletedate').setValue(res.itemQitaCompletedate);
             this.formGroup.get('itemQitaDesc').setValue(res.itemQitaDesc);
             this.itemTidangCost_vdr = res.itemTidangCost;
             this.itemTidangTax_vdr = res.itemTidangTax;
@@ -349,6 +372,7 @@ export class PresformComponent implements OnInit {
             this.itemNianjianCost_vdr = res.itemNianjianCost;
             this.itemBuhuanCost_vdr = res.itemBuhuanCost;
             this.itemQitaCost_vdr = res.itemQitaCost;
+            this.refreshFlag();
           });
         }
         // console.log('触发contact改变，且覆盖了form的值,此时tidang的值为:'+this.formGroup.value['checkboxTidang']);
@@ -376,7 +400,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemTidangCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemTidangCost').setValidators(null);
-        this.formGroup.get('itemTidangCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemTidangCompletedate').setValidators(null);
       }
       this.formGroup.get('itemTidangCost').updateValueAndValidity();
       this.formGroup.get('itemTidangCompletedate').updateValueAndValidity();
@@ -388,7 +412,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemGuohuCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemGuohuCost').setValidators(null);
-        this.formGroup.get('itemGuohuCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemGuohuCompletedate').setValidators(null);
       }
       this.formGroup.get('itemGuohuCost').updateValueAndValidity();
       this.formGroup.get('itemGuohuCompletedate').updateValueAndValidity();
@@ -400,7 +424,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemShangpaiCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemShangpaiCost').setValidators(null);
-        this.formGroup.get('itemShangpaiCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemShangpaiCompletedate').setValidators(null);
       }
       this.formGroup.get('itemShangpaiCost').updateValueAndValidity();
       this.formGroup.get('itemShangpaiCompletedate').updateValueAndValidity();
@@ -414,7 +438,7 @@ export class PresformComponent implements OnInit {
       } else {
         this.formGroup.get('itemWeizhangCost').setValidators(null);
         this.formGroup.get('itemWeizhangCost2').setValidators(null);
-        this.formGroup.get('itemWeizhangCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemWeizhangCompletedate').setValidators(null);
       }
       this.formGroup.get('itemWeizhangCost').updateValueAndValidity();
       this.formGroup.get('itemWeizhangCost2').updateValueAndValidity();
@@ -427,7 +451,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemDiyaCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemDiyaCost').setValidators(null);
-        this.formGroup.get('itemDiyaCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemDiyaCompletedate').setValidators(null);
       }
       this.formGroup.get('itemDiyaCost').updateValueAndValidity();
       this.formGroup.get('itemDiyaCompletedate').updateValueAndValidity();
@@ -439,7 +463,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemJiechudiyaCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemJiechudiyaCost').setValidators(null);
-        this.formGroup.get('itemJiechudiyaCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemJiechudiyaCompletedate').setValidators(null);
       }
       this.formGroup.get('itemJiechudiyaCost').updateValueAndValidity();
       this.formGroup.get('itemJiechudiyaCompletedate').updateValueAndValidity();
@@ -451,7 +475,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemWeituoCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemWeituoCost').setValidators(null);
-        this.formGroup.get('itemWeituoCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemWeituoCompletedate').setValidators(null);
       }
       this.formGroup.get('itemWeituoCost').updateValueAndValidity();
       this.formGroup.get('itemWeituoCompletedate').updateValueAndValidity();
@@ -463,7 +487,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemNianjianCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemNianjianCost').setValidators(null);
-        this.formGroup.get('itemNianjianCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemNianjianCompletedate').setValidators(null);
       }
       this.formGroup.get('itemNianjianCost').updateValueAndValidity();
       this.formGroup.get('itemNianjianCompletedate').updateValueAndValidity();
@@ -475,7 +499,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemBuhuanCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemBuhuanCost').setValidators(null);
-        this.formGroup.get('itemBuhuanCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemBuhuanCompletedate').setValidators(null);
       }
       this.formGroup.get('itemBuhuanCost').updateValueAndValidity();
       this.formGroup.get('itemBuhuanCompletedate').updateValueAndValidity();
@@ -487,7 +511,7 @@ export class PresformComponent implements OnInit {
         this.formGroup.get('itemQitaCompletedate').setValidators([Validators.required]);
       } else {
         this.formGroup.get('itemQitaCost').setValidators(null);
-        this.formGroup.get('itemQitaCompletedate').setValidators([Validators.required]);
+        this.formGroup.get('itemQitaCompletedate').setValidators(null);
       }
       this.formGroup.get('itemQitaCost').updateValueAndValidity();
       this.formGroup.get('itemQitaCompletedate').updateValueAndValidity();
@@ -498,6 +522,23 @@ export class PresformComponent implements OnInit {
     if (confirm('确定要返回？')) {
       this.router.navigateByUrl('/home/presmgt');
     }
+  }
+
+  refreshFlag(){
+    this.itemTidangCost_flag = this.compareNum(this.itemTidangCost_vdr, this.formGroup.get('itemTidangCost').value);
+    this.itemTidangTax_flag = this.compareNum(this.itemTidangTax_vdr, this.formGroup.get('itemTidangTax').value);
+    this.itemGuohuCost_flag= this.compareNum(this.itemGuohuCost_vdr, this.formGroup.get('itemGuohuCost').value);
+    this.itemGuohuTax_flag= this.compareNum(this.itemGuohuTax_vdr, this.formGroup.get('itemGuohuTax').value);
+    this.itemShangpaiCost_flag= this.compareNum(this.itemShangpaiCost_vdr, this.formGroup.get('itemShangpaiCost').value);
+    this.itemWeizhangCost_flag= this.compareNum(this.itemWeizhangCost_vdr,this.formGroup.get('itemWeizhangCost').value);
+    this.itemWeizhangCost2_flag= this.compareNum(this.itemWeizhangCost2_vdr, this.formGroup.get('itemWeizhangCost2').value);
+    this.itemDiyaCost_flag= this.compareNum(this.itemDiyaCost_vdr, this.formGroup.get('itemDiyaCost').value);
+    this.itemJiechudiyaCost_flag= this.compareNum(this.itemJiechudiyaCost_vdr, this.formGroup.get('itemJiechudiyaCost').value);
+    this.itemWeituoCost_flag= this.compareNum(this.itemWeituoCost_vdr, this.formGroup.get('itemWeituoCost').value);
+    this.itemNianjianCost_flag= this.compareNum(this.itemNianjianCost_vdr, this.formGroup.get('itemNianjianCost').value);
+    this.itemBuhuanCost_flag= this.compareNum(this.itemBuhuanCost_vdr, this.formGroup.get('itemBuhuanCost').value);
+    this.itemQitaCost_flag= this.compareNum(this.itemQitaCost_vdr,  this.formGroup.get('itemQitaCost').value);
+    this.checkValidNumStatus();
   }
 
   compareNum(vdr: any, pres: any) {
@@ -885,37 +926,54 @@ export class PresformComponent implements OnInit {
 
   }
 
-  submit() {
-    if (this.validNumStatus) {
-      if (this.presale.state == '审批中') {
-        alert('正在审批，请稍后再试！');
-      } else {
-        if (confirm('确认录入销售信息吗？')) {
-          this.presaleService.updatePresaleState('已录入', this.presale.saleid).subscribe(
-            res => {
-              alert('销售预录信息录入成功！');
-            },
-            err => {
-              alert('录入失败：' + err.message);
-            }
-          );
-        }
-      }
-    } else {
-      if (this.presale.state == '审批中') {
-        alert('正在审批，请稍后再试！');
-      } else {
-        if (confirm('确认提交审批吗？')) {
-          this.presaleService.updatePresaleState('审批中', this.presale.saleid).subscribe(
-            res => {
-              alert('提交审批成功！');
-              this.presale.state = '审批中';
-            },
-            err => {
-              alert('提交失败：' + err.message);
-            }
-          );
-        }
+  // submit() {
+  //   if (this.validNumStatus) {
+  //     if (this.presale.state == '审批中') {
+  //       alert('正在审批，请稍后再试！');
+  //     } else {
+  //       if (confirm('确认录入销售信息吗？')) {
+  //         this.presaleService.updatePresaleState('已录入', this.presale.saleid).subscribe(
+  //           res => {
+  //             alert('销售预录信息录入成功！');
+  //           },
+  //           err => {
+  //             alert('录入失败：' + err.message);
+  //           }
+  //         );
+  //       }
+  //     }
+  //   } else {
+  //     if (this.presale.state == '审批中') {
+  //       alert('正在审批，请稍后再试！');
+  //     } else {
+  //       if (confirm('确认提交审批吗？')) {
+  //         this.presaleService.updatePresaleState('审批中', this.presale.saleid).subscribe(
+  //           res => {
+  //             alert('提交审批成功！');
+  //             this.presale.state = '审批中';
+  //           },
+  //           err => {
+  //             alert('提交失败：' + err.message);
+  //           }
+  //         );
+  //       }
+  //     }
+  //   }
+  // }
+
+  submit(){
+    if (confirm('确认录入销售信息吗？')) {
+      if(this.presale.state == '已录入'){
+        alert('请勿重复提交！');
+      }else {
+        this.presaleService.updatePresaleState('已录入', this.presale.saleid).subscribe(
+          res => {
+            alert('销售预录信息录入成功！');
+          },
+          err => {
+            alert('录入失败：' + err.message);
+          }
+        );
       }
     }
   }

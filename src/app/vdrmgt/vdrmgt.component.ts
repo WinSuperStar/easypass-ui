@@ -8,7 +8,8 @@ import {Vendor, VendorService} from '../service/vendor.service';
 import {DateService} from '../shared/services/date.service';
 
 declare var $: any;
-let vdrmgtDataTable ;
+let vdrmgtDataTable;
+
 @Component({
   selector: 'app-vdrmgt',
   templateUrl: './vdrmgt.component.html',
@@ -101,7 +102,8 @@ export class VdrmgtComponent implements OnInit {
       res => {
         let id = res;
         // console.log(id);
-        this.router.navigateByUrl('/home/vdrmgt/' + id);
+        // this.router.navigateByUrl('/home/vdrmgt/' + id);
+        this.router.navigateByUrl('/home/vdrmgt/' + id+'/create');
       },
       err => {
 
@@ -144,9 +146,9 @@ export class VdrmgtComponent implements OnInit {
     this.formGroup.get('firstdate').setValue(localStorage.getItem('vdrmgt_date'));
     // console.log(this.formGroup.value['firstdate']);
     this.vendorService.getVdrs(this.formGroup.value).subscribe(res => {
-        if(res == null){
+        if (res == null) {
           this.vendors.length = 0;
-        }else{
+        } else {
           this.vendors = res;
         }
       },
@@ -191,26 +193,35 @@ export class VdrmgtComponent implements OnInit {
   }
 
   edit(id: any) {
-    this.router.navigateByUrl('/home/vdrmgt/' + id);
+    // this.router.navigateByUrl('/home/vdrmgt/' + id);
+    this.router.navigateByUrl('/home/vdrmgt/' + id+'/edit');
   }
 
   submit(id: any) {
     //提交
     if (confirm('确定提交？')) {
-      this.vendorService.smtVdr(id).subscribe(
+      this.vendorService.getVdr(id).subscribe(
         res => {
-          alert('提交成功！');
-          this.router.navigateByUrl('/home/vdrmgt');
-        },
-        err => {
-          alert('提交失败：' + err.message);
-        }
-      );
+          if (res.state == '已提交') {
+            alert('请勿重复提交');
+          } else {
+            this.vendorService.smtVdr(id).subscribe(
+              res => {
+                alert('提交成功！');
+                this.router.navigateByUrl('/home/vdrmgt');
+              },
+              err => {
+                alert('提交失败：' + err.message);
+              }
+            );
+          }
+        });
     }
   }
 
   view(id: any) {
-    this.router.navigateByUrl('/home/vdrmgt/' + id);
+    this.router.navigateByUrl('/home/vdrmgt/' + id+'/view');
+    // this.router.navigate(['/home/vdrmgt', [id, 'view']]);
   }
 
   delete(id: any) {

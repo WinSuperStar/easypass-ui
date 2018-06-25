@@ -494,6 +494,7 @@
   <div class="box-footer">
     <button type="button" class="btn btn-default" (click)="cancel()">取消</button>
     <button type="button" class="btn btn-default" (click)="save()">保存</button>
-    <input  autocomplete="off"  type="button" class="btn btn-info pull-right" [disabled]="!formGroup.valid" (click)="submit()" [value]="validNumStatus?'确认(提交)':'提交审批'">
+    <!--<input  autocomplete="off"  type="button" class="btn btn-info pull-right" [disabled]="!formGroup.valid" (click)="submit()" [value]="validNumStatus?'确认(提交)':'提交审批'">-->
+    <input  autocomplete="off"  type="button" class="btn btn-info pull-right" [disabled]="!formGroup.valid" (click)="submit()" value="确认(提交)">
   </div>
 </form>

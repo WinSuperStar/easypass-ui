@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>分配订单</h1>
+<div mat-dialog-content>
+  将当前订单分配给：
+  <mat-form-field>
+    <mat-select placeholder="选择业务员" [(ngModel)]="selectedValue" name="food">
+      <mat-option *ngFor="let user of data.users" [value]="user">
+        {{user.username}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">取消</button>
+  <button mat-button [mat-dialog-close]="selectedValue" cdkFocusInitial>确认</button>
+</div>

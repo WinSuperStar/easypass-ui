@@ -2,7 +2,7 @@
   <div class="box box-info">
     <div class="box-header with-border">
       <h3 class="box-title">办证要求以及费用</h3>
-      当前位置：{{itemdetail.relatedBillName}} -- {{itemdetail.relatedItemName}}
+      当前位置：{{itemdetail==undefined?'':itemdetail.relatedBillName}} -- {{reName(itemdetail==undefined?'':itemdetail.relatedItemName)}}
     </div>
     <!-- /.box-header -->
     <!-- form start -->
@@ -44,10 +44,10 @@
         <label class="col-sm-2 control-label">车辆是否到场</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
-            是<input type="radio" name="gender" value="是" formControlName="carPresent">
+            是<input type="radio" name="carPresent" value="是" formControlName="carPresent">
           </label>
           <label>
-            否<input type="radio" name="gender" value="否" formControlName="carPresent">
+            否<input type="radio" name="carPresent" value="否" formControlName="carPresent">
           </label>
         </div>
         <label class="col-sm-1 control-label">金额</label>
@@ -67,7 +67,8 @@
     </div>
     <div class="box-body">
       <div class="form-group">
-        <label class="col-sm-2 control-label">身份证</label>
+        <label class="col-sm-2 control-label">原车主（个人）</label>
+        <label class="col-sm-1 control-label">身份证</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
             原件<input type="radio" name="oriIdType" value="原件" formControlName="oriIdType">
@@ -75,6 +76,10 @@
           <label>
             复印件<input type="radio" name="oriIdType" value="复印件" formControlName="oriIdType">
           </label>
+        </div>
+        <label class="col-sm-1 control-label">其他证件</label>
+        <div class="col-sm-1">
+          <input type="checkbox" formControlName="oriOtherCert">
         </div>
         <label class="col-sm-1 control-label">金额</label>
         <div class="col-sm-1">
@@ -85,22 +90,20 @@
           <textarea class="form-control" formControlName="oriIdDesc"></textarea>
         </div>
       </div>
+      <!--<div class="form-group">-->
+
+        <!--<label class="col-sm-1 control-label">金额</label>-->
+        <!--<div class="col-sm-1">-->
+          <!--<input type="text" class="form-control" formControlName="oriOtherCertCost">-->
+        <!--</div>-->
+        <!--<label class="col-sm-1 control-label">摘要说明：</label>-->
+        <!--<div class="col-sm-2">-->
+          <!--<textarea class="form-control" formControlName="oriOtherCertDesc"></textarea>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="form-group">
-        <label class="col-sm-2 control-label">其他证件</label>
-        <div class="col-sm-1">
-          <input type="checkbox" formControlName="oriOtherCert">
-        </div>
-        <label class="col-sm-1 control-label">金额</label>
-        <div class="col-sm-1">
-          <input type="text" class="form-control" formControlName="oriOtherCertCost">
-        </div>
-        <label class="col-sm-1 control-label">摘要说明：</label>
-        <div class="col-sm-2">
-          <textarea class="form-control" formControlName="oriOtherCertDesc"></textarea>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">原车主单位营业执照</label>
+        <label class="col-sm-2 control-label">原车主（单位）</label>
+        <label class="col-sm-1 control-label">营业执照</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
             原件<input type="radio" name="oriLisenceType" value="原件" formControlName="oriLisenceType">
@@ -108,6 +111,10 @@
           <label>
             复印件<input type="radio" name="oriLisenceType" value="复印件" formControlName="oriLisenceType">
           </label>
+        </div>
+        <label class="col-sm-1 control-label">其他证件</label>
+        <div class="col-sm-1">
+          <input type="checkbox" formControlName="oriCompanyOtherCert">
         </div>
         <label class="col-sm-1 control-label">金额</label>
         <div class="col-sm-1">
@@ -118,7 +125,7 @@
           <textarea class="form-control" formControlName="oriLisenceDesc"></textarea>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="border-top: solid 1px #5d5c5c26;padding: 10px;">
         <label class="col-sm-2 control-label">本人是否到场</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
@@ -181,7 +188,8 @@
     </div>
     <div class="box-body">
       <div class="form-group">
-        <label class="col-sm-2 control-label">身份证</label>
+        <label class="col-sm-2 control-label">新车主（个人）</label>
+        <label class="col-sm-1 control-label">身份证</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
             原件<input type="radio" name="newIdType" value="原件" formControlName="newIdType">
@@ -189,6 +197,10 @@
           <label>
             复印件<input type="radio" name="newIdType" value="复印件" formControlName="newIdType">
           </label>
+        </div>
+        <label class="col-sm-1 control-label">其他证件</label>
+        <div class="col-sm-1">
+          <input type="checkbox" formControlName="newOtherCert">
         </div>
         <label class="col-sm-1 control-label">金额</label>
         <div class="col-sm-1">
@@ -199,22 +211,19 @@
           <textarea class="form-control" formControlName="newIdDesc"></textarea>
         </div>
       </div>
+      <!--<div class="form-group">-->
+        <!--<label class="col-sm-1 control-label">金额</label>-->
+        <!--<div class="col-sm-1">-->
+          <!--<input type="text" class="form-control" formControlName="newOtherCertCost">-->
+        <!--</div>-->
+        <!--<label class="col-sm-1 control-label">摘要说明：</label>-->
+        <!--<div class="col-sm-2">-->
+          <!--<textarea class="form-control" formControlName="newOtherCertDesc"></textarea>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="form-group">
-        <label class="col-sm-2 control-label">其他证件</label>
-        <div class="col-sm-1">
-          <input type="checkbox" formControlName="newOtherCert">
-        </div>
-        <label class="col-sm-1 control-label">金额</label>
-        <div class="col-sm-1">
-          <input type="text" class="form-control" formControlName="newOtherCertCost">
-        </div>
-        <label class="col-sm-1 control-label">摘要说明：</label>
-        <div class="col-sm-2">
-          <textarea class="form-control" formControlName="newOtherCertDesc"></textarea>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">原车主单位营业执照</label>
+        <label class="col-sm-2 control-label">新车主（单位）</label>
+        <label class="col-sm-1 control-label">营业执照</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
             原件<input type="radio" name="newLisenceType" value="原件" formControlName="newLisenceType">
@@ -222,6 +231,10 @@
           <label>
             复印件<input type="radio" name="newLisenceType" value="复印件" formControlName="newLisenceType">
           </label>
+        </div>
+        <label class="col-sm-1 control-label">其他证件</label>
+        <div class="col-sm-1">
+          <input type="checkbox" formControlName="newCompanyOtherCert">
         </div>
         <label class="col-sm-1 control-label">金额</label>
         <div class="col-sm-1">
@@ -232,7 +245,7 @@
           <textarea class="form-control" formControlName="newLisenceDesc"></textarea>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="border-top: solid 1px #5d5c5c26;padding: 10px;">
         <label class="col-sm-2 control-label">本人是否到场</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>

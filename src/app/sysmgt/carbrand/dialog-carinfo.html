@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>编辑车辆品牌</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [value]="data.carinfo.brand" [(ngModel)] ="data.carinfo.brand" placeholder="车辆品牌">
+    <input matInput [value]="data.carinfo.subbrand" [(ngModel)]="data.carinfo.subbrand" placeholder="车系">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">取消</button>
+  <button mat-button [mat-dialog-close]="data.carinfo" cdkFocusInitial>保存</button>
+</div>

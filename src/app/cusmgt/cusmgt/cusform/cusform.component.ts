@@ -94,13 +94,12 @@ export class CusformComponent implements OnInit {
         )
         this.cusService.addCus(this.cus).subscribe(
           res => {
-            // 告诉岗位创建成功或者失败
             alert('客户创建成功： ' + this.cus.cusname);
             this.router.navigateByUrl('/home/cusmgt');
           },
           err => {
-            console.log('错误信息是：'+err.message);
-            if(err.message.indexOf('contact_phone_UNIQUE')!=-1){
+            // console.log('错误信息是：'+err.error.message);
+            if(err.error.message.indexOf('contact_phone_UNIQUE')!=-1){
               alert('创建失败，手机号码已存在');
             } else {
               alert('创建失败: ' + err.message)
@@ -115,6 +114,7 @@ export class CusformComponent implements OnInit {
         this.cus.cusmode = this.formGroup.value['cusmode'];
         this.cus.add1 = this.formGroup.value['add1'];
         this.cus.address = this.formGroup.value['province'] + ' ' + this.formGroup.value['city'] + ' ' + this.formGroup.value['area'];
+        this.cus.state = this.formGroup.value['state'];
         console.log(this.cus);
         this.cusService.updateCustomer(this.cus).subscribe(
           res => {
@@ -141,11 +141,11 @@ export class CusformComponent implements OnInit {
       p = item.target.value;
     }
     console.log(p);
-    this.addrService.getProCode(p).subscribe(
-      res => {
-        this.formGroup.get('vdrplate1').setValue(res);
-      }
-    );
+    // this.addrService.getProCode(p).subscribe(
+    //   res => {
+    //     this.formGroup.get('vdrplate1').setValue(res);
+    //   }
+    // );
     this.city = this.addrService.getCities(p);
     // this.formGroup.get('vdraddr3').reset();
     this.area = this.addrService.getAreas('');
@@ -158,16 +158,16 @@ export class CusformComponent implements OnInit {
     }else{
       c = item.target.value;
     }
-    this.addrService.getShotCode(c).subscribe(
-      res => {
-        if (res == '' || res == null) {
-          // this.formGroup.get('vdrplate2').enable();
-        } else {
-          // this.formGroup.get('vdrplate2').disable();
-          this.formGroup.get('vdrplate2').setValue(res);
-        }
-      }
-    );
+    // this.addrService.getShotCode(c).subscribe(
+    //   res => {
+    //     if (res == '' || res == null) {
+    //       // this.formGroup.get('vdrplate2').enable();
+    //     } else {
+    //       // this.formGroup.get('vdrplate2').disable();
+    //       this.formGroup.get('vdrplate2').setValue(res);
+    //     }
+    //   }
+    // );
     this.area = this.addrService.getAreas(c);
   }
 }

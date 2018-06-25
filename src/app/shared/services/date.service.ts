@@ -15,6 +15,15 @@ export class DateService {
     }
   }
 
+  dateTimeFmt(val: any) {
+    if (val == '' || val == null) {
+      return '';
+    } else {
+      var crtTime = new Date(val);
+      return this.dateFtt('yyyy-MM-dd hh:mm:ss', crtTime);
+    }
+  }
+
   ngDateFmt(val: any) {
     if (val == '' || val == null) {
       return null;

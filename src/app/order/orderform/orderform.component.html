@@ -1,7 +1,11 @@
 <form class="form-horizontal" [formGroup]="formGroup">
+  <div class="my-container">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  </div>
   <div class="box box-info">
     <div class="box-header with-border">
       <h3 class="box-title">订单基本信息</h3>
+      <p>当前状态：{{order==undefined?'':order.state}}</p>
     </div>
     <!-- /.box-header -->
     <!-- form start -->
@@ -9,38 +13,58 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">车架号</label>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control typeahead" formControlName="carnum" data-provide="typeahead"
-                  id="odr_carnum" placeholder="输入车架号查询">
+          <input type="text" placeholder="输入要查询的车架号" class="form-control" matInput formControlName="carnum"
+                 aria-label="car" [matAutocomplete]="auto_carnum">
+          <mat-autocomplete #auto_carnum="matAutocomplete">
+            <mat-option *ngFor="let car of filteredCars | async" [value]="car.carnum"
+                        (onSelectionChange)="onSelectedCar($event, car)">
+              {{ car.carnum }}
+            </mat-option>
+          </mat-autocomplete>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'carnum')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <label class="col-sm-2 control-label">初次登记日期</label>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control" disabled formControlName="firstdate" id="odr_firstdate">
+          <input autocomplete="off" type="text" class="form-control" formControlName="firstdate" id="odr_firstdate">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">车辆详情</label>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">品牌</div>
-          <input  autocomplete="off"  type="text" class="form-control" disabled formControlName="carbrand" id="odr_carbrand">
+          <input autocomplete="off" type="text" class="form-control" formControlName="carbrand" id="odr_carbrand">
         </div>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">车系</div>
-          <input  autocomplete="off"  type="text" class="form-control" disabled formControlName="carset" id="odr_carset">
+          <input autocomplete="off" type="text" class="form-control" formControlName="carset" id="odr_carset">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">车辆登记证书扫描件</label>
-        <div class="col-sm-2"><input  autocomplete="off"  type="file" value="上传"></div>
+        <div class="col-sm-2"><input autocomplete="off" type="file" value="上传"></div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">其他证件照</label>
-        <div class="col-sm-2"><input  autocomplete="off"  type="file" value="上传"></div>
+        <div class="col-sm-2"><input autocomplete="off" type="file" value="上传"></div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">客户名称</label>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="cusname" id="odr_cusname"
-                  placeholder="输入客户名称">
+          <!--<input  autocomplete="off"  type="text" class="form-control" formControlName="cusname" id="odr_cusname"-->
+          <!--placeholder="输入客户名称">-->
+          <input type="text" placeholder="输入要查询的客户名称" class="form-control" matInput formControlName="cusname"
+                 aria-label="cusname" [matAutocomplete]="auto_cusname">
+          <mat-autocomplete #auto_cusname="matAutocomplete">
+            <mat-option *ngFor="let cus of filteredCustomers | async" [value]="cus.cusname"
+                        (onSelectionChange)="onSelectedCus($event,cus)">
+              {{ cus.cusname }}
+            </mat-option>
+          </mat-autocomplete>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'cusname')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <div>
           <button type="button" class="btn btn-primary" (click)="createCus()">新建客户</button>
@@ -55,6 +79,9 @@
             <option selected="selected" value="">请选择省</option>
             <option *ngFor="let pro of province | async; let i = index" value="{{pro.name}}">{{pro.name}}</option>
           </select>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'caraddr1')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">市</div>
@@ -62,6 +89,9 @@
             <option selected="selected" value="">请选择市</option>
             <option *ngFor="let c of city | async; let i = index" value="{{c.name}}">{{c.name}}</option>
           </select>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'caraddr2')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon">区</div>
@@ -74,20 +104,40 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">车牌号码</label>
         <div class="col-sm-1" style="width:70px;">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="carplate1">
+          <input autocomplete="off" type="text" class="form-control" formControlName="carplate1">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'carplate1')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <div class="col-sm-1" style="width:70px;">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="carplate2">
+          <input autocomplete="off" type="text" class="form-control" formControlName="carplate2">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'carplate2')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control" placeholder="号码" formControlName="carplatenum">
+          <input autocomplete="off" type="text" class="form-control" placeholder="号码" formControlName="carplatenum">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'carplatenum')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">代办商联系人</label>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control" placeholder="输入代办商联系人姓名" formControlName="vdrcontact"
-                  id="odr_vdrcontact">
+          <!--<input  autocomplete="off"  type="text" class="form-control" placeholder="输入代办商联系人姓名" formControlName="vdrcontact"-->
+          <!--id="odr_vdrcontact">-->
+          <input type="text" placeholder="输入要查询的代办商联系人" class="form-control" matInput formControlName="vdrcontact"
+                 aria-label="vdrcontact" [matAutocomplete]="auto_vdr">
+          <mat-autocomplete #auto_vdr="matAutocomplete">
+            <mat-option *ngFor="let vdr of filteredVdr | async" [value]="vdr.contact"
+                        (onSelectionChange)="onSelectedVdr($event, vdr)">
+              {{ vdr.contact }}
+            </mat-option>
+          </mat-autocomplete>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'vdrcontact')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <div>
           <!--<button type="button" class="btn btn-primary" style="margin-right: 5px;">导入代办商</button>-->
@@ -96,21 +146,33 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">原车主姓名</label>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="oriownername">
+          <input autocomplete="off" type="text" class="form-control" formControlName="oriownername">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'oriownername')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <label class="col-sm-2 control-label">联系电话</label>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="oriownerphone">
+          <input autocomplete="off" type="text" class="form-control" formControlName="oriownerphone">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'oriownerphone')"
+            errorMsg="*格式不正确"></app-field-error-display>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">商户（下家）姓名</label>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="newownername">
+          <input autocomplete="off" type="text" class="form-control" formControlName="newownername">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'newownername')"
+            errorMsg="*必填项"></app-field-error-display>
         </div>
         <label class="col-sm-2 control-label">联系电话</label>
         <div class="col-sm-2">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="newownerphone">
+          <input autocomplete="off" type="text" class="form-control" formControlName="newownerphone">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'oriownerphone')"
+            errorMsg="*格式不正确"></app-field-error-display>
         </div>
       </div>
       <div class="form-group">
@@ -119,14 +181,15 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <input  autocomplete="off"  type="text" class="form-control" disabled formControlName="itemdeadline">
+          <input type="text" class="form-control" formControlName="itemdeadline">
         </div>
         <label class="col-sm-2 control-label">办证预定日期</label>
         <div class="col-sm-2" style="display:table;">
           <div class="input-group-addon" (click)="d2.toggle()">
             <i class="fa fa-calendar"></i>
           </div>
-          <input  autocomplete="off"  type="text" class="form-control" name="dp2" [(ngModel)]="model" ngbDatepicker #d2="ngbDatepicker" formControlName="itemplandate">
+          <input type="text" class="form-control" name="dp" [(ngModel)]="model" ngbDatepicker #d2="ngbDatepicker"
+                 formControlName="itemplandate">
         </div>
       </div>
     </div>
@@ -143,22 +206,27 @@
         <label class="col-sm-2 control-label">违章信息</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
-            有<input  autocomplete="off"  type="radio" name="WeizhangStatus" value="有" formControlName="WeizhangStatus">
+            有<input autocomplete="off" type="radio" name="WeizhangStatus" value="有" formControlName="WeizhangStatus">
           </label>
           <label>
-            无<input  autocomplete="off"  type="radio" name="WeizhangStatus" value="无" formControlName="WeizhangStatus">
+            无<input autocomplete="off" type="radio" name="WeizhangStatus" value="无" formControlName="WeizhangStatus">
+          </label>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'WeizhangStatus')"
+            errorMsg="*必填项"></app-field-error-display>
+        </div>
+        <label class="col-sm-1 control-label">办理方式</label>
+        <div class="col-xs-2" style="padding-top: 5px;">
+          <label>
+            客户自办<input autocomplete="off" type="radio" name="WeizhangHandle" value="客户自办"
+                       formControlName="WeizhangHandle">
+          </label>
+          <label>
+            委托代办<input autocomplete="off" type="radio" name="WeizhangHandle" value="委托代办"
+                       formControlName="WeizhangHandle">
           </label>
         </div>
-        <label class="col-sm-2 control-label">办理方式</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
-          <label>
-            客户自办<input  autocomplete="off"  type="radio" name="WeizhangHandle" value="客户自办" formControlName="WeizhangHandle">
-          </label>
-          <label>
-            委托代办<input  autocomplete="off"  type="radio" name="WeizhangHandle" value="委托代办" formControlName="WeizhangHandle">
-          </label>
-        </div>
-        <label class="col-sm-2 control-label">摘要说明：</label>
+        <label class="col-sm-1 control-label">摘要说明：</label>
         <div class="col-sm-2">
           <textarea class="form-control" formControlName="WeizhangDesc"></textarea>
         </div>
@@ -168,22 +236,27 @@
         <label class="col-sm-2 control-label">年检信息</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
-            有<input  autocomplete="off"  type="radio" name="NianjianStatus" value="有" formControlName="NianjianStatus">
+            有<input autocomplete="off" type="radio" name="NianjianStatus" value="有" formControlName="NianjianStatus">
           </label>
           <label>
-            无<input  autocomplete="off"  type="radio" name="NianjianStatus" value="无" formControlName="NianjianStatus">
+            无<input autocomplete="off" type="radio" name="NianjianStatus" value="无" formControlName="NianjianStatus">
+          </label>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'NianjianStatus')"
+            errorMsg="*必填项"></app-field-error-display>
+        </div>
+        <label class="col-sm-1 control-label">办理方式</label>
+        <div class="col-xs-2" style="padding-top: 5px;">
+          <label>
+            客户自办<input autocomplete="off" type="radio" name="NianjianHandle" value="客户自办"
+                       formControlName="NianjianHandle">
+          </label>
+          <label>
+            委托代办<input autocomplete="off" type="radio" name="NianjianHandle" value="委托代办"
+                       formControlName="NianjianHandle">
           </label>
         </div>
-        <label class="col-sm-2 control-label">办理方式</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
-          <label>
-            客户自办<input  autocomplete="off"  type="radio" name="NianjianHandle" value="客户自办" formControlName="NianjianHandle">
-          </label>
-          <label>
-            委托代办<input  autocomplete="off"  type="radio" name="NianjianHandle" value="委托代办" formControlName="NianjianHandle">
-          </label>
-        </div>
-        <label class="col-sm-2 control-label">摘要说明：</label>
+        <label class="col-sm-1 control-label">摘要说明：</label>
         <div class="col-sm-2">
           <textarea class="form-control" formControlName="NianjianDesc"></textarea>
         </div>
@@ -193,22 +266,25 @@
         <label class="col-sm-2 control-label">抵押信息</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
-            有<input  autocomplete="off"  type="radio" name="DiyaStatus" value="有" formControlName="DiyaStatus">
+            有<input autocomplete="off" type="radio" name="DiyaStatus" value="有" formControlName="DiyaStatus">
           </label>
           <label>
-            无<input  autocomplete="off"  type="radio" name="DiyaStatus" value="无" formControlName="DiyaStatus">
+            无<input autocomplete="off" type="radio" name="DiyaStatus" value="无" formControlName="DiyaStatus">
+          </label>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'DiyaStatus')"
+            errorMsg="*必填项"></app-field-error-display>
+        </div>
+        <label class="col-sm-1 control-label">办理方式</label>
+        <div class="col-xs-2" style="padding-top: 5px;">
+          <label>
+            客户自办<input autocomplete="off" type="radio" name="DiyaHandle" value="客户自办" formControlName="DiyaHandle">
+          </label>
+          <label>
+            委托代办<input autocomplete="off" type="radio" name="DiyaHandle" value="委托代办" formControlName="DiyaHandle">
           </label>
         </div>
-        <label class="col-sm-2 control-label">办理方式</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
-          <label>
-            客户自办<input  autocomplete="off"  type="radio" name="DiyaHandle" value="客户自办" formControlName="DiyaHandle">
-          </label>
-          <label>
-            委托代办<input  autocomplete="off"  type="radio" name="DiyaHandle" value="委托代办" formControlName="DiyaHandle">
-          </label>
-        </div>
-        <label class="col-sm-2 control-label">摘要说明：</label>
+        <label class="col-sm-1 control-label">摘要说明：</label>
         <div class="col-sm-2">
           <textarea class="form-control" formControlName="DiyaDesc"></textarea>
         </div>
@@ -218,22 +294,27 @@
         <label class="col-sm-2 control-label">牌证信息</label>
         <div class="col-xs-1" style="padding-top: 5px;">
           <label>
-            有<input  autocomplete="off"  type="radio" name="PaizhengStatus" value="有" formControlName="PaizhengStatus">
+            有<input autocomplete="off" type="radio" name="PaizhengStatus" value="有" formControlName="PaizhengStatus">
           </label>
           <label>
-            无<input  autocomplete="off"  type="radio" name="PaizhengStatus" value="无" formControlName="PaizhengStatus">
+            无<input autocomplete="off" type="radio" name="PaizhengStatus" value="无" formControlName="PaizhengStatus">
+          </label>
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'PaizhengStatus')"
+            errorMsg="*必填项"></app-field-error-display>
+        </div>
+        <label class="col-sm-1 control-label">办理方式</label>
+        <div class="col-xs-2" style="padding-top: 5px;">
+          <label>
+            客户自办<input autocomplete="off" type="radio" name="PaizhengHandle" value="客户自办"
+                       formControlName="PaizhengHandle">
+          </label>
+          <label>
+            委托代办<input autocomplete="off" type="radio" name="PaizhengHandle" value="委托代办"
+                       formControlName="PaizhengHandle">
           </label>
         </div>
-        <label class="col-sm-2 control-label">办理方式</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
-          <label>
-            客户自办<input  autocomplete="off"  type="radio" name="PaizhengHandle" value="客户自办" formControlName="PaizhengHandle">
-          </label>
-          <label>
-            委托代办<input  autocomplete="off"  type="radio" name="PaizhengHandle" value="委托代办" formControlName="PaizhengHandle">
-          </label>
-        </div>
-        <label class="col-sm-2 control-label">摘要说明：</label>
+        <label class="col-sm-1 control-label">摘要说明：</label>
         <div class="col-sm-2">
           <textarea class="form-control" formControlName="PaizhengDesc"></textarea>
         </div>
@@ -242,7 +323,7 @@
         <label class="col-sm-2 control-label">其他基本信息</label>
         <label class="col-sm-2 control-label">其他费用</label>
         <div class="col-sm-1">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="QitaCost">
+          <input autocomplete="off" type="text" class="form-control" formControlName="QitaCost">
         </div>
         <label class="col-sm-2 control-label">摘要说明：</label>
         <div class="col-sm-2">
@@ -251,82 +332,75 @@
       </div>
 
       <div class="box-header with-border">
-        <h4>寄出材料信息</h4>
+        <h4>寄出材料明细</h4>
       </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">车辆材料</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
+        <label class="col-sm-2 control-label">登记证书</label>
+        <div class="col-xs-2" style="padding-top: 5px;">
           <label>
-            邮寄<input  autocomplete="off"  type="radio" name="Cheliangcailiao" value="邮寄" formControlName="Cheliangcailiao">
+            原件<input autocomplete="off" type="radio" name="Cheliangdengjizhengjian" value="原件"
+                     formControlName="Cheliangdengjizhengjian">
           </label>
           <label>
-            自带<input  autocomplete="off"  type="radio" name="Cheliangcailiao" value="自带" formControlName="Cheliangcailiao">
-          </label>
-        </div>
-        <label class="col-sm-2 control-label">办理方式</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
-          <label>
-            原件<input  autocomplete="off"  type="radio" name="Cheliangdengjizhengjian" value="原件" formControlName="Cheliangdengjizhengjian">
-          </label>
-          <label>
-            复印件<input  autocomplete="off"  type="radio" name="Cheliangdengjizhengjian" value="复印件" formControlName="Cheliangdengjizhengjian">
+            复印件<input autocomplete="off" type="radio" name="Cheliangdengjizhengjian" value="复印件"
+                      formControlName="Cheliangdengjizhengjian">
           </label>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">行驶证</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
+        <label class="col-sm-1 control-label">行驶证</label>
+        <div class="col-xs-2" style="padding-top: 5px;">
           <label>
-            原件<input  autocomplete="off"  type="radio" name="Xingshizheng" value="原件" formControlName="Xingshizheng">
+            原件<input autocomplete="off" type="radio" name="Xingshizheng" value="原件" formControlName="Xingshizheng">
           </label>
           <label>
-            复印件<input  autocomplete="off"  type="radio" name="Xingshizheng" value="复印件" formControlName="Xingshizheng">
-          </label>
-        </div>
-        <label class="col-sm-2 control-label">公章</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
-          <label>
-            有<input  autocomplete="off"  type="radio" name="Gongzhang" value="有" formControlName="Gongzhang">
-          </label>
-          <label>
-            无<input  autocomplete="off"  type="radio" name="Gongzhang" value="无" formControlName="Gongzhang">
+            复印件<input autocomplete="off" type="radio" name="Xingshizheng" value="复印件" formControlName="Xingshizheng">
           </label>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">原车主身份证</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
+        <div class="col-xs-2" style="padding-top: 5px;">
           <label>
-            原件<input  autocomplete="off"  type="radio" name="OriShenfenzheng" value="原件" formControlName="OriShenfenzheng">
+            原件<input autocomplete="off" type="radio" name="OriShenfenzheng" value="原件"
+                     formControlName="OriShenfenzheng">
           </label>
           <label>
-            复印件<input  autocomplete="off"  type="radio" name="OriShenfenzheng" value="复印件" formControlName="OriShenfenzheng">
+            复印件<input autocomplete="off" type="radio" name="OriShenfenzheng" value="复印件"
+                      formControlName="OriShenfenzheng">
           </label>
         </div>
-        <label class="col-sm-2 control-label">原车主居住证</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
+        <label class="col-sm-1 control-label">营业执照</label>
+        <div class="col-xs-2" style="padding-top: 5px;">
           <label>
-            原件<input  autocomplete="off"  type="radio" name="OriJuzhuzheng" value="原件" formControlName="OriJuzhuzheng">
+            原件<input autocomplete="off" type="radio" name="Yingyezhizhao" value="原件" formControlName="Yingyezhizhao">
           </label>
           <label>
-            复印件<input  autocomplete="off"  type="radio" name="OriJuzhuzheng" value="复印件" formControlName="OriJuzhuzheng">
+            复印件<input autocomplete="off" type="radio" name="Yingyezhizhao" value="复印件" formControlName="Yingyezhizhao">
+          </label>
+        </div>
+        <!--<label class="col-sm-2 control-label">原车主居住证</label>-->
+        <!--<div class="col-xs-1" style="padding-top: 5px;">-->
+        <!--<label>-->
+        <!--原件<input  autocomplete="off"  type="radio" name="OriJuzhuzheng" value="原件" formControlName="OriJuzhuzheng">-->
+        <!--</label>-->
+        <!--<label>-->
+        <!--复印件<input  autocomplete="off"  type="radio" name="OriJuzhuzheng" value="复印件" formControlName="OriJuzhuzheng">-->
+        <!--</label>-->
+        <!--</div>-->
+        <label class="col-sm-1 control-label">公章</label>
+        <div class="col-xs-1" style="padding-top: 5px;">
+          <label>
+            有<input autocomplete="off" type="radio" name="Gongzhang" value="有" formControlName="Gongzhang">
+          </label>
+          <label>
+            无<input autocomplete="off" type="radio" name="Gongzhang" value="无" formControlName="Gongzhang">
           </label>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">营业执照</label>
-        <div class="col-xs-1" style="padding-top: 5px;">
-          <label>
-            原件<input  autocomplete="off"  type="radio" name="Yingyezhizhao" value="原件" formControlName="Yingyezhizhao">
-          </label>
-          <label>
-            复印件<input  autocomplete="off"  type="radio" name="Yingyezhizhao" value="复印件" formControlName="Yingyezhizhao">
-          </label>
-        </div>
         <label class="col-sm-2 control-label">其他</label>
-        <div class="col-sm-2" style="padding-top: 5px;">
-          <input  autocomplete="off"  type="text" class="form-control" formControlName="Qitaxinxi">
+        <div class="col-sm-4" style="padding-top: 5px;">
+          <textarea type="text" class="form-control" formControlName="Qitaxinxi"></textarea>
         </div>
       </div>
       <div class="box-header with-border">
@@ -334,24 +408,69 @@
       </div>
       <div class="box-body">
         <div class="form-group">
+          <label class="col-sm-2 control-label">车辆材料</label>
+          <div class="col-xs-1" style="padding-top: 5px;">
+            <label>
+              邮寄<input autocomplete="off" type="radio" name="Cheliangcailiao" value="邮寄"
+                       formControlName="Cheliangcailiao">
+            </label>
+            <label>
+              自带<input autocomplete="off" type="radio" name="Cheliangcailiao" value="自带"
+                       formControlName="Cheliangcailiao">
+            </label>
+            <app-field-error-display
+              [displayError]="validation.isFiledValid(formGroup, 'Cheliangcailiao')"
+              errorMsg="*必填项"></app-field-error-display>
+          </div>
+        </div>
+        <div class="form-group">
           <label class="col-sm-2 control-label">快递单号</label>
           <div class="col-sm-2">
-            <input  autocomplete="off"  type="text" class="form-control" formControlName="Kuaididanhao">
+            <input autocomplete="off" type="text" class="form-control" formControlName="Kuaididanhao">
+            <app-field-error-display
+              [displayError]="validation.isFiledValid(formGroup, 'Kuaididanhao')"
+              errorMsg="*必填项"></app-field-error-display>
           </div>
           <label class="col-sm-2 control-label">快递费用</label>
           <div class="col-sm-2">
-            <input  autocomplete="off"  type="text" class="form-control" formControlName="KuaidiCost">
+            <input autocomplete="off" type="text" class="form-control" formControlName="KuaidiCost">
+            <app-field-error-display
+              [displayError]="validation.isFiledValid(formGroup, 'KuaidiCost')"
+              errorMsg="*必填项"></app-field-error-display>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">快递单照片</label>
           <div class="col-sm-2">
-            <input  autocomplete="off"  type="file" value="上传" formControlName="KuaidiImgPath">
+            <input autocomplete="off" type="file" value="上传" formControlName="KuaidiImgPath">
+          </div>
+        </div>
+        <div formArrayName="KuaidiSets">
+          <div *ngFor="let e of formGroup.get('KuaidiSets').controls;let i = index;">
+            <div [formGroupName]="i">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">附加快递{{i+1}}单号</label>
+                <div class="col-sm-2">
+                  <input autocomplete="off" type="text" class="form-control" formControlName="kNum">
+                </div>
+                <label class="col-sm-2 control-label">附加快递{{i+1}}费用</label>
+                <div class="col-sm-2">
+                  <input autocomplete="off" type="text" class="form-control" formControlName="kCost">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">附加快递单{{i+1}}照片</label>
+                <div class="col-sm-2">
+                  <input type="file" value="上传" formControlName="kPath">
+                </div>
+                <span><i class="fa fa-fw  fa-minus-square-o" (click)="removeKuaidiSets(i)"></i></span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <button type="button" class="btn btn-default">添加快递单</button>
-          <button type="button" class="btn btn-default">确认寄出</button>
+          <button type="button" class="kuaidibt" id="order_bt_addKuaidi" (click)="addKuaidiSets()">添加快递单</button>
+          <button type="button" class="kuaidibt" id="order_bt_kuaidiEvt" (click)="kuaidiEvt()">{{kuaidiButtonDisplay()}}</button>
         </div>
       </div>
     </div>
@@ -368,7 +487,7 @@
         <!--// 提档-->
         <tr>
           <td style="width:10%;">
-            提档<input  autocomplete="off"  type="checkbox" formControlName="checkboxTidang">
+            提档<input autocomplete="off" type="checkbox" formControlName="checkboxTidang">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxTidang').value" (click)="itemdetail($event)" name="tidang">
@@ -382,20 +501,22 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">提档金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemTidangCost" [class.validNum]="!itemTidangCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemTidangCost"
+                       [class.validNum]="!itemTidangCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemTidangCost')"
                   errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">提档交易税</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemTidangTax" [class.validNum]="!itemTidangTax_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemTidangTax"
+                       [class.validNum]="!itemTidangTax_flag">
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemTidangCompletedate">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemTidangCompletedate">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemTidangCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -410,7 +531,7 @@
         <!--// 过户-->
         <tr>
           <td>
-            过户<input  autocomplete="off"  type="checkbox" formControlName="checkboxGuohu">
+            过户<input autocomplete="off" type="checkbox" formControlName="checkboxGuohu">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxGuohu').value" (click)="itemdetail($event)" name="guohu">
@@ -424,20 +545,22 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">过户金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemGuohuCost" [class.validNum]="!itemGuohuCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemGuohuCost"
+                       [class.validNum]="!itemGuohuCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemGuohuCost')"
                   errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">过户交易税</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemGuohuTax" [class.validNum]="!itemGuohuTax_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemGuohuTax"
+                       [class.validNum]="!itemGuohuTax_flag">
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemGuohuCompletedate">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemGuohuCompletedate">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemGuohuCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -452,7 +575,7 @@
         <!--上牌-->
         <tr>
           <td>
-            上牌<input  autocomplete="off"  type="checkbox" formControlName="checkboxShangpai" name="cbShangpai">
+            上牌<input autocomplete="off" type="checkbox" formControlName="checkboxShangpai" name="cbShangpai">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxShangpai').value" (click)="itemdetail($event)" name="shangpai">
@@ -466,7 +589,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">上牌金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemShangpaiCost" [class.validNum]="!itemShangpaiCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemShangpaiCost"
+                       [class.validNum]="!itemShangpaiCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemShangpaiCost')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -475,7 +599,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemShangpaiCompletedate">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemShangpaiCompletedate">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemShangpaiCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -490,7 +614,7 @@
         <!--违章-->
         <tr>
           <td>
-            违章<input  autocomplete="off"  type="checkbox" formControlName="checkboxWeizhang">
+            违章<input autocomplete="off" type="checkbox" formControlName="checkboxWeizhang">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxWeizhang').value" (click)="itemdetail($event)" name="weizhang">
@@ -504,14 +628,16 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">违章RMB/条</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemWeizhangCost" [class.validNum]="!itemWeizhangCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemWeizhangCost"
+                       [class.validNum]="!itemWeizhangCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemWeizhangCost')"
                   errorMsg="*必填项"></app-field-error-display>
               </div>
               <label class="col-sm-2 control-label">扣分RMB/分</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemWeizhangCost2" [class.validNum]="!itemWeizhangCost2_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemWeizhangCost2"
+                       [class.validNum]="!itemWeizhangCost2_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemWeizhangCost2')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -520,7 +646,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemWeizhangCompletedate">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemWeizhangCompletedate">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemWeizhangCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -535,7 +661,7 @@
         <!--抵押-->
         <tr>
           <td>
-            抵押<input  autocomplete="off"  type="checkbox" formControlName="checkboxDiya">
+            抵押<input autocomplete="off" type="checkbox" formControlName="checkboxDiya">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxDiya').value" (click)="itemdetail($event)" name="diya">
@@ -549,7 +675,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">抵押金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemDiyaCost" [class.validNum]="!itemDiyaCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemDiyaCost"
+                       [class.validNum]="!itemDiyaCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemDiyaCost')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -558,7 +685,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemDiyaCompletedate">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemDiyaCompletedate">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemDiyaCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -573,7 +700,7 @@
         <!--解除抵押 -->
         <tr>
           <td>
-            解除抵押<input  autocomplete="off"  type="checkbox" formControlName="checkboxJiechudiya">
+            解除抵押<input autocomplete="off" type="checkbox" formControlName="checkboxJiechudiya">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxJiechudiya').value" (click)="itemdetail($event)"
@@ -588,7 +715,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">解除抵押金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemJiechudiyaCost">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemJiechudiyaCost">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemJiechudiyaCost')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -597,7 +724,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemJiechudiyaCompletedate" [class.validNum]="!itemJiechudiyaCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemJiechudiyaCompletedate"
+                       [class.validNum]="!itemJiechudiyaCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemJiechudiyaCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -612,7 +740,7 @@
         <!--委托-->
         <tr>
           <td>
-            年检委托<input  autocomplete="off"  type="checkbox" formControlName="checkboxWeituo">
+            年检委托<input autocomplete="off" type="checkbox" formControlName="checkboxWeituo">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxWeituo').value" (click)="itemdetail($event)" name="weituo">
@@ -626,7 +754,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">年检委托金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemWeituoCost">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemWeituoCost">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemWeituoCost')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -635,7 +763,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemWeituoCompletedate" [class.validNum]="!itemWeituoCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemWeituoCompletedate"
+                       [class.validNum]="!itemWeituoCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemWeituoCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -650,7 +779,7 @@
         <!--年检-->
         <tr>
           <td>
-            年检<input  autocomplete="off"  type="checkbox" formControlName="checkboxNianjian">
+            年检<input autocomplete="off" type="checkbox" formControlName="checkboxNianjian">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxNianjian').value" (click)="itemdetail($event)" name="nianjian">
@@ -664,7 +793,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">年检金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemNianjianCost" [class.validNum]="!itemNianjianCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemNianjianCost"
+                       [class.validNum]="!itemNianjianCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemNianjianCost')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -673,7 +803,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemNianjianCompletedate">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemNianjianCompletedate">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemNianjianCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -688,7 +818,7 @@
         <!--换补牌证-->
         <tr>
           <td>
-            换补牌证<input  autocomplete="off"  type="checkbox" formControlName="checkboxBuhuan">
+            换补牌证<input autocomplete="off" type="checkbox" formControlName="checkboxBuhuan">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxBuhuan').value" (click)="itemdetail($event)" name="buhuan">
@@ -702,7 +832,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">换补牌证金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemBuhuanCost" [class.validNum]="!itemBuhuanCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemBuhuanCost"
+                       [class.validNum]="!itemBuhuanCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemBuhuanCost')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -711,7 +842,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemBuhuanCompletedate">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemBuhuanCompletedate">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemBuhuanCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -726,7 +857,7 @@
         <!--其他-->
         <tr>
           <td>
-            其他<input  autocomplete="off"  type="checkbox" formControlName="checkboxQita">
+            其他<input autocomplete="off" type="checkbox" formControlName="checkboxQita">
           </td>
           <td>
             <button [hidden]="!formGroup.get('checkboxQita').value" (click)="itemdetail($event)" name="qita">
@@ -740,7 +871,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">其他金额</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemQitaCost" [class.validNum]="!itemQitaCost_flag">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemQitaCost"
+                       [class.validNum]="!itemQitaCost_flag">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemQitaCost')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -749,7 +881,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">预计完成工作日</label>
               <div class="col-sm-2">
-                <input  autocomplete="off"  type="text" class="form-control" formControlName="itemQitaCompletedate">
+                <input autocomplete="off" type="text" class="form-control" formControlName="itemQitaCompletedate">
                 <app-field-error-display
                   [displayError]="validation.isFiledValid(formGroup, 'itemQitaCompletedate')"
                   errorMsg="*必填项"></app-field-error-display>
@@ -771,7 +903,7 @@
   <div class="box-footer">
     <button type="button" class="btn btn-default" (click)="cancel()">取消</button>
     <button type="button" class="btn btn-default" (click)="save()">保存</button>
-    <button type="submit" class="btn btn-info pull-right" (click)="save()">确认(提交)</button>
+    <button type="submit" class="btn btn-info pull-right" (click)="submit()">{{smtButtonDisplay()}}</button>
   </div>
 
 </form>

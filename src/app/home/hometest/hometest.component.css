@@ -39,3 +39,12 @@ img {
   line-height:40px;
   text-align:center;
 }
+.mq marquee{
+  display: inline-block;
+  overflow: hidden;
+  text-align: initial;
+  white-space: nowrap;
+  width: 600px;
+  height:50px;
+  font-size:34px;
+}

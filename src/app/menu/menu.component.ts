@@ -28,19 +28,22 @@ export class MenuComponent implements OnInit {
       new Menu(1, '系统管理', [
         {id: 11, name: '用户管理', link: 'home/usermgt'},
         {id: 12, name: '岗位管理', link: 'home/pstnmgt'},
-        { id: 13, name: '权限管理', link: 'home/authmgt' },
-        { id: 14, name: '访问日志', link: 'home/accessLogmgt' },
+        {id: 13, name: '车辆品牌', link: 'home/carbmgt'},
+        { id: 14, name: '权限管理', link: 'home/authmgt' },
+        { id: 15, name: '访问日志', link: 'home/accessLogmgt'},
       ]),
       new Menu(2, '客户管理', [{id: 21, name: '客户管理', link: 'home/cusmgt'}, {id: 22, name: '代办商管理', link: 'home/vdrmgt'}]),
       new Menu(3, '销售限价管理', [{id: 31, name: '销售限价管理', link: 'home/presmgt'}]),
       new Menu(4, '订单管理',
         [{id: 41, name: '办证车辆管理', link: 'home/carmgt'},
           {id: 42, name: '创建订单', link: 'home/orderform/0'},
-          {id: 43, name: '查询订单(待提交)', link: 'home/odrmgt'},
-          {id: 44, name: '查询订单(待办证)', link: 'home/odrmgt'},
-          {id: 45, name: '查询订单(办证中)', link: 'home/odrmgt'},
-          {id: 46, name: '查询订单(办证完成)', link: 'home/odrmgt'},
-          {id: 47, name: '查询订单(汇总)', link: 'home/odrmgt'}
+          {id: 43, name: '查询订单(待补全)', link: 'home/odrmgt_saved'},
+          {id: 44, name: '查询订单(待提交)', link: 'home/odrmgt'},
+          {id: 45, name: '查询订单(待办证)', link: 'home/odrmgt'},
+          {id: 46, name: '查询订单(办证中)', link: 'home/odrmgt'},
+          {id: 47, name: '查询订单(办证完成)', link: 'home/odrmgt'},
+          {id: 48, name: '订单审批', link: 'home/odrmgt'},
+          {id: 49, name: '查询订单(汇总)', link: 'home/odrmgt'}
           ]),
     ];
     /*if (!this.pService.checkPerm('1')){
@@ -51,13 +54,14 @@ export class MenuComponent implements OnInit {
   // target to hold menu information and enable the active-highlight function
   nav(m: subMenu) {
     if(m.name == '创建订单'){
-      if(confirm('确定要新建订单？')){
+      // if(confirm('确定要新建订单？')){
         let creator = JSON.parse(localStorage.getItem('currentUser'))['username'];
         this.orderService.createOdr(creator).subscribe(
           res => {
             let id = res;
             // console.log(id);
             this.router.navigateByUrl('/home/orderform/' + id);
+            // this.router.navigate(['orderform',id]);
           },
           err => {
 
@@ -65,7 +69,7 @@ export class MenuComponent implements OnInit {
         );
         // this.router.navigateByUrl(m.link);
         this.currentMenuId = m.id;
-      }
+      // }
     }else {
       this.router.navigateByUrl(m.link);
       this.currentMenuId = m.id;

@@ -1,0 +1,100 @@
+<div class="box box-info">
+  <div class="box-header with-border">
+    <h3 class="box-title">车辆品牌信息添加</h3>
+    <h6 style="color:red;">*填写信息中间不能有空格</h6>
+  </div>
+  <!-- /.box-header -->
+  <!-- form start -->
+  <form class="form-horizontal" [formGroup]="formGroup">
+    <div class="box-body">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">品牌名称</label>
+        <div class="col-sm-2">
+          <input autocomplete="off" type="text" class="form-control" formControlName="brand">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'brand')"
+            errorMsg="*必填项"></app-field-error-display>
+        </div>
+        <label class="col-sm-2 control-label">车系名称</label>
+        <div class="col-sm-2">
+          <input autocomplete="off" type="text" class="form-control" formControlName="set">
+          <app-field-error-display
+            [displayError]="validation.isFiledValid(formGroup, 'set')"
+            errorMsg="*必填项"></app-field-error-display>
+        </div>
+      </div>
+    </div>
+    <div class="box-footer">
+      <button type="botton" class="btn btn-primary pull-left" (click)="create()">添加</button>&nbsp;&nbsp;
+    </div>
+  </form>
+</div>
+
+<div class="box box-info">
+  <div class="box-header with-border">
+    <h3 class="box-title">车辆品牌查询</h3>
+  </div>
+  <!-- /.box-header -->
+  <!-- form start -->
+  <form class="form-horizontal" [formGroup]="formGroup2">
+    <div class="box-body">
+
+      <div class="box-body" style="padding:5px;">
+        <label class="col-sm-2 control-label">品牌</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="carbrand">
+        </div>
+        <label class="col-sm-2 control-label">车系</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="carset">
+        </div>
+      </div>
+      <div class="box-footer">
+        <button type="botton" class="btn btn-primary pull-left" (click)="search()">搜索</button>&nbsp;&nbsp;
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">查询结果</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <div style="height:450px;">
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>编号</th>
+          <th>车辆品牌</th>
+          <th>车辆车系</th>
+          <th>编辑</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let car of carinfos | paginate: { id:'carinfo_id', itemsPerPage:10, currentPage: page}; let i = index;">
+          <td>{{car.infoid}}</td>
+          <td>{{car.brand}}</td>
+          <td>{{car.subbrand}}</td>
+          <td>
+            <a class="btn btn-warning btn-xs" (click)="edit(car)"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
+            <a class="btn btn-danger btn-xs" (click)="delete(car.infoid)"><span class="glyphicon glyphicon-remove"></span>删除</a>
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        </tfoot>
+      </table>
+    </div>
+    <div class="has-text-centered">
+      <pagination-controls id="carinfo_id"
+                           (pageChange)="page = $event"
+                           autoHide="true"
+                           previousLabel="上一页"
+                           nextLabel="下一页"></pagination-controls>
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>

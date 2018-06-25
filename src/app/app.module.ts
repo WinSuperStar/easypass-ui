@@ -33,7 +33,7 @@ import {PresformComponent} from './presmgt/presform/presform.component';
 import {PresmgtComponent} from './presmgt/presmgt/presmgt.component';
 import {CarformComponent} from './carmgt/carform/carform.component';
 import {OdrmgtComponent} from './order/odrmgt/odrmgt.component';
-import {OrderformComponent} from './order/orderform/orderform.component';
+import {DialogOrderAssign, OrderformComponent} from './order/orderform/orderform.component';
 import {LoginComponent} from './login/login.component';
 import {AuthGuardService} from './shared/guards/auth-guard.service';
 import {LoginServiceService} from './shared/services/login-service.service';
@@ -65,6 +65,12 @@ import {OrderHomeComponent} from './order/order-home/order-home.component';
 import {OrderService} from './service/order.service';
 import {VdrLeaveGuardService} from './shared/guards/vdr-leave-guard.service';
 import {PresLeaveGuardService} from './shared/guards/pres-leave-guard.service';
+import {MatAutocompleteModule, MatButtonModule, MatDialogModule, MatInputModule, MatSelectModule} from '@angular/material';
+import {LoadingModule} from 'ngx-loading';
+import {OdrLeaveGuardService} from './shared/guards/odr-leave-guard.service';
+import { OdrmgtSavedComponent } from './order/odrmgt-saved/odrmgt-saved.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CarbrandComponent, DialogCarinfo} from './sysmgt/carbrand/carbrand.component';
 
 const routeConfig: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -80,6 +86,7 @@ const routeConfig: Routes = [
         {path: 'accessLogmgt', component: AccesslogmgtComponent},
         {path: 'userform', component: UserformComponent},
         {path: 'userform/:id', component: UserformComponent},
+        {path: 'carbmgt', component: CarbrandComponent},
         {path: 'pstnmgt', component: PstnmgtComponent},
         {path: 'pstnform/:id', component: PstnformComponent},
         {path: 'cusmgt', component: CusmgtComponent},
@@ -89,11 +96,12 @@ const routeConfig: Routes = [
         {path: 'presform/:id', component: PresformComponent},
         {path: 'authmgt', component: AuthmgtComponent},
         {path: 'vdrmgt', component: VdrmgtComponent},
-        {path: 'vdrmgt/:id', component: VdrFormComponent, canDeactivate: [VdrLeaveGuardService]},
+        {path: 'vdrmgt/:id/:aim', component: VdrFormComponent, canDeactivate: [VdrLeaveGuardService]},
         {path: 'carmgt', component: CarmgtComponent},
         {path: 'carform/:id', component: CarformComponent},
         {path: 'odrmgt', component: OdrmgtComponent},
-        {path: 'orderform/:id', component: OrderformComponent},
+        {path: 'orderform/:id', component: OrderformComponent, canDeactivate:[OdrLeaveGuardService],runGuardsAndResolvers:'always'},
+        {path: 'odrmgt_saved', component: OdrmgtSavedComponent},
         {path: 'presmgt', component: PresmgtComponent},
         {path: 'presmgt/:id', component: PresformComponent, canDeactivate:[PresLeaveGuardService]},
         {path: 'itemform', component: ItemFormComponent},
@@ -144,21 +152,34 @@ const routeConfig: Routes = [
     AccesslogmgtComponent,
     PresapprComponent,
     PaginationComponent,
-    OrderHomeComponent
+    OrderHomeComponent,
+    OdrmgtSavedComponent,
+    DialogOrderAssign,
+    DialogCarinfo,
+    CarbrandComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     HttpClientModule,
-    RouterModule.forRoot(routeConfig, {useHash: true}),
+    RouterModule.forRoot(routeConfig, {useHash: true, onSameUrlNavigation: "reload"}),
     ReactiveFormsModule,
     ReactiveFormsModule,
     FileUploaderModule,
     NgxPaginationModule,
     NgbModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    MatAutocompleteModule,
+    LoadingModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    MatInputModule
   ],
+  exports: [RouterModule,MatDialogModule,MatInputModule],
+  entryComponents: [DialogOrderAssign, DialogCarinfo],
   providers: [
     httpInterceptorProviders,
     LoggerService,
@@ -179,7 +200,8 @@ const routeConfig: Routes = [
     PresaleService,
     OrderService,
     VdrLeaveGuardService,
-    PresLeaveGuardService], // used to mention what service to provide in this module
+    PresLeaveGuardService,
+    OdrLeaveGuardService], // used to mention what service to provide in this module
   bootstrap: [AppComponent] // main component
 })
 export class AppModule {

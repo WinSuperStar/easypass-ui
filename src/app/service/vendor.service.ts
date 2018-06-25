@@ -42,6 +42,22 @@ export class VendorService {
     return this.httpClient.post('/api/getVdr', params);
   }
 
+  getVdrsByAddr(a1,a2,a3):Observable<any>{
+    let params = new HttpParams()
+      .set('vdraddr1', a1)
+      .set('vdraddr2', a2)
+      .set('vdraddr3', a3)
+      .set('vdrplate1', '')
+      .set('vdrplate2', '')
+      .set('contact', '')
+      .set('contactphone', '')
+      .set('firstdate', null)
+      .set('state', '')
+      .set('itemlist', '');
+    // console.log('search params are: '+params);
+    return this.httpClient.post('/api/getVdrs', params);
+  }
+
   getVdrs(form: any): Observable<any> {
     let params = new HttpParams()
       .set('vdraddr1', form['vdraddr1'])

@@ -45,9 +45,11 @@ export class ItemFormComponent implements OnInit {
       oriIdCost: [''],
       oriOtherCert: [''],
       oriOtherCertCost: [''],
+      oriOtherCertDesc:[''],
       oriPresent: [''],
       oriPresentDesc: [''],
       oriPresentCost: [''],
+      oriCompanyOtherCert:[''],
       oriLisenceType: [''],
       oriLisenceDesc: [''],
       oriLisenceCost: [''],
@@ -58,9 +60,11 @@ export class ItemFormComponent implements OnInit {
       newIdCost: [''],
       newOtherCert: [''],
       newOtherCertCost: [''],
+      newOtherCertDesc:[''],
       newPresent: [''],
       newPresentDesc: [''],
       newPresentCost: [''],
+      newCompanyOtherCert:[''],
       newLisenceType: [''],
       newLisenceDesc: [''],
       newLisenceCost: [''],
@@ -76,6 +80,7 @@ export class ItemFormComponent implements OnInit {
     this.idService.getItemdetail(id).subscribe(
       res => {
         this.itemdetail = res;
+        console.dir(this.itemdetail);
         this.formGroup.reset({
           matDengji: this.itemdetail.matDengji,
           matXingshi: this.itemdetail.matXingshi,
@@ -92,9 +97,11 @@ export class ItemFormComponent implements OnInit {
           oriIdCost: this.itemdetail.oriIdCost,
           oriOtherCert: this.itemdetail.oriOtherCert,
           oriOtherCertCost: this.itemdetail.oriOtherCertCost,
+          oriOtherCertDesc: this.itemdetail.oriOtherCertDesc,
           oriPresent: this.itemdetail.oriPresent,
           oriPresentDesc: this.itemdetail.oriPresentDesc,
           oriPresentCost: this.itemdetail.oriPresentCost,
+          oriCompanyOtherCert: this.itemdetail.oriCompanyOtherCert,
           oriLisenceType: this.itemdetail.oriLisenceType,
           oriLisenceDesc: this.itemdetail.oriLisenceDesc,
           oriLisenceCost: this.itemdetail.oriLisenceCost,
@@ -108,6 +115,7 @@ export class ItemFormComponent implements OnInit {
           newPresent: this.itemdetail.newPresent,
           newPresentDesc: this.itemdetail.newPresentDesc,
           newPresentCost: this.itemdetail.newPresentCost,
+          newCompanyOtherCert: this.itemdetail.newCompanyOtherCert,
           newLisenceType: this.itemdetail.newLisenceType,
           newLisenceDesc: this.itemdetail.newLisenceDesc,
           newLisenceCost: this.itemdetail.newLisenceCost,
@@ -236,9 +244,11 @@ export class ItemFormComponent implements OnInit {
       this.itemdetail.oriIdCost = this.formGroup.get('oriIdCost').value;
       this.itemdetail.oriOtherCert = this.formGroup.get('oriOtherCert').value;
       this.itemdetail.oriOtherCertCost = this.formGroup.get('oriOtherCertCost').value;
+      this.itemdetail.oriOtherCertDesc = this.formGroup.get('oriOtherCertDesc').value;
       this.itemdetail.oriPresent = this.formGroup.get('oriPresent').value;
       this.itemdetail.oriPresentDesc = this.formGroup.get('oriPresentDesc').value;
       this.itemdetail.oriPresentCost = this.formGroup.get('oriPresentCost').value;
+      this.itemdetail.oriCompanyOtherCert = this.formGroup.get('oriCompanyOtherCert').value;
       this.itemdetail.oriLisenceType = this.formGroup.get('oriLisenceType').value;
       this.itemdetail.oriLisenceDesc = this.formGroup.get('oriLisenceDesc').value;
       this.itemdetail.oriLisenceCost = this.formGroup.get('oriLisenceCost').value;
@@ -252,6 +262,7 @@ export class ItemFormComponent implements OnInit {
       this.itemdetail.newPresent = this.formGroup.get('newPresent').value;
       this.itemdetail.newPresentDesc = this.formGroup.get('newPresentDesc').value;
       this.itemdetail.newPresentCost = this.formGroup.get('newPresentCost').value;
+      this.itemdetail.newCompanyOtherCert = this.formGroup.get('newCompanyOtherCert').value;
       this.itemdetail.newLisenceType = this.formGroup.get('newLisenceType').value;
       this.itemdetail.newLisenceDesc = this.formGroup.get('newLisenceDesc').value;
       this.itemdetail.newLisenceCost = this.formGroup.get('newLisenceCost').value;
@@ -290,7 +301,7 @@ export class ItemFormComponent implements OnInit {
     if (path === 'presale') {
       this.router.navigateByUrl('/home/presmgt/' + id);
     } else {
-      this.router.navigateByUrl('/home/vdrmgt/' + id);
+      this.router.navigateByUrl('/home/vdrmgt/' + id+'/edit');
     }
   }
 
@@ -357,6 +368,34 @@ export class ItemFormComponent implements OnInit {
         }
       }
     });
+  }
+
+  reName(name: any){
+    let a = '';
+    switch(name){
+      case 'tidang': a = '提档';
+      break;
+      case 'guohu': a = '过户';
+      break;
+      case 'shangpai': a = '上牌';
+        break;
+      case 'weizhang': a = '违章';
+        break;
+      case 'weituo': a = '委托';
+        break;
+      case 'nianjian': a = '年检';
+        break;
+      case 'diya': a = '抵押';
+        break;
+      case 'jiechudiya': a = '解除抵押';
+        break;
+      case 'qita': a = '其他';
+        break;
+      case 'buhuan': a = '换补牌证';
+        break;
+      default: break;
+    }
+    return a;
   }
 
 }

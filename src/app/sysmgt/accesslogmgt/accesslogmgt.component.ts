@@ -63,7 +63,7 @@ export class AccesslogmgtComponent implements OnInit {
         { 'data': 'username' },
         { 'data': 'operatorTime' ,
            'render': function ( data, type, row ) {
-             data = date.dateFmt(data);
+             data = date.dateTimeFmt(data);
              return data;
           }},
         { 'data': 'method' },

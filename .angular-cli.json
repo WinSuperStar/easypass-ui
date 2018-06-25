@@ -29,7 +29,8 @@
         "assets/bower_components/bootstrap-daterangepicker/daterangepicker.css",
         "assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
         "assets/bower_components/bootstrap-fileinput/css/fileinput.css",
-        "assets/bower_components/bootstrap-fileinput/themes/explorer-fa/theme.css"
+        "assets/bower_components/bootstrap-fileinput/themes/explorer-fa/theme.css",
+        "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",

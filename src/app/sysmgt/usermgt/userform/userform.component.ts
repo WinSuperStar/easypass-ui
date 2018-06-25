@@ -39,7 +39,6 @@ export class UserformComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.roles = this.roleService.getRoles();
     this.userid = this.routeInfo.snapshot.params['id'];
     this.formModel = this.fb.group({
@@ -192,11 +191,13 @@ export class UserformComponent implements OnInit {
             this.router.navigateByUrl('/home/usermgt');
           },
           err => {
-            console.log(err);
-            if(err.message.indexOf('phone_UNIQUE')!=-1){
+            if(err.error.message.indexOf('phone_UNIQUE')!=-1){
               alert('创建失败，手机号码已存在');
               this.user = null;
+            }else{
+              alert('创建失败，错误信息：'+err.error.message);
             }
+
           }
         );
       } else {

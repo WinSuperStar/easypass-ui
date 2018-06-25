@@ -1,0 +1,162 @@
+<div class="box box-info">
+  <div class="box-header with-border">
+    <h3 class="box-title">订单查询 - 待补全</h3>
+  </div>
+  <!-- /.box-header -->
+  <!-- form start -->
+  <form class="form-horizontal" [formGroup]="formGroup">
+    <div class="box-body">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">订单编号</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="orderid">
+        </div>
+        <label class="col-sm-2 control-label">业务员</label>
+        <div class="col-sm-2">
+          <select class="form-control" formControlName="assignee">
+            <option *ngFor="let c of users; let i = index;" value={{c.username}}>{{c.username}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">牌照代码</label>
+        <div class="col-sm-1" style="width:70px;">
+          <input type="text" class="form-control" formControlName="carplate1" >
+        </div>
+        <div class="col-sm-1" style="width:70px;">
+          <input type="text" class="form-control" formControlName="carplate2">
+        </div>
+        <label class="col-sm-2 control-label">牌照号码</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="carplatenum">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车架号</label>
+        <div class="col-sm-2">
+          <input  autocomplete="off"  type="text" class="form-control" formControlName="carnum">
+        </div>
+        <label class="col-sm-2 control-label">原车主姓名</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="oriownername">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车辆详情</label>
+        <div class="col-sm-2" style="display:table;">
+          <div class="input-group-addon">品牌</div>
+          <select class="form-control" formControlName="carbrand" (change)="showSet($event)">
+            <option value="">请选择</option>
+            <option *ngFor="let c of brand | async; let i = index" value="{{c}}">{{c}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2" style="display:table;">
+          <div class="input-group-addon">车系</div>
+          <select class="form-control" formControlName="carset">
+            <option value="">请选择</option>
+            <option *ngFor="let c of set | async; let i = index" value="{{c}}">{{c}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">客户模式</label>
+        <div class="col-sm-1">
+          <select class="form-control" formControlName="cusmode">
+            <option disabled selected="selected" value="">请选择</option>
+            <option value="个人">个人</option>
+            <option value="公司">公司</option>
+          </select>
+        </div>
+        <label class="col-sm-2 control-label">客户名称</label>
+        <div class="col-sm-2">
+          <select class="form-control" formControlName="cusname">
+            <option *ngFor="let c of customers | async; let i = index;" value={{c.cusname}}>{{c.cusname}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">快递单号</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="kuaidinum">
+        </div>
+        <label class="col-sm-2 control-label">创建人</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" formControlName="creator">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">办证项目</label>
+        <div *ngFor="let item of formGroup.get('itemlist').controls; let i=index">
+          <div class="col-sm-2 formMulCheckBox">
+            <div>{{itemlist[i].name}}</div>
+            <input type="checkbox"   class="vdrItem" [formControl]="item" value="{{itemlist[i].state}}">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      <!--<button type="submit" class="btn btn-primary pull-left" (click)="create()">新建代办商</button>&nbsp;&nbsp;-->
+      <button type="submit" class="btn btn-success pull-left" style="margin-left:5px;" (click)="search()">查询</button>
+    </div>
+    <!-- /.box-footer -->
+  </form>
+</div>
+
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">查询结果</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>订单编号</th>
+        <th>客户名称</th>
+        <th>品牌</th>
+        <th>车系</th>
+        <th>原车牌号码</th>
+        <th>原车主姓名</th>
+        <th>车架号</th>
+        <th style="width:15%;">办证项目</th>
+        <th>订单状态</th>
+        <th>快递单号</th>
+        <th>创建人</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let v of odrs | paginate: { id: 'odrmgt_saved_id',itemsPerPage:10, currentPage: page}; let i = index">
+        <td>{{v.orderid}}</td>
+        <td>{{v.cusname}}</td>
+        <td>{{v.carbrand}}</td>
+        <td>{{v.carset}}</td>
+        <td>{{v.carPlateCode+' '+v.carPlateNum}}</td>
+        <td>{{v.oriOwnerName}}</td>
+        <td>{{v.carnum}}</td>
+        <td>{{showItemDetail(v)}}</td>
+        <td>{{v.state}}</td>
+        <td>{{v.kuaidiNum}}</td>
+        <td>{{v.creator}}</td>
+        <td>
+          <p>
+            <a class="btn btn-primary btn-xs" (click)="receive(v)"><span class="glyphicon glyphicon-ok"></span>签收</a>
+            <a class="btn btn-info btn-xs" (click)="assign(v)"><span class="glyphicon glyphicon-plus"></span>分单</a>
+            <a class="btn btn-warning btn-xs" (click)="edit(v.orderid)"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
+          </p>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      </tfoot>
+    </table>
+    <div class="has-text-centered">
+      <pagination-controls id="odrmgt_saved_id" (pageChange)="page = $event"
+                           autoHide="true"
+                           previousLabel="上一页"
+                           nextLabel="下一页"></pagination-controls>
+    </div>
+  </div>
+  <!-- /.box-body -->
+</div>
